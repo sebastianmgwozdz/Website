@@ -1,0 +1,18 @@
+.background {
+  background-color: aqua;
+  height: 100vh;
+}
+
+.centered {
+  align-items: center;
+  text-align: center;
+  width: 35%;
+  height: 70%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}

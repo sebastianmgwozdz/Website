@@ -1,0 +1,27 @@
+.centeredButton {
+  align-items: center;
+  text-align: center;
+  width: 35%;
+  height: 7%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.centeredGame {
+  align-items: center;
+  text-align: center;
+  width: 50%;
+  height: 50%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: -5%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}

@@ -1,0 +1,42 @@
+.Bio-header {
+  text-align: center;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10vh;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 5vmin;
+  color: white;
+  z-index: 10;
+  position: relative;
+}
+
+.Transparent-Background {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
+}
+
+.Contact {
+  font-size: 2.33vmin;
+}
+
+.Image {
+  display: inline;
+  margin-right: 1vmin;
+  margin-left: 1vmin;
+}
+
+.Image:hover {
+  box-shadow: 0 0.5vmin 1.5vmin rgba(255, 255, 255, 0.75);
+}
+
+.Icon {
+  padding-top: 50vh;
+}
