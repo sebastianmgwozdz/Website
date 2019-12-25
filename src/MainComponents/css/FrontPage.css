@@ -28,9 +28,8 @@
 }
 
 .Image {
-  display: inline;
-  margin-right: 1vmin;
-  margin-left: 1vmin;
+  margin-right: 1.5vmin;
+  margin-left: 1.5vmin;
 }
 
 .Image:hover {

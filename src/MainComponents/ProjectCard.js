@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -11,10 +10,11 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 345
+    maxWidth: 300,
+    maxHeight: 350
   },
   media: {
-    height: 140
+    height: 100
   }
 });
 
@@ -22,8 +22,8 @@ export default function ProjectCard(props) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.card}>
-      <CardActionArea>
+    <div style={{ marginLeft: "2%" }}>
+      <Card className={classes.card}>
         <CardMedia className={classes.media} image={props.image} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
@@ -33,22 +33,22 @@ export default function ProjectCard(props) {
             {props.text}
           </Typography>
         </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Router>
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => {
-              props.switchFunc(window.location + "typinggame");
-            }}
-            component={Link}
-            to="/typinggame"
-          >
-            Demo
-          </Button>
-        </Router>
-      </CardActions>
-    </Card>
+        <CardActions>
+          <Router>
+            <Button
+              size="small"
+              color="primary"
+              onClick={() => {
+                props.switchFunc(window.location + "typinggame");
+              }}
+              component={Link}
+              to="/typinggame"
+            >
+              Demo
+            </Button>
+          </Router>
+        </CardActions>
+      </Card>
+    </div>
   );
 }

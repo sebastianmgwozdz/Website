@@ -40,26 +40,23 @@ export default function About() {
             <List className={classes.root}>
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                  <Avatar alt="Java" src="icons/java.jpg" />
                 </ListItemAvatar>
-                <ListItemText primary="Brunch this weekend?" />
+                <ListItemText primary="Java" />
               </ListItem>
               <Divider variant="inset" component="li" />
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                  <Avatar
-                    alt="Travis Howard"
-                    src="/static/images/avatar/2.jpg"
-                  />
+                  <Avatar alt="JavaScript" src="icons/javascript.png" />
                 </ListItemAvatar>
-                <ListItemText primary="Summer BBQ" />
+                <ListItemText primary="JavaScript" />
               </ListItem>
               <Divider variant="inset" component="li" />
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                  <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+                  <Avatar alt="React" src="icons/react.png" />
                 </ListItemAvatar>
-                <ListItemText primary="Oui Oui" />
+                <ListItemText primary="React" />
               </ListItem>
             </List>
           </div>
@@ -67,26 +64,23 @@ export default function About() {
             <List className={classes.root}>
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                  <Avatar alt="C#" src="icons/csharp.png" />
                 </ListItemAvatar>
-                <ListItemText primary="Brunch this weekend?" />
+                <ListItemText primary="C#" />
               </ListItem>
               <Divider variant="inset" component="li" />
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                  <Avatar
-                    alt="Travis Howard"
-                    src="/static/images/avatar/2.jpg"
-                  />
+                  <Avatar alt="Python" src="icons/python.jpg" />
                 </ListItemAvatar>
-                <ListItemText primary="Summer BBQ" />
+                <ListItemText primary="Python" />
               </ListItem>
               <Divider variant="inset" component="li" />
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                  <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+                  <Avatar alt="HTML" src="icons/html.png" />
                 </ListItemAvatar>
-                <ListItemText primary="Oui Oui" />
+                <ListItemText primary="HTML" />
               </ListItem>
             </List>
           </div>

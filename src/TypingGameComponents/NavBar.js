@@ -4,6 +4,9 @@ import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import "./css/NavBar.css";
 import Game from "./Game";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import HomeIcon from "@material-ui/icons/Home";
+import GamepadIcon from "@material-ui/icons/Gamepad";
 
 function NavBar(props) {
   const [value, setValue] = React.useState(1);
@@ -21,7 +24,7 @@ function NavBar(props) {
           <BottomNavigationAction
             component={Link}
             to="/"
-            label="Back To Website"
+            label="Return To Website"
             onClick={() => {
               props.switchPage(
                 window.location.href.slice(
@@ -30,16 +33,19 @@ function NavBar(props) {
                 )
               );
             }}
+            icon={<ExitToAppIcon />}
           />
           <BottomNavigationAction
             label="Home"
             component={Link}
             to="/typinggame"
+            icon={<HomeIcon />}
           />
           <BottomNavigationAction
             label="Play Game"
             component={Link}
             to="/typinggame/play"
+            icon={<GamepadIcon />}
           />
         </BottomNavigation>
       </nav>

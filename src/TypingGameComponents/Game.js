@@ -3,7 +3,6 @@ import GameDisplay from "./GameDisplay.js";
 import $ from "jquery";
 import WPMCounter from "./WPMCounter.js";
 import GameOver from "./GameOver.js";
-import GameStartButton from "./GameStartButton";
 import Loader from "../Loader";
 import "./css/Game.css";
 
@@ -27,7 +26,7 @@ async function getWords() {
 function Game() {
   const [loading, setLoading] = useState(true);
   const [done, setDone] = useState(false);
-  const [correctChars, setCorrectChars] = useState(-1);
+  const [correctChars, setCorrectChars] = useState(0);
   const [charsPressed, setCharsPressed] = useState(0);
   const [words, setWords] = useState("");
 
@@ -57,12 +56,8 @@ function Game() {
     });
   }, []);
 
-  if (correctChars === -1) {
-    return (
-      <div className="centeredButton">
-        <GameStartButton clickFunc={updateCorrectChars}></GameStartButton>
-      </div>
-    );
+  if (loading) {
+    return <Loader loading={loading}></Loader>;
   } else if (done) {
     return (
       <GameOver
@@ -75,7 +70,6 @@ function Game() {
 
   return (
     <div>
-      <Loader loading={loading}></Loader>
       <div className="centeredGame">
         <GameDisplay
           words={words}
