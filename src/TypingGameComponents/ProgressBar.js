@@ -18,7 +18,7 @@ function ProgressBar(props) {
     <div className={classes.root}>
       <LinearProgress
         variant="determinate"
-        value={(props.timeRemaining * 10) / 3 - 1}
+        value={(props.timeRemaining * 10) / (props.duration / 10) - 1}
         color="secondary"
       />
     </div>

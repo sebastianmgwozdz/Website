@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
@@ -10,6 +10,8 @@ import GamepadIcon from "@material-ui/icons/Gamepad";
 
 function NavBar(props) {
   const [value, setValue] = React.useState(1);
+  const [duration, setDuration] = useState(30);
+  const [wordLength, setWordlength] = useState([5, 8]);
 
   return (
     <Router>
@@ -29,7 +31,7 @@ function NavBar(props) {
               props.switchPage(
                 window.location.href.slice(
                   0,
-                  window.location.href.indexOf("/typinggame")
+                  window.location.href.indexOf("/typingtest")
                 )
               );
             }}
@@ -38,21 +40,27 @@ function NavBar(props) {
           <BottomNavigationAction
             label="Home"
             component={Link}
-            to="/typinggame"
+            to="/typingtest"
             icon={<HomeIcon />}
           />
           <BottomNavigationAction
             label="Play Game"
             component={Link}
-            to="/typinggame/play"
+            to="/typingtest/start"
             icon={<GamepadIcon />}
           />
         </BottomNavigation>
       </nav>
       <div>
         <Switch>
-          <Route path="/typinggame/play">
-            <Game></Game>
+          <Route path="/typingtest/start">
+            <Game
+              navFunc={setValue}
+              durationFunc={setDuration}
+              duration={duration}
+              lengthFunc={setWordlength}
+              length={wordLength}
+            ></Game>
           </Route>
         </Switch>
       </div>

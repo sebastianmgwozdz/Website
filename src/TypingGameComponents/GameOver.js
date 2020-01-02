@@ -8,18 +8,18 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { Link } from "react-router-dom";
 
 function GameOver(props) {
+  const { navFunc, correctChars, duration, charsPressed, resetFunc } = props;
   const [open, setOpen] = useState(true);
 
   const handleClose = () => {
     setOpen(false);
+    navFunc(1);
   };
 
-  const WPM = ((props.correctChars / 5) * 2).toFixed(0);
+  const wpm = ((correctChars / 5) * (60 / duration)).toFixed(0);
 
-  let accuracy =
-    props.charsPressed > 0
-      ? ((props.correctChars / props.charsPressed) * 100).toFixed(0)
-      : 100;
+  const accuracy =
+    charsPressed > 0 ? ((correctChars / charsPressed) * 100).toFixed(0) : 100;
 
   return (
     <div>
@@ -32,7 +32,7 @@ function GameOver(props) {
         <DialogTitle id="alert-dialog-title">{"Game Over"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Final Speed: {WPM} words per minute
+            Final Speed: {wpm} words per minute
             <br></br>
             Final Accuracy: {accuracy}%
           </DialogContentText>
@@ -40,13 +40,19 @@ function GameOver(props) {
         <DialogActions>
           <Button
             component={Link}
-            to="/typinggame"
+            to="/typingtest"
             onClick={handleClose}
             color="primary"
           >
             Home
           </Button>
-          <Button onClick={props.resetFunc} color="primary" autoFocus>
+          <Button
+            component={Link}
+            to="/typingtest/start"
+            onClick={resetFunc}
+            color="primary"
+            autoFocus
+          >
             Play Again
           </Button>
         </DialogActions>

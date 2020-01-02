@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import InputField from "./InputField";
 
 function GameDisplay(props) {
+  const { words, charFunc, correctCharFunc } = props;
   const [completedString, setCompletedString] = useState("");
   const [wordStr] = useState(
-    props.words.reduce((total, current) => {
+    words.reduce((total, current) => {
       return total + " " + current;
     })
   );
@@ -13,10 +14,10 @@ function GameDisplay(props) {
 
   useEffect(() => {
     if (!currWord) {
-      setCurrWord(props.words.shift());
+      setCurrWord(words.shift());
     }
     setCurrInput("");
-  }, [currWord, props.words]);
+  }, [currWord, words]);
 
   function getHighlightedText() {
     let wordEnd = wordStr.indexOf(" ", completedString.length);
@@ -46,10 +47,10 @@ function GameDisplay(props) {
       setCompletedString(completedString.slice(0, completedString.length - 1));
     } else if (addedCorrectChar(curr)) {
       addCharacter(curr);
-      props.charFunc();
-      props.correctCharFunc();
+      charFunc();
+      correctCharFunc();
     } else if (curr.length > currInput.length) {
-      props.charFunc();
+      charFunc();
     }
 
     setCurrInput(curr);
@@ -58,7 +59,7 @@ function GameDisplay(props) {
   function addCharacter(curr) {
     let updatedStr = completedString + curr[curr.length - 1];
     if (curr === currWord) {
-      setCurrWord(props.words.shift());
+      setCurrWord(words.shift());
       updatedStr += " ";
     }
     setCompletedString(updatedStr);

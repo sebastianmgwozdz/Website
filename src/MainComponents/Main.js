@@ -15,14 +15,12 @@ export default function Main() {
     <Router>
       <Switch>
         <Route exact path="/">
-          <div>
-            <Front></Front>
-            <About></About>
-            <Education></Education>
-            <Projects switchPage={setPage}></Projects>
-          </div>
+          <Front></Front>
+          <About></About>
+          <Education></Education>
+          <Projects switchPage={setPage}></Projects>
         </Route>
-        <Route exact path="/typinggame">
+        <Route exact path="/typingtest">
           <App switchPage={setPage}></App>
         </Route>
       </Switch>

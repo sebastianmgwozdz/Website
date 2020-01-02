@@ -19,18 +19,19 @@ const useStyles = makeStyles({
 });
 
 export default function ProjectCard(props) {
+  const { image, title, text, switchFunc } = props;
   const classes = useStyles();
 
   return (
     <div style={{ marginLeft: "2%" }}>
       <Card className={classes.card}>
-        <CardMedia className={classes.media} image={props.image} />
+        <CardMedia className={classes.media} image={image} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {props.title}
+            {title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {props.text}
+            {text}
           </Typography>
         </CardContent>
         <CardActions>
@@ -39,10 +40,10 @@ export default function ProjectCard(props) {
               size="small"
               color="primary"
               onClick={() => {
-                props.switchFunc(window.location + "typinggame");
+                switchFunc(window.location + "typingtest");
               }}
               component={Link}
-              to="/typinggame"
+              to="/typingtest"
             >
               Demo
             </Button>
