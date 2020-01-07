@@ -39,7 +39,7 @@ export default function Main() {
           <Auth0Provider
             domain={config.domain}
             client_id={config.clientId}
-            redirect_uri={window.location.origin}
+            redirect_uri={"https://sebastiangwo.com/peercoding/"}
             onRedirectCallback={onRedirectCallback}
           >
             <PeerCoding></PeerCoding>
