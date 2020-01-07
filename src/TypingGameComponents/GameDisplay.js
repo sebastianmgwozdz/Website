@@ -24,7 +24,14 @@ function GameDisplay(props) {
     let restOfWord = wordStr.slice(completedString.length, wordEnd);
 
     return (
-      <div>
+      <div
+        style={{
+          borderStyle: "solid",
+          borderRadius: "50px",
+          padding: "5%",
+          boxShadow: "0px 15px 10px #b7b9bd"
+        }}
+      >
         <span style={{ backgroundColor: "#88D669" }}>{completedString}</span>
         <span style={{ backgroundColor: "#F26D6D" }}>{restOfWord}</span>
         {wordStr.slice(wordEnd, wordStr.length)}
@@ -41,7 +48,7 @@ function GameDisplay(props) {
   }
 
   function handleChange(e) {
-    const curr = e.target.value.trim();
+    const curr = e.target.value.trim().toLowerCase();
 
     if (removedCompletedChar(curr)) {
       setCompletedString(completedString.slice(0, completedString.length - 1));

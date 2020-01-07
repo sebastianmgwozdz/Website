@@ -1,22 +1,14 @@
-.centeredButton {
-  align-items: center;
+.centeredSetup {
   text-align: center;
-  width: 35%;
-  height: 7%;
-  overflow: auto;
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  justify-content: center;
+  display: flex;
 }
 
 .centeredGame {
   align-items: center;
   text-align: center;
   width: 50%;
-  height: 50%;
+  height: 70%;
   overflow: auto;
   margin: auto;
   position: absolute;
