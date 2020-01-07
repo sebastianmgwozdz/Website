@@ -35,7 +35,7 @@ export default function Main() {
         <Route exact path="/typingtest">
           <TypingGame switchPage={setPage}></TypingGame>
         </Route>
-        <Route exact path="/peercoding">
+        <Route exact path="/peercoding/login">
           <Auth0Provider
             domain={config.domain}
             client_id={config.clientId}
