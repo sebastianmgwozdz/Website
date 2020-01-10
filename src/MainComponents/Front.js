@@ -13,7 +13,7 @@ export default function Front() {
   return (
     <div style={{ backgroundColor: "#fff" }}>
       <Loader loading={loading}></Loader>
-      <div style={{ height: "100vh" }}>
+      <div style={{ height: "100vh", overflow: "hidden" }}>
         <img
           onLoad={() => {
             setLoading(false);
@@ -21,13 +21,7 @@ export default function Front() {
           src="icons/background.jpg"
           alt="Background"
           style={{
-            backgroundSize: "cover",
-            backgroundPosition: "center center",
-            position: "relative",
-            top: 0,
-            bottom: 0,
             height: "100vh",
-            maxWidth: "100%",
             zIndex: 0,
             display: displayProp()
           }}
