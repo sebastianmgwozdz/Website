@@ -12,6 +12,16 @@ export default function Front() {
   }
 
   axios
+    .post("https://sgwomessenger.azurewebsites.net/api/contacts", {
+      id1: 69,
+      id2: 420
+    })
+    .then(function(response) {})
+    .catch(function(error) {
+      console.log(error);
+    });
+
+  axios
     .get("https://sgwomessenger.azurewebsites.net/api/contacts")
     .then(resp => {
       console.log(resp.data);
