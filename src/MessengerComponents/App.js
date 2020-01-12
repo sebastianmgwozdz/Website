@@ -18,7 +18,7 @@ export default function App() {
       .post("https://sgwomessenger.azurewebsites.net/api/users", {
         email: em,
         password: pass,
-        username: user
+        nickname: user
       })
       .catch(function(error) {
         console.log(error);
