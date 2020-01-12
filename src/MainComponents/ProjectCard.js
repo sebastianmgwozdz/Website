@@ -40,7 +40,7 @@ export default function ProjectCard(props) {
               size="small"
               color="primary"
               onClick={() => {
-                switchFunc(window.location + "typingtest");
+                switchFunc();
               }}
               component={Link}
               to="/typingtest"

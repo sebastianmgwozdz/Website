@@ -4,7 +4,8 @@ import About from "./About";
 import Education from "./Education";
 import Projects from "./Projects";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import App from "../TypingGameComponents/App";
+import TypingApp from "../TypingGameComponents/App";
+import MessengerApp from "../MessengerComponents/App";
 
 export default function Main() {
   function setPage(path) {
@@ -21,7 +22,10 @@ export default function Main() {
           <Projects switchPage={setPage}></Projects>
         </Route>
         <Route exact path="/typingtest">
-          <App switchPage={setPage}></App>
+          <TypingApp switchPage={setPage}></TypingApp>
+        </Route>
+        <Route exact path="/messenger">
+          <MessengerApp></MessengerApp>
         </Route>
       </Switch>
     </Router>
