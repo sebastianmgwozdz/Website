@@ -14,12 +14,13 @@ export default function App() {
   }
 
   function insertUser(em, pass, user) {
+    let formData = new FormData();
+    formData.append("Nickname", user);
+    formData.append("Email", em);
+    formData.append("Password", pass);
+
     axios
-      .post("https://sgwomessenger.azurewebsites.net/api/users", {
-        Nickname: user,
-        Email: em,
-        Password: pass
-      })
+      .post("https://sgwomessenger.azurewebsites.net/api/users", formData)
       .catch(function(error) {
         console.log(error);
       });
