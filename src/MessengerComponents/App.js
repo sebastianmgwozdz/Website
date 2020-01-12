@@ -16,9 +16,9 @@ export default function App() {
   function insertUser(em, pass, user) {
     axios
       .post("https://sgwomessenger.azurewebsites.net/api/users", {
-        email: em,
-        password: pass,
-        nickname: user
+        Nickname: user,
+        Email: em,
+        Password: pass
       })
       .catch(function(error) {
         console.log(error);
