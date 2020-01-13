@@ -2,6 +2,7 @@ import React from "react";
 import bcrypt from "bcryptjs";
 import axios from "axios";
 import NavBar from "./NavBar";
+import PrivateRoute from "./PrivateRoute";
 
 export default function App() {
   function hashAndStore(em, pass, user) {
@@ -28,7 +29,7 @@ export default function App() {
 
   return (
     <div>
-      <NavBar></NavBar>
+      <PrivateRoute path="/messenger/home" component={NavBar} />
     </div>
   );
 }

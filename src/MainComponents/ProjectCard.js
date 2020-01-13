@@ -42,8 +42,6 @@ export default function ProjectCard(props) {
               onClick={() => {
                 switchFunc();
               }}
-              component={Link}
-              to="/typingtest"
             >
               Demo
             </Button>
