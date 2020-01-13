@@ -35,7 +35,7 @@ export default function Main() {
         <Route exact path="/typingtest">
           <TypingApp switchPage={setPage}></TypingApp>
         </Route>
-        <Route exact path="/messenger/login">
+        <Route exact path="/messenger/home">
           <Auth0Provider
             domain={config.domain}
             client_id={config.clientId}

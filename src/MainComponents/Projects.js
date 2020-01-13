@@ -22,7 +22,7 @@ function Projects(props) {
           text="Messaging app built with React frontend and Asp.net Core backend"
           image={require("./images/test.jpeg")}
           switchFunc={() => {
-            props.switchPage(window.location + "messenger/login");
+            props.switchPage(window.location + "messenger/home");
           }}
         ></ProjectCard>
       </div>
