@@ -17,6 +17,7 @@ function Projects(props) {
             props.switchPage(window.location + "typingtest");
           }}
         ></ProjectCard>
+        {/*
         <ProjectCard
           title="Messenger (WIP)"
           text="Messaging app built with React frontend and Asp.net Core backend"
@@ -24,7 +25,7 @@ function Projects(props) {
           switchFunc={() => {
             props.switchPage(window.location + "messenger/home");
           }}
-        ></ProjectCard>
+        ></ProjectCard>*/}
       </div>
     </div>
   );
