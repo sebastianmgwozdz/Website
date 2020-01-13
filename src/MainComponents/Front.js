@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./css/FrontPage.css";
 import NavBar from "./NavBar.js";
 import Loader from "../Loader";
-import axios from "axios";
 
 export default function Front() {
   const [loading, setLoading] = useState(true);
@@ -10,16 +9,6 @@ export default function Front() {
   function displayProp() {
     return loading ? "none" : "initial";
   }
-
-  axios
-    .post("https://sgwomessenger.azurewebsites.net/api/users", {
-      Nickname: "test",
-      Email: "lmao@done.com",
-      Password: "yee"
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
 
   return (
     <div style={{ backgroundColor: "#fff" }}>

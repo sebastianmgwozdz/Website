@@ -1,6 +1,7 @@
 import React from "react";
 import bcrypt from "bcryptjs";
 import axios from "axios";
+import NavBar from "./NavBar";
 
 export default function App() {
   function hashAndStore(em, pass, user) {
@@ -25,7 +26,9 @@ export default function App() {
       });
   }
 
-  hashAndStore("lol@meme.com", "test", "terenger");
-
-  return <div>test</div>;
+  return (
+    <div>
+      <NavBar></NavBar>
+    </div>
+  );
 }
