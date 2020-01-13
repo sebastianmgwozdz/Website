@@ -1,8 +1,26 @@
 import React from "react";
 import bcrypt from "bcryptjs";
 import axios from "axios";
+import withFirebaseAuth from "react-with-firebase-auth";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import firebaseConfig from "../firebaseConfig";
+import Login from "./Login";
+import Home from "./Home";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-export default function App() {
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const firebaseAppAuth = firebaseApp.auth();
+
+firebaseAppAuth.onAuthStateChanged(function(user) {
+  if (user) {
+    console.log("meme");
+  }
+});
+
+function App(props) {
+  const { user } = props;
+
   function hashAndStore(em, pass, user) {
     bcrypt.hash(pass, 10, (err, hash) => {
       if (err) {
@@ -25,5 +43,23 @@ export default function App() {
       });
   }
 
-  return <div>test</div>;
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/messenger">
+          <Link to="/messenger/login">Login</Link>
+        </Route>
+        <Route exact path="/messenger/login">
+          <Login user={user} firebaseAppAuth={firebaseAppAuth}></Login>
+        </Route>
+        <Route exact path="/messenger/home">
+          <Home></Home>
+        </Route>
+      </Switch>
+    </Router>
+  );
 }
+
+export default withFirebaseAuth({
+  firebaseAppAuth
+})(App);

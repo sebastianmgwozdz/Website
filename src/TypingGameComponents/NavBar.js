@@ -25,8 +25,6 @@ function NavBar(props) {
           showLabels
         >
           <BottomNavigationAction
-            component={Link}
-            to="/"
             label="Return To Website"
             onClick={() => {
               props.history.push("/");
