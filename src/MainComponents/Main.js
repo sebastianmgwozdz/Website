@@ -5,12 +5,9 @@ import Education from "./Education";
 import Projects from "./Projects";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TypingApp from "../TypingGameComponents/App";
+import MessengerApp from "../MessengerComponents/App";
 
 export default function Main() {
-  function setPage(path) {
-    window.location = path;
-  }
-
   return (
     <Router>
       <Switch>
@@ -18,10 +15,13 @@ export default function Main() {
           <Front></Front>
           <About></About>
           <Education></Education>
-          <Projects switchPage={setPage}></Projects>
+          <Projects></Projects>
         </Route>
         <Route exact path="/typingtest">
-          <TypingApp switchPage={setPage}></TypingApp>
+          <TypingApp></TypingApp>
+        </Route>
+        <Route exact path="/messenger">
+          <MessengerApp></MessengerApp>
         </Route>
       </Switch>
     </Router>

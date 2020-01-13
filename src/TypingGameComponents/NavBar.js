@@ -7,6 +7,7 @@ import Game from "./Game";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
 import GamepadIcon from "@material-ui/icons/Gamepad";
+import { withRouter } from "react-router-dom";
 
 function NavBar(props) {
   const [value, setValue] = React.useState(1);
@@ -28,12 +29,7 @@ function NavBar(props) {
             to="/"
             label="Return To Website"
             onClick={() => {
-              props.switchPage(
-                window.location.href.slice(
-                  0,
-                  window.location.href.indexOf("/typingtest")
-                )
-              );
+              props.history.push("/");
             }}
             icon={<ExitToAppIcon />}
           />
@@ -68,4 +64,4 @@ function NavBar(props) {
   );
 }
 
-export default NavBar;
+export default withRouter(NavBar);

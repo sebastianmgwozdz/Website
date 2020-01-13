@@ -5,7 +5,7 @@ import "./css/App.css";
 export default function App(props) {
   return (
     <div className="background">
-      <NavBar switchPage={props.switchPage}></NavBar>
+      <NavBar></NavBar>
     </div>
   );
 }
