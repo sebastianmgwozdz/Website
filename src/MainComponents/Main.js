@@ -14,7 +14,9 @@ export default function Main() {
         <Route path="/typingtest">
           <TypingApp></TypingApp>
         </Route>
-
+        <Route path="/messenger">
+          <MessengerApp></MessengerApp>
+        </Route>
         <Route path="/">
           <Front></Front>
           <About></About>
