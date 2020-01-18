@@ -18,9 +18,9 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const firebaseAppAuth = firebaseApp.auth();
 firebaseAppAuth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
-const LANDING = "http://sebastiangwo.com/messenger";
-const LOGIN = "http://sebastiangwo.com/messenger/login";
-const SIGNUP = "http://sebastiangwo.com/messenger/signup";
+const LANDING = "http://localhost:3000/messenger";
+const LOGIN = "http://localhost:3000/messenger/login";
+const SIGNUP = "http://localhost:3000/messenger/signup";
 
 const UNPROTECTED_PATHS = [LANDING, LOGIN, SIGNUP];
 

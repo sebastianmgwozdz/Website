@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import NavigationIcon from "@material-ui/icons/Navigation";
@@ -19,11 +19,11 @@ export default function NavigationButton(props) {
   const { text, disabled, onClick } = props;
 
   return (
-    <Fragment className={classes.root}>
+    <div className={classes.root}>
       <Fab variant="extended" disabled={disabled} onClick={onClick}>
         <NavigationIcon className={classes.extendedIcon} />
         {text}
       </Fab>
-    </Fragment>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import "./css/FrontPage.css";
 import NavBar from "./NavBar.js";
 import Loader from "../Loader";

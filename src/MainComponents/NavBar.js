@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import "./css/FrontPage.css";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
