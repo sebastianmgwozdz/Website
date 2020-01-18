@@ -8,12 +8,11 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { Link } from "react-router-dom";
 
 function GameOver(props) {
-  const { navFunc, correctChars, duration, charsPressed, resetFunc } = props;
+  const { correctChars, duration, charsPressed, resetFunc } = props;
   const [open, setOpen] = useState(true);
 
   const handleClose = () => {
     setOpen(false);
-    navFunc(1);
   };
 
   const wpm = ((correctChars / 5) * (60 / duration)).toFixed(0);
@@ -38,14 +37,6 @@ function GameOver(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button
-            component={Link}
-            to="/typingtest"
-            onClick={handleClose}
-            color="primary"
-          >
-            Home
-          </Button>
           <Button
             component={Link}
             to="/typingtest/start"

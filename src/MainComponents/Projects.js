@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import "./css/Projects.css";
 import ProjectTable from "./ProjectTable";
 import ProjectCard from "./ProjectCard";
@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 function Projects(props) {
   return (
     <div className="Projects-Background" id="projects">
-      <div className="Projects-Header">Projects</div>
+      <header className="Projects-Header">Projects</header>
       <div className="w-50 p-3" style={{ display: "flex", marginLeft: "2%" }}>
         <ProjectTable />
         <ProjectCard

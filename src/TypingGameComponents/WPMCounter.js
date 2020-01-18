@@ -3,24 +3,36 @@ import ProgressBar from "./ProgressBar";
 import "./css/WPMCounter.css";
 
 function WPMCounter(props) {
-  const { duration, doneFunc, correctCharCount, charCount } = props;
+  const {
+    duration,
+    doneFunc,
+    correctCharCount,
+    charCount,
+    restart,
+    durationFunc
+  } = props;
   const [wpm, setWpm] = useState(0);
   const [percentAccuracy, setPercentAccuracy] = useState(100);
   const [timeRemaining, setTimeRemaining] = useState(props.duration);
 
   useEffect(() => {
+    let timer;
     if (timeRemaining === duration) {
       let start = Date.now();
-      let timer = setInterval(() => {
+      timer = setInterval(() => {
         let secondsElapsed = (Date.now() - start) / 1000;
 
         setTimeRemaining(duration - secondsElapsed);
-
-        if (secondsElapsed >= duration) {
-          doneFunc(true);
-          clearInterval(timer);
-        }
       }, 150);
+    }
+
+    if (restart) {
+      clearInterval(timer);
+      durationFunc(duration - timeRemaining);
+      doneFunc(true);
+    } else if (duration - timeRemaining >= duration) {
+      clearInterval(timer);
+      doneFunc(true);
     }
 
     let words = correctCharCount / 5;

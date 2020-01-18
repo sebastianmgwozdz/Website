@@ -11,17 +11,17 @@ export default function Main() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
+        <Route path="/typingtest">
+          <TypingApp></TypingApp>
+        </Route>
+        <Route path="/messenger">
+          <MessengerApp></MessengerApp>
+        </Route>
+        <Route path="/">
           <Front></Front>
           <About></About>
           <Education></Education>
           <Projects></Projects>
-        </Route>
-        <Route exact path="/typingtest">
-          <TypingApp></TypingApp>
-        </Route>
-        <Route exact path="/messenger">
-          <MessengerApp></MessengerApp>
         </Route>
       </Switch>
     </Router>

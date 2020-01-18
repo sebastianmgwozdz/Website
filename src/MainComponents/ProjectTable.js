@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import "./css/Projects.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -21,28 +21,23 @@ function createData(name, description, toolsUsed, link) {
 
 const rows = [
   createData(
-    "Stock Market",
-    "Application allowing the user to search a stock and see its graph and the daily statistics, by parsing data from a CSV file. Utilizes TreeSet, TreeMap, and array Data Structures.",
-    "Java, JavaFX",
-    "https://github.com/sebastianmgwozdz/Stock-Market"
-  ),
-  createData(
     "Shortest Path",
     "Application that finds the shortest path between start and end points specified by the user, and draws the path taken. Utilizes Dijkstra/A* algorithms and HashSet/LinkedHashSet/HashMap/2D Array Data Structures.",
     "Java, JavaFX",
     "https://github.com/sebastianmgwozdz/Shortest-Path"
   ),
   createData(
+    "Stock Market",
+    "Application allowing the user to search a stock and see its graph and the daily statistics, by parsing data from a CSV file. Utilizes TreeSet, TreeMap, and array Data Structures.",
+    "Java, JavaFX",
+    "https://github.com/sebastianmgwozdz/Stock-Market"
+  ),
+
+  createData(
     "Evasive Maneuvers",
     "Sidescroller game inspired by Helicopter Game and Flappy Bird, where the user maneuvers through a series of obstacles in the air.",
     "Python, Pygame",
     "https://github.com/sebastianmgwozdz/Evasive-Maneuvers"
-  ),
-  createData(
-    "Digital Logic Calculator",
-    "Calculator built for Intro to Computer Systems class. Implemented basic calculator functions (+, -, /, *) entirely through the use of digital logic and boolean functions.",
-    "MIPS Assembly",
-    ""
   )
 ];
 

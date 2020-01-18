@@ -5,7 +5,7 @@ import FadeButton from "./FadeButton";
 export default function Education() {
   return (
     <div className="Education-Background" id="education">
-      <div className="Education-Header">Education</div>
+      <header className="Education-Header">Education</header>
       <div className="Education-Buttons">
         <FadeButton
           label="Institution"

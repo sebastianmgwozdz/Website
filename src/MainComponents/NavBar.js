@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import "./css/FrontPage.css";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -64,44 +64,5 @@ export default function NavBar() {
         </Button>
       </ButtonGroup>
     </div>
-    /*
-    <ButtonToolbar className="NavBar">
-      <Button variant="dark" size="lg">
-        <Link
-          activeClass="active"
-          to="about"
-          spy={true}
-          smooth={true}
-          offset={0}
-          duration={850}
-        >
-          About Me
-        </Link>
-      </Button>
-      <Button variant="dark" size="lg">
-        <Link
-          activeClass="active"
-          to="education"
-          spy={true}
-          smooth={true}
-          offset={0}
-          duration={850}
-        >
-          Education
-        </Link>
-      </Button>
-      <Button variant="dark" size="lg">
-        <Link
-          activeClass="active"
-          to="projects"
-          spy={true}
-          smooth={true}
-          offset={0}
-          duration={850}
-        >
-          Projects
-        </Link>
-      </Button>
-    </ButtonToolbar> */
   );
 }

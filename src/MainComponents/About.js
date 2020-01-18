@@ -24,17 +24,17 @@ export default function About() {
 
   return (
     <div className="About-Background" id="about">
-      <div className="About-Header">
+      <header className="About-Header">
         About Me
-        <div className="About-Subtext">
+        <span className="About-Subtext">
           From an early age, I have always had a place in my heart for
           technology. I appreciate tech in all forms, from cars to smartphones,
           though computers have interested me the most. When studying, reading,
           or listening to music, I will be channeling my creativity to build
           something that leaves me feeling fulfilled. Programming is one of many
           tools I use to achieve that.
-        </div>
-        <div style={{ marginBottom: "2%", marginTop: "2%" }}>Skills</div>
+        </span>
+        <span style={{ marginBottom: "2%", marginTop: "2%" }}>Skills</span>
         <div>
           <div style={{ float: "left" }}>
             <List className={classes.root}>
@@ -85,7 +85,7 @@ export default function About() {
             </List>
           </div>
         </div>
-      </div>
+      </header>
     </div>
   );
 }

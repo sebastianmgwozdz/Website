@@ -7,7 +7,14 @@ import "./css/Game.css";
 import SetupScreen from "./SetupScreen.js";
 
 function Game(props) {
-  const { length, lengthFunc, duration, durationFunc, navFunc } = props;
+  const {
+    length,
+    lengthFunc,
+    duration,
+    durationFunc,
+    restart,
+    setRestart
+  } = props;
   const [done, setDone] = useState(false);
   const [correctChars, setCorrectChars] = useState(-1);
   const [charsPressed, setCharsPressed] = useState(0);
@@ -39,6 +46,9 @@ function Game(props) {
   }
 
   function reset() {
+    durationFunc(30);
+    lengthFunc([5, 8]);
+    setRestart(false);
     setCorrectChars(-1);
     setCharsPressed(0);
     setDone(false);
@@ -63,27 +73,26 @@ function Game(props) {
         correctChars={correctChars}
         charsPressed={charsPressed}
         resetFunc={reset}
-        navFunc={navFunc}
         duration={duration}
       ></GameOver>
     );
   }
 
   return (
-    <div>
-      <div className="centeredGame">
-        <GameDisplay
-          words={words}
-          correctCharFunc={incrementCorrectChars}
-          charFunc={incrementCharsPressed}
-        ></GameDisplay>
-        <WPMCounter
-          correctCharCount={correctChars}
-          charCount={charsPressed}
-          doneFunc={setDone}
-          duration={duration}
-        ></WPMCounter>
-      </div>
+    <div className="centeredGame">
+      <GameDisplay
+        words={words}
+        correctCharFunc={incrementCorrectChars}
+        charFunc={incrementCharsPressed}
+      ></GameDisplay>
+      <WPMCounter
+        correctCharCount={correctChars}
+        charCount={charsPressed}
+        doneFunc={setDone}
+        duration={duration}
+        durationFunc={durationFunc}
+        restart={restart}
+      ></WPMCounter>
     </div>
   );
 }

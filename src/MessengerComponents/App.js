@@ -1,46 +1,37 @@
 import React from "react";
-import bcrypt from "bcryptjs";
-import axios from "axios";
 import withFirebaseAuth from "react-with-firebase-auth";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from "../firebaseConfig";
 import Login from "./Login";
 import Home from "./Home";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Signup from "./Signup";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  withRouter
+} from "react-router-dom";
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const firebaseAppAuth = firebaseApp.auth();
+firebaseAppAuth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
-firebaseAppAuth.onAuthStateChanged(function(user) {
-  if (user) {
-    console.log("meme");
-  }
-});
+const LANDING = "http://localhost:3000/messenger";
+const LOGIN = "http://localhost:3000/messenger/login";
+const SIGNUP = "http://localhost:3000/messenger/signup";
+
+const UNPROTECTED_PATHS = [LANDING, LOGIN, SIGNUP];
+
+function accessingRestrictedRoute() {
+  const currPath = window.location.href;
+  return !UNPROTECTED_PATHS.includes(currPath) && !firebaseAppAuth.currentUser;
+}
 
 function App(props) {
-  const { user } = props;
-
-  function hashAndStore(em, pass, user) {
-    bcrypt.hash(pass, 10, (err, hash) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      insertUser(em, hash, user);
-    });
-  }
-
-  function insertUser(em, pass, user) {
-    axios
-      .post("https://sgwomessenger.azurewebsites.net/api/users", {
-        Nickname: user,
-        Email: em,
-        Password: pass
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+  if (accessingRestrictedRoute()) {
+    props.history.replace("/messenger");
   }
 
   return (
@@ -50,16 +41,21 @@ function App(props) {
           <Link to="/messenger/login">Login</Link>
         </Route>
         <Route exact path="/messenger/login">
-          <Login user={user} firebaseAppAuth={firebaseAppAuth}></Login>
+          <Login firebaseAppAuth={firebaseAppAuth}></Login>
+        </Route>
+        <Route exact path="/messenger/signup">
+          <Signup firebaseAppAuth={firebaseAppAuth}></Signup>
         </Route>
         <Route exact path="/messenger/home">
-          <Home></Home>
+          <Home firebaseAppAuth={firebaseAppAuth}></Home>
         </Route>
       </Switch>
     </Router>
   );
 }
 
-export default withFirebaseAuth({
-  firebaseAppAuth
-})(App);
+export default withRouter(
+  withFirebaseAuth({
+    firebaseAppAuth
+  })(App)
+);
