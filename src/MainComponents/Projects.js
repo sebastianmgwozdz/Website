@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import "./css/Projects.css";
 import ProjectTable from "./ProjectTable";
 import ProjectCard from "./ProjectCard";
