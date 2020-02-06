@@ -13,12 +13,13 @@ const useStyles = makeStyles(theme => ({
 
 function ProgressBar(props) {
   const classes = useStyles();
+  const { timeRemaining, duration } = props;
 
   return (
     <div className={classes.root}>
       <LinearProgress
         variant="determinate"
-        value={(props.timeRemaining * 10) / (props.duration / 10) - 1}
+        value={(timeRemaining * 10) / (duration / 10) - 1}
         color="secondary"
       />
     </div>

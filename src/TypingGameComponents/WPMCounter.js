@@ -13,42 +13,44 @@ function WPMCounter(props) {
   } = props;
   const [wpm, setWpm] = useState(0);
   const [percentAccuracy, setPercentAccuracy] = useState(100);
-  const [timeRemaining, setTimeRemaining] = useState(props.duration);
+  const [secondsElapsed, setSecondsElapsed] = useState(0);
+  const [timer, setTimer] = useState(undefined);
 
   useEffect(() => {
-    let timer;
-    if (timeRemaining === duration) {
+    if (!timer) {
       let start = Date.now();
-      timer = setInterval(() => {
-        let secondsElapsed = (Date.now() - start) / 1000;
-
-        setTimeRemaining(duration - secondsElapsed);
-      }, 150);
+      setTimer(
+        setInterval(() => {
+          setSecondsElapsed((Date.now() - start) / 1000);
+        }, 150)
+      );
     }
 
-    if (restart) {
-      clearInterval(timer);
-      durationFunc(duration - timeRemaining);
-      doneFunc(true);
-    } else if (duration - timeRemaining >= duration) {
+    if (restart || secondsElapsed >= duration) {
+      if (restart) {
+        durationFunc(secondsElapsed);
+      }
       clearInterval(timer);
       doneFunc(true);
     }
-
-    let words = correctCharCount / 5;
 
     if (charCount > 0) {
-      setWpm((words / (duration - timeRemaining)) * 60);
-      setPercentAccuracy(((words * 5) / charCount) * 100);
+      updateStats();
     }
-  }, [timeRemaining]);
+  }, [props]);
+
+  function updateStats() {
+    let words = correctCharCount / 5;
+    setWpm((words / secondsElapsed) * 60);
+    setPercentAccuracy(((words * 5) / charCount) * 100);
+  }
 
   return (
     <div>
       <div>{wpm.toFixed(0)} WPM</div>
       <div className="padded">{percentAccuracy.toFixed(0)} % Accuracy</div>
       <ProgressBar
-        timeRemaining={timeRemaining.toFixed(1)}
+        timeRemaining={(duration - secondsElapsed).toFixed(1)}
         duration={duration}
       ></ProgressBar>
     </div>

@@ -44,7 +44,7 @@ function GameDisplay(props) {
   }
 
   function addedCorrectChar(curr) {
-    return currWord.indexOf(curr) === 0 && curr.length > currInput.length;
+    return currWord.indexOf(curr) === 0;
   }
 
   function handleChange(e) {
@@ -52,11 +52,11 @@ function GameDisplay(props) {
 
     if (removedCompletedChar(curr)) {
       setCompletedString(completedString.slice(0, completedString.length - 1));
-    } else if (addedCorrectChar(curr)) {
-      addCharacter(curr);
-      charFunc();
-      correctCharFunc();
     } else if (curr.length > currInput.length) {
+      if (addedCorrectChar(curr)) {
+        addCharacter(curr);
+        correctCharFunc();
+      }
       charFunc();
     }
 

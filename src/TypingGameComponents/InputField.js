@@ -12,13 +12,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function InputField(props) {
+  const { changeFunc, value } = props;
+
   return (
     <form className={useStyles()} noValidate autoComplete="off">
-      <TextField
-        variant="outlined"
-        onChange={props.changeFunc}
-        value={props.value}
-      />
+      <TextField variant="outlined" onChange={changeFunc} value={value} />
     </form>
   );
 }

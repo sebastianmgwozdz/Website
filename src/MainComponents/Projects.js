@@ -18,15 +18,6 @@ function Projects(props) {
             props.history.push("/typingtest");
           }}
         ></ProjectCard>
-
-        <ProjectCard
-          title="Messenger (WIP)"
-          text="Messaging app built with React frontend and Asp.net Core backend"
-          image={require("./images/test.jpeg")}
-          switchFunc={() => {
-            props.history.push("/messenger");
-          }}
-        ></ProjectCard>
       </div>
     </div>
   );
