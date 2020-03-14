@@ -43,5 +43,28 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyAmP9vHAYXjvQfBkXF8K1Bzv67C5bdlY2o",
+        authDomain: "papertrader-312a4.firebaseapp.com",
+        databaseURL: "https://papertrader-312a4.firebaseio.com",
+        projectId: "papertrader-312a4",
+        storageBucket: "papertrader-312a4.appspot.com",
+        messagingSenderId: "672884369309",
+        appId: "1:672884369309:web:97272ced4cc41670507174",
+        measurementId: "G-Z7ZEBHG5CQ"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
   </body>
 </html>
