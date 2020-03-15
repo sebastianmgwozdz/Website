@@ -5,7 +5,7 @@ import Loader from "../Loader";
 import { withRouter } from "react-router-dom";
 
 function Front(props) {
-  if (window.location.href !== "https://sebastiangwo.com") {
+  if (window.location.href !== "https://sebastiangwo.com/") {
     props.history.replace("/");
   }
 
