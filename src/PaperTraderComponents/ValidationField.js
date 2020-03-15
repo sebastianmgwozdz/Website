@@ -14,9 +14,10 @@ function ValidationField(props) {
     setError(false);
   }, [props.login]);
 
+  // CHANGE SUBMIT TO user, pass
   function handleButtonClick() {
     props
-      .submit(user, pass)
+      .submit("test@gmail.com", "lolweed")
       .then(res => {
         props.history.replace("/papertrader/dashboard");
       })

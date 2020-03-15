@@ -1,24 +1,64 @@
 import React, { useState, useEffect } from "react";
 import StockCard from "./StockCard";
+import { positions as getPositions } from "./Helpers";
 import { withFirebase } from "../Firebase";
-import Sidebar from "./Sidebar";
+import BuyCard from "./BuyCard";
+import PurchaseDialog from "./PurchaseDialog";
 
-function DashBoard(props) {
+function Dashboard(props) {
   const [tick, setTick] = useState(0);
+  const [positions, setPositions] = useState([]);
+  const [dialogVisible, setDialogVisible] = useState(false);
+
+  function update() {
+    setTick(tick + 1);
+    getPositions(props.firebase.auth.currentUser.uid).then(res => {
+      setPositions(res);
+    });
+  }
 
   useEffect(() => {
-    setTimeout(() => {
-      setTick(tick + 1);
+    update();
+  }, []);
+
+  useEffect(() => {
+    let t = setTimeout(() => {
+      update();
     }, 5000);
+
+    return () => {
+      clearTimeout(t);
+    };
   }, [tick]);
 
+  function getCards() {
+    let cards = [];
+
+    for (let i = 0; i < positions.length; i++) {
+      cards.push(
+        <StockCard
+          position={positions[i]}
+          ticker={positions[i]["ticker"]}
+          tick={tick}
+          key={i}
+          priceBought={positions[i]["price"]}
+        ></StockCard>
+      );
+    }
+    return cards;
+  }
+
   return (
-    <div style={{ display: "flex" }}>
-      <Sidebar></Sidebar>
-      <StockCard ticker="BINANCE:BTCUSDT" tick={tick}></StockCard>
-      <StockCard ticker="AAPL" tick={tick}></StockCard>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "0.5fr 0.5fr 0.5fr"
+      }}
+    >
+      {getCards()}
+      <BuyCard clickFunc={setDialogVisible}></BuyCard>
     </div>
   );
 }
 
-export default withFirebase(DashBoard);
+export default withFirebase(Dashboard);
