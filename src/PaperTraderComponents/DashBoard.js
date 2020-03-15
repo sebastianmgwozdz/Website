@@ -3,7 +3,6 @@ import StockCard from "./StockCard";
 import { positions as getPositions } from "./Helpers";
 import { withFirebase } from "../Firebase";
 import BuyCard from "./BuyCard";
-import PurchaseDialog from "./PurchaseDialog";
 
 function Dashboard(props) {
   const [tick, setTick] = useState(0);

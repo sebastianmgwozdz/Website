@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import Home from "./Home";
-import DashBoard from "./Main";
 import "./App.css";
 import { withFirebase } from "../Firebase";
 import Main from "./Main";
