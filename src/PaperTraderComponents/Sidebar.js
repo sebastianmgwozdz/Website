@@ -1,5 +1,6 @@
 import React from "react";
 import { Menu } from "antd";
+import MarketCounter from "./MarketCounter";
 
 export default function Sidebar(props) {
   function getMenuItems() {
@@ -25,6 +26,8 @@ export default function Sidebar(props) {
       style={{ width: 256, height: "100vh" }}
       defaultSelectedKeys={["0"]}
     >
+      <MarketCounter></MarketCounter>
+
       {getMenuItems()}
     </Menu>
   );

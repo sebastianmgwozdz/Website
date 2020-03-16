@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import StockCard from "./StockCard";
 import { positions as getPositions } from "./Helpers";
 import { withFirebase } from "../Firebase";
-import BuyCard from "./BuyCard";
+import BalanceButton from "./BalanceButton";
 
 function Dashboard(props) {
   const [tick, setTick] = useState(0);
@@ -55,7 +55,7 @@ function Dashboard(props) {
       }}
     >
       {getCards()}
-      <BuyCard clickFunc={setDialogVisible}></BuyCard>
+      <BalanceButton></BalanceButton>
     </div>
   );
 }

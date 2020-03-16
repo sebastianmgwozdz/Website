@@ -2,7 +2,9 @@ import React from "react";
 import Dashboard from "./Dashboard";
 
 let views = [
-  <Dashboard></Dashboard>,
+  <div style={{ height: "150vh" }}>
+    <Dashboard></Dashboard>
+  </div>,
   <div>view2</div>,
   <div>view3</div>,
   <div>view4</div>,

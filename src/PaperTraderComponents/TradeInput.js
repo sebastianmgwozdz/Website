@@ -19,11 +19,13 @@ allStocks().then(res => {
 export default function TradeInput() {
   const [selectedVal, setSelectedVal] = useState("");
   const [options, setOptions] = useState([]);
+  const [currVal, setCurrVal] = useState("");
 
   async function onSearch(searchText) {
     let arr = [];
     if (!searchText) {
-      return arr;
+      setOptions([]);
+      return;
     }
 
     let filtered = stocks.get(searchText[0].toUpperCase());
@@ -40,9 +42,14 @@ export default function TradeInput() {
     setSelectedVal(data);
   }
 
+  function onChange(data) {
+    setCurrVal(data);
+  }
+
   return (
     <div>
       <AutoComplete
+        onChange={onChange}
         options={options}
         style={{
           width: 200
@@ -50,6 +57,7 @@ export default function TradeInput() {
         onSearch={onSearch}
         onSelect={onSelect}
         placeholder="Enter Stock Symbol"
+        value={currVal}
       />
     </div>
   );

@@ -8,7 +8,7 @@ import Main from "./Main";
 
 function App(props) {
   if (
-    window.location.href !== "https://sebastiangwo.com/papertrader/home" &&
+    window.location.href !== "http://localhost:3000/papertrader/home" &&
     !props.firebase.auth.currentUser
   ) {
     props.history.replace("/papertrader/home");

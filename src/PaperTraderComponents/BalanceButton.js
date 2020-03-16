@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Card, Modal } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Button, Modal } from "antd";
 import TradeInput from "./TradeInput";
 
-export default function BuyCard(props) {
+export default function BalanceButton(props) {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -28,25 +27,25 @@ export default function BuyCard(props) {
   }
 
   return (
-    <div style={{ margin: "5vh" }}>
-      <Card
+    <div>
+      <Button
+        type="primary"
+        shape="round"
+        size={"large"}
         style={{
-          width: "25vw",
-          height: "33vh",
-          borderColor: "#949494",
-          borderRadius: "25px"
+          position: "fixed",
+          top: "82vh",
+          left: "82vw",
+          width: "12vw",
+          height: "8vh",
+          fontSize: "22px",
+          backgroundColor: "#24e361",
+          borderColor: "#24e361"
         }}
-        hoverable
         onClick={showModal}
       >
-        <PlusOutlined
-          style={{
-            fontSize: "15vh",
-            display: "block",
-            margin: "auto"
-          }}
-        />
-      </Card>
+        $2935
+      </Button>
       <Modal
         title="Make a Trade"
         visible={visible}
