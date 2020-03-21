@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withFirebase } from "../Firebase";
+import { withFirebase } from "../../Firebase";
 import PositionSummary from "./PositionSummary";
 import CardGrid from "./CardGrid";
 import BalanceButton from "./BalanceButton";

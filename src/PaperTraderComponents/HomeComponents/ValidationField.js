@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AntButton from "./AntButton";
-import { withFirebase } from "../Firebase";
+import { withFirebase } from "../../Firebase";
 import InputField from "./InputField";
 import { withRouter } from "react-router-dom";
 import { Alert } from "antd";

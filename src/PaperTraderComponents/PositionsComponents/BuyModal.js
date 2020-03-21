@@ -3,8 +3,9 @@ import { Modal, Typography, Button, message } from "antd";
 import Autocomplete from "./Autocomplete";
 import AntRadio from "./AntRadio";
 import AntInput from "./AntInput";
-import { post } from "./Helpers";
-import { withFirebase } from "../Firebase";
+import { post } from "../Helpers";
+import { withFirebase } from "../../Firebase";
+import { server } from "../../links";
 
 const { Text } = Typography;
 
@@ -51,8 +52,8 @@ function BuyModal(props) {
             amount: props.balance - quantity * price
           };
 
-          post("http://localhost:8080/positions/", position).then(() => {
-            post("http://localhost:8080/balances/", balance).then(() => {
+          post(server + "positions/", position).then(() => {
+            post(server + "balances/", balance).then(() => {
               props.setBalance(props.balance - quantity * price);
             });
           });

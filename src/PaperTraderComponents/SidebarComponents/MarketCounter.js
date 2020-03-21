@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Statistic } from "antd";
-import { isOpen } from "./Helpers";
+import { isOpen } from "../Helpers";
 
 export default function MarketCounter() {
   const [tick, setTick] = useState(0);

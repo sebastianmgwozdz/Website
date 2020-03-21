@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { get } from "./Helpers";
+import { get } from "../Helpers";
 import { Card } from "antd";
 import Graph from "./Graph";
 import { Typography } from "antd";
-import { withFirebase } from "../Firebase";
+import { withFirebase } from "../../Firebase";
 import CoverCard from "./CoverCard";
+import { server } from "../../links";
 
 const { Meta } = Card;
 const { Text } = Typography;
@@ -27,7 +28,8 @@ function StockCard(props) {
         setQuote(res);
       }
       get(
-        "http://localhost:8080/positions/id=" +
+        server +
+          "positions/id=" +
           firebase.auth.currentUser.uid +
           "/ticker=" +
           ticker

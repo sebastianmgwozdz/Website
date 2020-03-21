@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AutoComplete } from "antd";
-import { get } from "./Helpers";
+import { get } from "../Helpers";
 
 let stocks = new Map();
 get(

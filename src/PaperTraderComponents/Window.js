@@ -1,5 +1,5 @@
 import React from "react";
-import Positions from "./Positions";
+import Positions from "./PositionsComponents/Positions";
 import Account from "./Account";
 
 let views = [

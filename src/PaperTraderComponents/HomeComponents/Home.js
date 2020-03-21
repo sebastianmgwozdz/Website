@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withFirebase } from "../Firebase";
+import { withFirebase } from "../../Firebase";
 import ValidationField from "./ValidationField";
 import { Button } from "antd";
 

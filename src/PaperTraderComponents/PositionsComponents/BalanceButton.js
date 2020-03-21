@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "antd";
 import BuyModal from "./BuyModal";
-import { get } from "./Helpers";
-import { withFirebase } from "../Firebase";
+import { get } from "../Helpers";
+import { withFirebase } from "../../Firebase";
+import { server } from "../../links";
 
 function BalanceButton(props) {
   const [visible, setVisible] = useState(false);
@@ -11,13 +12,13 @@ function BalanceButton(props) {
   console.log("BalanceButton");
 
   useEffect(() => {
-    get(
-      "http://localhost:8080/balances/" + props.firebase.auth.currentUser.uid
-    ).then(res => {
-      if (res) {
-        setBalance(res["amount"]);
+    get(server + "balances/" + props.firebase.auth.currentUser.uid).then(
+      res => {
+        if (res) {
+          setBalance(res["amount"]);
+        }
       }
-    });
+    );
   }, []);
 
   function showModal() {

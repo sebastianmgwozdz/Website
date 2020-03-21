@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Window from "./Window";
 import { withFirebase } from "../Firebase";
-import Sidebar from "./Sidebar";
+import Sidebar from "./SidebarComponents/Sidebar";
 
 function Main() {
   const [menuOption, setMenuOption] = useState(0);

@@ -1,6 +1,7 @@
 import React from "react";
 import { post } from "./Helpers";
 import { withFirebase } from "../Firebase";
+import { server } from "../links";
 
 function Account(props) {
   console.log("Account");
@@ -13,7 +14,7 @@ function Account(props) {
             userId: props.firebase.auth.currentUser.uid,
             amount: 100000
           };
-          post("http://localhost:8080/balances/", data);
+          post(server + "balances/", data);
         }}
       >
         reset account

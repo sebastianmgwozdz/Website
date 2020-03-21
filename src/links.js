@@ -1,4 +1,5 @@
-let main = "https://sebastiangwo.com/";
-let papertrader = "https://sebastiangwo.com/papertrader/home";
+let main = "http://localhost:3000/";
+let papertrader = main + "papertrader/home";
+let server = "http://localhost:8080/";
 
-export { main, papertrader };
+export { main, papertrader, server };

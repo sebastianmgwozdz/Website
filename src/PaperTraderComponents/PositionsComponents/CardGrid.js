@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { get } from "./Helpers";
+import { get } from "../Helpers";
 import { message } from "antd";
 import StockCard from "./StockCard";
-import { withFirebase } from "../Firebase";
+import { withFirebase } from "../../Firebase";
+import { server } from "../../links";
 
 function CardGrid(props) {
   const [positions, setPositions] = useState(new Set());
@@ -10,9 +11,7 @@ function CardGrid(props) {
   function update() {
     let p = new Set();
 
-    get(
-      "http://localhost:8080/positions/" + props.firebase.auth.currentUser.uid
-    )
+    get(server + "positions/" + props.firebase.auth.currentUser.uid)
       .then(res => {
         if (!res) {
           message.error(

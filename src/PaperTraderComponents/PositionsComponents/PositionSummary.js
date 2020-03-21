@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
-import { get } from "./Helpers";
-import { withFirebase } from "../Firebase";
+import { get } from "../Helpers";
+import { withFirebase } from "../../Firebase";
+import { server } from "../../links";
 
 function PositionSummary(props) {
   const [entries, setEntries] = useState([]);
@@ -17,7 +18,8 @@ function PositionSummary(props) {
   async function getLines() {
     let lines = [];
     let arr = await get(
-      "http://localhost:8080/positions/id=" +
+      server +
+        "positions/id=" +
         props.firebase.auth.currentUser.uid +
         "/ticker=" +
         props.ticker
