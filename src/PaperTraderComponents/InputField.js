@@ -4,6 +4,8 @@ import { Input } from "antd";
 export default function InputField(props) {
   const { type } = props;
 
+  console.log("InputField");
+
   function handleChange(e) {
     props.changeFunc(e.target.value);
   }

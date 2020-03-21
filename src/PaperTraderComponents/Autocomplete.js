@@ -1,27 +1,34 @@
 import React, { useState } from "react";
 import { AutoComplete } from "antd";
-import { allStocks } from "./Helpers";
+import { get } from "./Helpers";
 
 let stocks = new Map();
-allStocks().then(res => {
+get(
+  "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bpleiinrh5r8m26im1dg"
+).then(res => {
   let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   for (let i = 0; i < 26; i++) {
     let char = chars[i];
     stocks.set(
       char,
-      res.filter(val => {
-        return val["displaySymbol"][0] === char;
-      })
+      res
+        ? res.filter(val => {
+            return val["displaySymbol"][0] === char;
+          })
+        : []
     );
   }
 });
 
-export default function TradeInput() {
-  const [selectedVal, setSelectedVal] = useState("");
+export default function Autocomplete(props) {
   const [options, setOptions] = useState([]);
-  const [currVal, setCurrVal] = useState("");
+
+  console.log("Autocomplete");
 
   async function onSearch(searchText) {
+    props.setSelectedVal("");
+    props.setPrice("");
+
     let arr = [];
     if (!searchText) {
       setOptions([]);
@@ -35,21 +42,36 @@ export default function TradeInput() {
         arr.push({ value: curr });
       }
     }
+
     setOptions(arr);
   }
 
-  function onSelect(data) {
-    setSelectedVal(data);
+  async function currPrice(ticker) {
+    let currPrice;
+
+    await get(
+      "https://finnhub.io/api/v1/quote?symbol=" +
+        ticker +
+        "&token=bpleiinrh5r8m26im1dg"
+    ).then(res => {
+      if (res) {
+        currPrice = res["c"];
+      }
+    });
+
+    return currPrice;
   }
 
-  function onChange(data) {
-    setCurrVal(data);
+  function onSelect(val) {
+    props.setSelectedVal(val);
+    currPrice(val).then(res => {
+      props.setPrice(res);
+    });
   }
 
   return (
     <div>
       <AutoComplete
-        onChange={onChange}
         options={options}
         style={{
           width: 200
@@ -57,7 +79,6 @@ export default function TradeInput() {
         onSearch={onSearch}
         onSelect={onSelect}
         placeholder="Enter Stock Symbol"
-        value={currVal}
       />
     </div>
   );

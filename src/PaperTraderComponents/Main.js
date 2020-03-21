@@ -3,8 +3,10 @@ import Window from "./Window";
 import { withFirebase } from "../Firebase";
 import Sidebar from "./Sidebar";
 
-function Main(props) {
+function Main() {
   const [menuOption, setMenuOption] = useState(0);
+
+  console.log("Main");
 
   return (
     <div style={{ display: "flex" }}>

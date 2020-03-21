@@ -1,53 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { Statistic } from "antd";
+import { isOpen } from "./Helpers";
 
 export default function MarketCounter() {
   const [tick, setTick] = useState(0);
   const [d, setD] = useState(-1);
 
+  console.log("MarketCounter");
+
   function update() {
-    let date = new Date();
-    let currDay = date.getUTCDay();
-    let currHour = date.getUTCHours();
-    let currMin = date.getUTCMinutes();
-
-    let target;
-
-    if (isOpen(currDay, currHour, currMin)) {
-      target = 20 * 60;
+    if (isOpen()) {
+      date.setUTCHours(20);
+      date.setUTCMinutes(1);
     } else {
-      let dayDiff = 0;
-      if (currDay === 6) {
-        dayDiff = 1;
+      if (date.getUTCHours() > 19) {
+        date.setUTCDate(date.getUTCDate() + 1);
       }
-      target = 13 * 60 + 30 + dayDiff * 24 * 60;
+      if (date.getUTCDay() === 6) {
+        date.setUTCDate(date.getUTCDate() + 1);
+      }
+      if (date.getUTCDay() === 0) {
+        date.setUTCDate(date.getUTCDate() + 1);
+      }
+      date.setUTCHours(13);
+      date.setUTCMinutes(31);
     }
-    let deadline = target - currMin - currHour * 60 + 1;
-
-    setD(Date.now() + deadline * 60 * 1000);
+    date.setUTCSeconds(0);
+    setD(date);
   }
-
-  function isOpen(currDay, currHour, currMin) {
-    return !(
-      currDay === 0 ||
-      currDay === 6 ||
-      currHour < 13 ||
-      currHour >= 20 ||
-      (currHour === 13 && currMin < 30)
-    );
-  }
-
-  useEffect(update, []);
 
   useEffect(() => {
-    let t = setTimeout(() => {
+    update();
+    let t = setInterval(() => {
       update();
       setTick(tick + 1);
-    }, 1000);
+    }, 5000);
     return () => {
-      clearTimeout(t);
+      clearInterval(t);
     };
-  }, [tick]);
+  }, []);
+
+  useEffect(() => {}, [tick]);
 
   const { Countdown } = Statistic;
 

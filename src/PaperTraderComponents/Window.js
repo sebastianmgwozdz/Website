@@ -1,15 +1,15 @@
 import React from "react";
-import Dashboard from "./Dashboard";
+import Positions from "./Positions";
+import Account from "./Account";
 
 let views = [
-  <div style={{ height: "150vh" }}>
-    <Dashboard></Dashboard>
-  </div>,
-  <div>view2</div>,
+  <Positions></Positions>,
+  <Account></Account>,
   <div>view3</div>,
   <div>view4</div>,
   <div>view5</div>
 ];
 export default function Window(props) {
+  console.log("Window");
   return views[props.menuOption];
 }

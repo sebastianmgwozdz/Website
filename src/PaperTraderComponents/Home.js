@@ -6,6 +6,8 @@ import { Button } from "antd";
 function Home(props) {
   const [login, setLogin] = useState(true);
 
+  console.log("Home");
+
   return (
     <div>
       <ValidationField

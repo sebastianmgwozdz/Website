@@ -26,6 +26,8 @@ function ValidationField(props) {
       });
   }
 
+  console.log("ValidationField");
+
   return (
     <div>
       <InputField

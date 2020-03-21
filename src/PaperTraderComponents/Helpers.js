@@ -1,52 +1,38 @@
 import axios from "axios";
 
-export async function latestQuote(ticker) {
-  let currPrice;
+export async function get(url) {
+  let res;
 
   await axios
-    .get(
-      "https://finnhub.io/api/v1/quote?symbol=" +
-        ticker +
-        "&token=bpleiinrh5r8m26im1dg"
-    )
+    .get(url)
     .then(function(response) {
-      currPrice = response.data;
+      res = response.data;
     })
     .catch(function(error) {
       console.log(error);
     });
 
-  return currPrice;
+  return res;
 }
 
-export async function positions(userId) {
-  let positions = [];
-
-  await axios
-    .get("http://localhost:8080/positions/" + userId)
-    .then(function(response) {
-      positions = response.data;
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
-
-  return positions;
+export async function post(url, data) {
+  await axios.post(url, data).catch(function(error) {
+    console.log(error);
+  });
 }
 
-export async function allStocks() {
-  let stocks = [];
+export function isOpen() {
+  let date = new Date();
 
-  await axios
-    .get(
-      "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bpleiinrh5r8m26im1dg"
-    )
-    .then(function(response) {
-      stocks = response.data;
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
+  let currDay = date.getUTCDay();
+  let currHour = date.getUTCHours();
+  let currMin = date.getUTCMinutes();
 
-  return stocks;
+  return !(
+    currDay === 0 ||
+    currDay === 6 ||
+    currHour < 13 ||
+    currHour >= 20 ||
+    (currHour === 13 && currMin < 30)
+  );
 }

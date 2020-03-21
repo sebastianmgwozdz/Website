@@ -5,14 +5,17 @@ import Home from "./Home";
 import "./App.css";
 import { withFirebase } from "../Firebase";
 import Main from "./Main";
+import { papertrader } from "../links";
 
 function App(props) {
   if (
-    window.location.href !== "http://localhost:3000/papertrader/home" &&
+    window.location.href !== papertrader &&
     !props.firebase.auth.currentUser
   ) {
     props.history.replace("/papertrader/home");
   }
+
+  console.log("App");
 
   return (
     <Router>

@@ -3,7 +3,8 @@ import { LineChart, Line } from "recharts";
 
 export default function Graph(props) {
   const [data, setData] = useState([]);
-  const [color, setColor] = useState("#999999");
+
+  console.log("Graph");
 
   function normalize() {
     if (data.length <= 1) {
@@ -29,25 +30,14 @@ export default function Graph(props) {
   }
 
   useEffect(() => {
-    if (props.currPrice !== -1) {
-      setData([
-        ...data,
-        {
-          uv: props.currPrice,
-          pv: 0.5,
-          amt: data.length
-        }
-      ]);
-
-      if (data.length >= 1) {
-        if (props.currPrice > props.priceOpen) {
-          setColor("#24e361");
-        } else {
-          setColor("#f55936");
-        }
-      }
+    if (props.dataPoint !== -1) {
+      data.push({
+        uv: props.dataPoint,
+        pv: 0.5,
+        amt: data.length
+      });
     }
-  }, [props.currPrice]);
+  }, [props.dataPoint, props.color]);
 
   normalize();
 
@@ -66,7 +56,7 @@ export default function Graph(props) {
       <Line
         type="monotone"
         dataKey="pv"
-        stroke={color}
+        stroke={props.color}
         dot={false}
         strokeWidth={1.5}
         isAnimationActive={false}

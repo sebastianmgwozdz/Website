@@ -2,10 +2,14 @@ import React from "react";
 import { Menu } from "antd";
 import MarketCounter from "./MarketCounter";
 
+const menuLabels = ["Positions", "Account"];
+
 export default function Sidebar(props) {
+  console.log("Sidebar");
+
   function getMenuItems() {
     let items = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < menuLabels.length; i++) {
       items.push(
         <Menu.Item
           key={i}
@@ -13,17 +17,18 @@ export default function Sidebar(props) {
             props.setMenuOption(i);
           }}
         >
-          Option {i + 1}
+          {menuLabels[i]}
         </Menu.Item>
       );
     }
+
     return items;
   }
 
   return (
     <Menu
       mode="inline"
-      style={{ width: 256, height: "100vh" }}
+      style={{ maxWidth: "17vw", height: "100vh" }}
       defaultSelectedKeys={["0"]}
     >
       <MarketCounter></MarketCounter>

@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal } from "antd";
-import TradeInput from "./TradeInput";
+import { Button } from "antd";
+import BuyModal from "./BuyModal";
+import { get } from "./Helpers";
+import { withFirebase } from "../Firebase";
 
-export default function BalanceButton(props) {
-  const [confirmLoading, setConfirmLoading] = useState(false);
+function BalanceButton(props) {
   const [visible, setVisible] = useState(false);
+  const [balance, setBalance] = useState(-1);
+
+  console.log("BalanceButton");
 
   useEffect(() => {
-    setVisible(props.visible);
-  }, [props.visible]);
+    get(
+      "http://localhost:8080/balances/" + props.firebase.auth.currentUser.uid
+    ).then(res => {
+      if (res) {
+        setBalance(res["amount"]);
+      }
+    });
+  }, []);
 
   function showModal() {
     setVisible(true);
   }
 
-  function handleOk() {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setVisible(false);
-      setConfirmLoading(false);
-    }, 2000);
-  }
-
-  function handleCancel() {
-    setVisible(false);
+  if (balance === -1) {
+    return null;
   }
 
   return (
@@ -31,7 +33,6 @@ export default function BalanceButton(props) {
       <Button
         type="primary"
         shape="round"
-        size={"large"}
         style={{
           position: "fixed",
           top: "82vh",
@@ -44,17 +45,16 @@ export default function BalanceButton(props) {
         }}
         onClick={showModal}
       >
-        $2935
+        ${balance}
       </Button>
-      <Modal
-        title="Make a Trade"
+      <BuyModal
         visible={visible}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-      >
-        <TradeInput></TradeInput>
-      </Modal>
+        setVisible={setVisible}
+        balance={balance}
+        setBalance={setBalance}
+      ></BuyModal>
     </div>
   );
 }
+
+export default withFirebase(BalanceButton);

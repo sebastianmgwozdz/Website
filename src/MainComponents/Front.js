@@ -3,9 +3,10 @@ import "./css/FrontPage.css";
 import NavBar from "./NavBar.js";
 import Loader from "../Loader";
 import { withRouter } from "react-router-dom";
+import { main } from "../links";
 
 function Front(props) {
-  if (window.location.href !== "http://localhost:3000/") {
+  if (window.location.href !== main) {
     props.history.replace("/");
   }
 
