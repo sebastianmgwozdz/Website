@@ -1,4 +1,5 @@
 import axios from "axios";
+import { server } from "../links";
 
 export async function get(url) {
   let res;
@@ -7,6 +8,7 @@ export async function get(url) {
     .get(url)
     .then(function(response) {
       res = response.data;
+      console.log(res["c"]);
     })
     .catch(function(error) {
       console.log(error);

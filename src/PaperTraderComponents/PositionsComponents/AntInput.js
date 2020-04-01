@@ -7,7 +7,11 @@ export default function AntInput(props) {
   return (
     <Input
       onChange={data => {
-        if (props.balance - props.price * Number(data.target.value) >= 0) {
+        if (
+          props.type !== 0 ||
+          props.balance - props.price * Number(data.target.value) >= 0
+        ) {
+          console.log(Number(data.target.value));
           props.setVal(Number(data.target.value));
         }
       }}

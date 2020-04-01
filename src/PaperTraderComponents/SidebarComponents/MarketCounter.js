@@ -9,9 +9,11 @@ export default function MarketCounter() {
   console.log("MarketCounter");
 
   function update() {
+    let date = new Date();
+
     if (isOpen()) {
       date.setUTCHours(20);
-      date.setUTCMinutes(1);
+      date.setUTCMinutes(0);
     } else {
       if (date.getUTCHours() > 19) {
         date.setUTCDate(date.getUTCDate() + 1);
@@ -31,33 +33,18 @@ export default function MarketCounter() {
 
   useEffect(() => {
     update();
-    let t = setInterval(() => {
-      update();
-      setTick(tick + 1);
-    }, 5000);
-    return () => {
-      clearInterval(t);
-    };
   }, []);
-
-  useEffect(() => {}, [tick]);
 
   const { Countdown } = Statistic;
 
-  let date = new Date();
-  let currDay = date.getUTCDay();
-  let currHour = date.getUTCHours();
-  let currMin = date.getUTCMinutes();
-
   return (
-    <Countdown
-      title={
-        isOpen(currDay, currHour, currMin)
-          ? "Time to market close:"
-          : "Time to market open:"
-      }
-      value={d}
-      format="HH:mm"
-    />
+    <div style={{ textAlign: "center", marginBottom: "2vh", marginTop: "2vh" }}>
+      <Countdown
+        title={isOpen() ? "Time to market close:" : "Time to market open:"}
+        value={d}
+        format="HH:mm"
+        onFinish={update}
+      />
+    </div>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { Menu } from "antd";
 import MarketCounter from "./MarketCounter";
 
-const menuLabels = ["Positions", "Account"];
+const menuLabels = ["Positions", "Companies", "Account"];
 
 export default function Sidebar(props) {
   console.log("Sidebar");

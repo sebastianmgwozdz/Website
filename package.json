@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.2.1",
     "antd": "^4.0.2",
     "axios": "^0.19.2",
+    "d3-scale": "^3.2.1",
     "firebase": "^7.11.0",
     "jquery": "^3.4.1",
     "react": "^16.12.0",

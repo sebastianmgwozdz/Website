@@ -19,7 +19,6 @@ function Account(props) {
       >
         reset account
       </div>
-      <div>total balance: $-1</div>
     </div>
   );
 }

@@ -1,66 +1,59 @@
 import React, { useState, useEffect } from "react";
-import { LineChart, Line } from "recharts";
+import { AreaChart, Area, ReferenceLine, YAxis } from "recharts";
 
 export default function Graph(props) {
   const [data, setData] = useState([]);
 
   console.log("Graph");
 
-  function normalize() {
-    if (data.length <= 1) {
-      return;
+  useEffect(() => {
+    if (props.dataPoint) {
+      setData([
+        ...data,
+        {
+          uv: props.dataPoint,
+          amt: data.length
+        }
+      ]);
     }
-    let min = 10000;
-    let max = -10000;
+  }, [props.dataPoint, props.quote]);
 
-    for (let i = 0; i < data.length; i++) {
-      let val = data[i].uv;
-      if (val < min) {
-        min = val;
-      }
-      if (val > max) {
-        max = val;
-      }
-    }
-
-    data.map(val => {
-      let normalizedVal = (val.uv - min) / (max - min);
-      return (val["pv"] = normalizedVal);
+  function minMax() {
+    let arr = data.map(val => {
+      return val.uv;
     });
+    return [Math.min(arr), Math.max(arr)];
   }
 
-  useEffect(() => {
-    if (props.dataPoint !== -1) {
-      data.push({
-        uv: props.dataPoint,
-        pv: 0.5,
-        amt: data.length
-      });
-    }
-  }, [props.dataPoint, props.color]);
-
-  normalize();
+  let color = props.dataPoint > 0 ? "#24e361" : "#f55936";
 
   return (
-    <LineChart
-      width={350}
-      height={150}
-      data={data}
-      margin={{
-        top: 50,
-        right: 30,
-        left: 30,
-        bottom: 5
-      }}
-    >
-      <Line
-        type="monotone"
-        dataKey="pv"
-        stroke={props.color}
-        dot={false}
-        strokeWidth={1.5}
-        isAnimationActive={false}
-      />
-    </LineChart>
+    <div>
+      <AreaChart
+        width={350}
+        height={155}
+        data={data}
+        margin={{ top: 40, right: 30, left: 30, bottom: 10 }}
+      >
+        <defs>
+          <linearGradient id={props.ticker} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor={color} stopOpacity={0.4} />
+            <stop offset="95%" stopColor={color} stopOpacity={0} />
+          </linearGradient>
+        </defs>
+
+        <YAxis type="number" domain={[minMax()[0], minMax()[1]]} hide></YAxis>
+
+        <Area
+          type="monotone"
+          dataKey="uv"
+          stroke={color}
+          fillOpacity={0.4}
+          fill={"url(#" + props.ticker + ")"}
+          strokeWidth={1.5}
+          isAnimationActive={false}
+        />
+      </AreaChart>
+    </div>
   );
 }

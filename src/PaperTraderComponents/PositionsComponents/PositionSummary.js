@@ -3,9 +3,11 @@ import Header from "./Header";
 import { get } from "../Helpers";
 import { withFirebase } from "../../Firebase";
 import { server } from "../../links";
+import PriceCounter from "./PriceCounter";
 
 function PositionSummary(props) {
   const [entries, setEntries] = useState([]);
+  const [currPrice, setCurrPrice] = useState(-1);
 
   console.log("PositionSummary");
 
@@ -42,6 +44,8 @@ function PositionSummary(props) {
   return (
     <div>
       <Header returnFunc={props.returnFunc} ticker={props.ticker}></Header>
+      <PriceCounter ticker={props.ticker}></PriceCounter>
+      <span> Company Information:</span>
       {entries}
     </div>
   );

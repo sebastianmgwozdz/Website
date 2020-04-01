@@ -4,7 +4,7 @@ import PositionSummary from "./PositionSummary";
 import CardGrid from "./CardGrid";
 import BalanceButton from "./BalanceButton";
 
-function Positions(props) {
+function Positions() {
   const [selectedStock, setSelectedStock] = useState("");
 
   console.log("Positions");

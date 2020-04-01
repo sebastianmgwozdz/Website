@@ -36,6 +36,10 @@ export default function Autocomplete(props) {
     }
 
     let filtered = stocks.get(searchText[0].toUpperCase());
+    if (!filtered) {
+      setOptions([]);
+      return;
+    }
     for (let i = 0; i < filtered.length; i++) {
       let curr = filtered[i]["displaySymbol"];
       if (curr.toLowerCase().includes(searchText.toLowerCase())) {

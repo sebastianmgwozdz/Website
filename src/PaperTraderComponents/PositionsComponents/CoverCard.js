@@ -7,7 +7,7 @@ export default function CoverCard(props) {
       hoverable
       style={{
         width: "24vw",
-        height: "33vh",
+        height: "35vh",
         borderColor: "#949494",
         borderRadius: "25px"
       }}

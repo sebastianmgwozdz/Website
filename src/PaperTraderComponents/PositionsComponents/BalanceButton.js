@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "antd";
 import BuyModal from "./BuyModal";
-import { get } from "../Helpers";
+import { get, post } from "../Helpers";
 import { withFirebase } from "../../Firebase";
 import { server } from "../../links";
 
@@ -25,6 +25,17 @@ function BalanceButton(props) {
     setVisible(true);
   }
 
+  function updateBalance(val) {
+    let b = {
+      userId: props.firebase.auth.currentUser.uid,
+      amount: val
+    };
+
+    post(server + "balances/", b).then(() => {
+      setBalance(val);
+    });
+  }
+
   if (balance === -1) {
     return null;
   }
@@ -46,13 +57,13 @@ function BalanceButton(props) {
         }}
         onClick={showModal}
       >
-        ${balance}
+        ${balance.toFixed(2)}
       </Button>
       <BuyModal
         visible={visible}
         setVisible={setVisible}
         balance={balance}
-        setBalance={setBalance}
+        updateBalance={updateBalance}
       ></BuyModal>
     </div>
   );

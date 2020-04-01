@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { get } from "../Helpers";
-import { Card } from "antd";
 import Graph from "./Graph";
 import { Typography } from "antd";
 import { withFirebase } from "../../Firebase";
 import CoverCard from "./CoverCard";
-import { server } from "../../links";
+import Loading from "./Loading";
 
-const { Meta } = Card;
 const { Text } = Typography;
+const BLACK = "#000000";
+const GREEN = "#24e361";
+const RED = "#f55936";
 
 function StockCard(props) {
-  const [quote, setQuote] = useState({});
-  const [activePositions, setActivePositions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { firebase, ticker, positions, clickFunc } = props;
+  const [quote, setQuote] = useState(null);
+  const { ticker, positions, clickFunc } = props;
 
   console.log("StockCard");
 
@@ -27,31 +26,34 @@ function StockCard(props) {
       if (res) {
         setQuote(res);
       }
-      get(
-        server +
-          "positions/id=" +
-          firebase.auth.currentUser.uid +
-          "/ticker=" +
-          ticker
-      ).then(res => {
-        setActivePositions(res);
-        if (loading) {
-          setLoading(false);
-        }
-      });
     });
   }, [positions]);
 
+  function isToday(date) {
+    const today = new Date();
+    const d = new Date(date);
+
+    return (
+      d.getDate() === today.getUTCDate() &&
+      d.getMonth() === today.getUTCMonth() &&
+      d.getFullYear() === today.getUTCFullYear()
+    );
+  }
+
   function calcDiff(type) {
     let diff = 0;
-    if (!quote || !activePositions) {
+
+    if (!quote) {
       return diff;
     }
 
-    for (let pos of activePositions) {
-      let d =
+    for (let pos of positions) {
+      let d;
+      let sinceClose = !isToday(pos["openDate"]) && type === "day";
+
+      d =
         pos["remaining"] *
-        (quote["c"] - (type === "net" ? pos["price"] : quote["pc"]));
+        (quote["c"] - (sinceClose ? quote["pc"] : pos["price"]));
 
       if (pos["long"]) {
         diff += d;
@@ -63,46 +65,59 @@ function StockCard(props) {
     return diff;
   }
 
-  function metaList() {
-    return [
-      <Meta title={ticker} />,
+  function text(dayChange, netChange) {
+    if (!quote) {
+      return null;
+    }
 
-      <p>
-        <Text>Day Change: </Text>
+    return (
+      <div>
+        <Text style={{ color: BLACK, fontSize: "20px" }}>{ticker}</Text>
+        <br />
+
+        <Text style={{ color: BLACK }}>Day Change: </Text>
         <Text
           style={{
-            color: calcDiff("day") > 0 ? "#24e361" : "#f55936"
+            color: dayChange > 0 ? GREEN : RED
           }}
         >
-          ${calcDiff("day").toFixed(2)}
+          ${dayChange.toFixed(2)}
         </Text>
         <br />
-        <Text>Net Change: </Text>
+        <Text style={{ color: BLACK }}>Net Change: </Text>
         <Text
           style={{
-            color: calcDiff("net") > 0 ? "#24e361" : "#f55936"
+            color: netChange > 0 ? GREEN : RED
           }}
         >
-          ${calcDiff("net").toFixed(2)}
+          ${netChange.toFixed(2)}
         </Text>
-      </p>
-    ];
+      </div>
+    );
   }
+
+  let dayChange = calcDiff("day");
+  let netChange = calcDiff("net");
 
   return (
     <div style={{ margin: "3vh" }}>
       <CoverCard
         cover={
-          <Graph
-            dataPoint={quote["c"]}
-            color={quote["c"] > quote["pc"] ? "#24e361" : "#f55936"}
-          ></Graph>
+          quote ? (
+            <Graph
+              dataPoint={dayChange.toFixed(2)}
+              quote={quote}
+              color={dayChange > 0 ? GREEN : RED}
+              ticker={ticker}
+            ></Graph>
+          ) : (
+            <Loading></Loading>
+          )
         }
-        loading={loading}
         onClick={() => {
           clickFunc(ticker);
         }}
-        metaList={metaList()}
+        metaList={text(dayChange, netChange)}
       ></CoverCard>
     </div>
   );

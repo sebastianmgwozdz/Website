@@ -3,7 +3,7 @@ import { Modal, Typography, Button, message } from "antd";
 import Autocomplete from "./Autocomplete";
 import AntRadio from "./AntRadio";
 import AntInput from "./AntInput";
-import { post } from "../Helpers";
+import { get, post, enterPosition } from "../Helpers";
 import { withFirebase } from "../../Firebase";
 import { server } from "../../links";
 
@@ -20,14 +20,58 @@ function BuyModal(props) {
 
   function onOk() {
     setConfirmLoading(true);
-    makeTrade(type, symbol, quantity, props.firebase.auth.currentUser.uid).then(
-      () => {
-        props.setVisible(false);
-        setConfirmLoading(false);
-        setType(0);
-        setSymbol("");
-        setQuantity(0);
-        setPrice("");
+    makeTrade().then(() => {
+      props.setVisible(false);
+      setConfirmLoading(false);
+      setType(0);
+      setSymbol("");
+      setQuantity(0);
+      setPrice("");
+    });
+  }
+
+  async function activePositions(compareFunc, callback) {
+    await get(
+      server +
+        "positions/id=" +
+        props.firebase.auth.currentUser.uid +
+        "/ticker=" +
+        symbol +
+        "/active"
+    ).then(res => {
+      let rel = res.sort(compareFunc);
+      res = rel;
+      callback(res);
+    });
+  }
+
+  function close() {
+    let mult = type === 1 ? 1 : -1;
+    activePositions(
+      (a, b) => {
+        return mult * (a["price"] - b["price"]);
+      },
+      res => {
+        let closed = 0;
+        let am = 0;
+        for (let p of res) {
+          if ((type === 1 && p["long"]) || (type === 3 && !p["long"])) {
+            let shares = p["remaining"];
+            let remSell = quantity - closed;
+            let sellAll = shares <= remSell;
+
+            am +=
+              (sellAll ? remSell : quantity) *
+              (type === 1 ? price : p["price"] - price);
+            closed += sellAll ? remSell : quantity;
+            p["remaining"] = sellAll ? 0 : shares - quantity;
+            p["closeDate"] = sellAll ? Date.now() : null;
+
+            post(server + "positions/", p);
+          }
+        }
+
+        props.updateBalance(props.balance + am);
       }
     );
   }
@@ -35,29 +79,34 @@ function BuyModal(props) {
   async function makeTrade() {
     switch (type) {
       case 1:
+        close();
+
         break;
-      case 2:
+
+      case 3:
+        close();
         break;
       default:
-        if (props.balance - quantity * price >= 0) {
-          let position = {
-            ticker: symbol,
-            count: quantity,
-            price: price,
-            userId: props.firebase.auth.currentUser.uid,
-            long: true
-          };
-          let balance = {
-            userId: props.firebase.auth.currentUser.uid,
-            amount: props.balance - quantity * price
-          };
+        let long = true;
 
-          post(server + "positions/", position).then(() => {
-            post(server + "balances/", balance).then(() => {
-              props.setBalance(props.balance - quantity * price);
-            });
-          });
+        if (type === 2) {
+          long = false;
         }
+
+        let position = {
+          ticker: symbol,
+          price: price,
+          initial: quantity,
+          remaining: quantity,
+          userId: props.firebase.auth.currentUser.uid,
+          isLong: long
+        };
+
+        post(server + "positions/", position).then(() => {
+          if (type === 0) {
+            props.updateBalance(props.balance - quantity * price);
+          }
+        });
 
         break;
     }
@@ -92,14 +141,27 @@ function BuyModal(props) {
         setSelectedVal={setSymbol}
         setPrice={setPrice}
       ></Autocomplete>
-      <AntRadio labels={["Buy", "Sell", "Short"]} setVal={setType}></AntRadio>
+      <AntRadio
+        labels={["Buy", "Sell", "Short", "Cover Short"]}
+        setVal={setType}
+      ></AntRadio>
       <AntInput
         setVal={setQuantity}
         balance={props.balance}
         price={price}
         quantity={quantity}
+        type={type}
       ></AntInput>
-      <Text>{price}</Text>
+      <Text>
+        {symbol &&
+          quantity !== 0 &&
+          "Total Value: $" +
+            price +
+            " x " +
+            quantity +
+            " = $" +
+            (price * quantity).toFixed(2)}
+      </Text>
     </Modal>
   );
 }
