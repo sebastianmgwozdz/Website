@@ -1,5 +1,4 @@
 import axios from "axios";
-import { server } from "../links";
 
 export async function get(url) {
   let res;
@@ -8,7 +7,6 @@ export async function get(url) {
     .get(url)
     .then(function(response) {
       res = response.data;
-      console.log(res["c"]);
     })
     .catch(function(error) {
       console.log(error);
@@ -17,15 +15,19 @@ export async function get(url) {
   return res;
 }
 
-export async function post(url, data) {
-  await axios.post(url, data).catch(function(error) {
+export function del(url) {
+  axios.delete(url).catch(function(error) {
     console.log(error);
   });
 }
 
-export function isOpen() {
-  let date = new Date();
+export function post(url, data) {
+  axios.post(url, data).catch(function(error) {
+    console.log(error);
+  });
+}
 
+export function isOpen(date) {
   let currDay = date.getUTCDay();
   let currHour = date.getUTCHours();
   let currMin = date.getUTCMinutes();

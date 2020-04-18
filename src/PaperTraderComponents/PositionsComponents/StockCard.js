@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { get } from "../Helpers";
+import { get, isOpen } from "../Helpers";
 import Graph from "./Graph";
 import { Typography } from "antd";
 import { withFirebase } from "../../Firebase";
@@ -13,21 +13,36 @@ const RED = "#f55936";
 
 function StockCard(props) {
   const [quote, setQuote] = useState(null);
-  const { ticker, positions, clickFunc } = props;
+  const [tick, setTick] = useState(0);
+  const { ticker, positions, clickFunc, data } = props;
 
   console.log("StockCard");
 
-  useEffect(() => {
+  function updateQuote() {
     get(
       "https://finnhub.io/api/v1/quote?symbol=" +
         ticker +
         "&token=bpleiinrh5r8m26im1dg"
-    ).then(res => {
+    ).then((res) => {
       if (res) {
         setQuote(res);
       }
     });
-  }, [positions]);
+  }
+
+  useEffect(() => {
+    updateQuote();
+  }, []);
+
+  useEffect(() => {
+    let curr = new Date();
+    curr.setMinutes(curr.getMinutes - 1);
+
+    if (isOpen(curr)) {
+      updateQuote();
+    }
+    setTick(tick + 1);
+  }, [data]);
 
   function isToday(date) {
     const today = new Date();
@@ -53,7 +68,8 @@ function StockCard(props) {
 
       d =
         pos["remaining"] *
-        (quote["c"] - (sinceClose ? quote["pc"] : pos["price"]));
+        ((!data ? quote["c"] : data["p"]) -
+          (sinceClose ? quote["pc"] : pos["price"]));
 
       if (pos["long"]) {
         diff += d;
@@ -65,10 +81,31 @@ function StockCard(props) {
     return diff;
   }
 
+  function percentDiff(old, updated) {
+    if (isNaN(updated) || isNaN(old)) {
+      return 0;
+    }
+    return ((updated - old) / old) * 100;
+  }
+
+  function totalValue() {
+    let val = 0;
+
+    for (let pos of positions) {
+      val += pos["remaining"] * pos["price"];
+    }
+
+    return val;
+  }
+
   function text(dayChange, netChange) {
     if (!quote) {
       return null;
     }
+
+    let dayPercent = percentDiff(quote["pc"], quote["c"]);
+    let total = totalValue();
+    let netPercent = percentDiff(total, netChange + total);
 
     return (
       <div>
@@ -78,19 +115,19 @@ function StockCard(props) {
         <Text style={{ color: BLACK }}>Day Change: </Text>
         <Text
           style={{
-            color: dayChange > 0 ? GREEN : RED
+            color: dayChange > 0 ? GREEN : RED,
           }}
         >
-          ${dayChange.toFixed(2)}
+          ${dayChange.toFixed(2)} ({dayPercent.toFixed(2)}%)
         </Text>
         <br />
         <Text style={{ color: BLACK }}>Net Change: </Text>
         <Text
           style={{
-            color: netChange > 0 ? GREEN : RED
+            color: netChange > 0 ? GREEN : RED,
           }}
         >
-          ${netChange.toFixed(2)}
+          ${netChange.toFixed(2)} ({netPercent.toFixed(2)}%)
         </Text>
       </div>
     );
@@ -104,12 +141,7 @@ function StockCard(props) {
       <CoverCard
         cover={
           quote ? (
-            <Graph
-              dataPoint={dayChange.toFixed(2)}
-              quote={quote}
-              color={dayChange > 0 ? GREEN : RED}
-              ticker={ticker}
-            ></Graph>
+            <Graph dataPoint={dayChange} quote={quote} ticker={ticker}></Graph>
           ) : (
             <Loading></Loading>
           )

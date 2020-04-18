@@ -11,7 +11,7 @@ export default function MarketCounter() {
   function update() {
     let date = new Date();
 
-    if (isOpen()) {
+    if (isOpen(date)) {
       date.setUTCHours(20);
       date.setUTCMinutes(0);
     } else {
@@ -40,7 +40,7 @@ export default function MarketCounter() {
   return (
     <div style={{ textAlign: "center", marginBottom: "2vh", marginTop: "2vh" }}>
       <Countdown
-        title={isOpen() ? "Time to market close:" : "Time to market open:"}
+        title={isOpen(new Date()) ? "Market Closes In:" : "Market Opens In:"}
         value={d}
         format="HH:mm"
         onFinish={update}

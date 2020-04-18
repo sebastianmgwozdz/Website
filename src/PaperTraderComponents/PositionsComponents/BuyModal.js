@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Modal, Typography, Button, message } from "antd";
+import React, { useState } from "react";
+import { Modal, Button } from "antd";
 import Autocomplete from "./Autocomplete";
 import AntRadio from "./AntRadio";
 import AntInput from "./AntInput";
-import { get, post, enterPosition } from "../Helpers";
+import { get, post } from "../Helpers";
 import { withFirebase } from "../../Firebase";
 import { server } from "../../links";
-
-const { Text } = Typography;
+import TradeText from "./TradeText";
 
 function BuyModal(props) {
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -20,14 +19,16 @@ function BuyModal(props) {
 
   function onOk() {
     setConfirmLoading(true);
-    makeTrade().then(() => {
-      props.setVisible(false);
-      setConfirmLoading(false);
-      setType(0);
-      setSymbol("");
-      setQuantity(0);
-      setPrice("");
-    });
+    makeTrade().then(reset);
+  }
+
+  function reset() {
+    props.setVisible(false);
+    setConfirmLoading(false);
+    setType(0);
+    setSymbol("");
+    setQuantity(0);
+    setPrice("");
   }
 
   async function activePositions(compareFunc, callback) {
@@ -65,7 +66,9 @@ function BuyModal(props) {
               (type === 1 ? price : p["price"] - price);
             closed += sellAll ? remSell : quantity;
             p["remaining"] = sellAll ? 0 : shares - quantity;
-            p["closeDate"] = sellAll ? Date.now() : null;
+            let date = new Date();
+
+            p["closeDate"] = sellAll ? date : null;
 
             post(server + "positions/", p);
           }
@@ -102,18 +105,13 @@ function BuyModal(props) {
           isLong: long
         };
 
-        post(server + "positions/", position).then(() => {
-          if (type === 0) {
-            props.updateBalance(props.balance - quantity * price);
-          }
-        });
+        post(server + "positions/", position);
+        if (type === 0) {
+          props.updateBalance(props.balance - quantity * price);
+        }
 
         break;
     }
-  }
-
-  function onCancel() {
-    props.setVisible(false);
   }
 
   return (
@@ -122,7 +120,7 @@ function BuyModal(props) {
       visible={props.visible}
       destroyOnClose
       footer={[
-        <Button key="back" onClick={onCancel}>
+        <Button key="back" onClick={reset}>
           Cancel
         </Button>,
         <Button
@@ -140,7 +138,9 @@ function BuyModal(props) {
       <Autocomplete
         setSelectedVal={setSymbol}
         setPrice={setPrice}
+        price={price}
       ></Autocomplete>
+
       <AntRadio
         labels={["Buy", "Sell", "Short", "Cover Short"]}
         setVal={setType}
@@ -151,17 +151,15 @@ function BuyModal(props) {
         price={price}
         quantity={quantity}
         type={type}
+        ticker={symbol}
       ></AntInput>
-      <Text>
-        {symbol &&
-          quantity !== 0 &&
-          "Total Value: $" +
-            price +
-            " x " +
-            quantity +
-            " = $" +
-            (price * quantity).toFixed(2)}
-      </Text>
+      <TradeText
+        symbol={symbol}
+        quantity={quantity}
+        price={price}
+        balance={props.balance}
+        type={type}
+      ></TradeText>
     </Modal>
   );
 }

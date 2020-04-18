@@ -74,16 +74,19 @@ export default function Autocomplete(props) {
   }
 
   return (
-    <div>
+    <span>
       <AutoComplete
         options={options}
         style={{
-          width: 200
+          width: 200,
+          marginRight: "25px"
         }}
         onSearch={onSearch}
         onSelect={onSelect}
         placeholder="Enter Stock Symbol"
       />
-    </div>
+
+      {props.price}
+    </span>
   );
 }

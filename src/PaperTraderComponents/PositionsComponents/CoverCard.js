@@ -8,8 +8,7 @@ export default function CoverCard(props) {
       style={{
         width: "24vw",
         height: "35vh",
-        borderColor: "#949494",
-        borderRadius: "25px"
+        borderColor: "#949494"
       }}
       cover={props.cover ? props.cover : null}
       loading={props.loading}

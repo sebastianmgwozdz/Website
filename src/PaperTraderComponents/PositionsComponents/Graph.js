@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AreaChart, Area, ReferenceLine, YAxis } from "recharts";
+import { AreaChart, Area, YAxis, ReferenceLine } from "recharts";
 
 export default function Graph(props) {
   const [data, setData] = useState([]);
@@ -12,20 +12,32 @@ export default function Graph(props) {
         ...data,
         {
           uv: props.dataPoint,
-          amt: data.length
-        }
+          amt: data.length,
+        },
       ]);
     }
-  }, [props.dataPoint, props.quote]);
+  }, [props.dataPoint]);
 
   function minMax() {
-    let arr = data.map(val => {
+    let arr = data.map((val) => {
       return val.uv;
     });
-    return [Math.min(arr), Math.max(arr)];
+    let min = Math.min.apply(Math, arr);
+    let max = Math.max.apply(Math, arr);
+    if (min > 0 && max > 0) {
+      return [-0.5 * max, max];
+    } else if (min < 0 && max < 0) {
+      return [min, -0.5 * min];
+    } else {
+      return [min, max];
+    }
   }
 
   let color = props.dataPoint > 0 ? "#24e361" : "#f55936";
+
+  if (data.length <= 1) {
+    return null;
+  }
 
   return (
     <div>
@@ -42,7 +54,9 @@ export default function Graph(props) {
           </linearGradient>
         </defs>
 
-        <YAxis type="number" domain={[minMax()[0], minMax()[1]]} hide></YAxis>
+        <YAxis type="number" domain={minMax()} hide></YAxis>
+
+        <ReferenceLine y={0} strokeDasharray="3 3" ifOverflow="show" />
 
         <Area
           type="monotone"

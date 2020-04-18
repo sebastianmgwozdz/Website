@@ -31,9 +31,8 @@ function BalanceButton(props) {
       amount: val
     };
 
-    post(server + "balances/", b).then(() => {
-      setBalance(val);
-    });
+    post(server + "balances/", b);
+    setBalance(val);
   }
 
   if (balance === -1) {

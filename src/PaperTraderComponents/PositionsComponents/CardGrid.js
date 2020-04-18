@@ -3,16 +3,19 @@ import { get } from "../Helpers";
 import StockCard from "./StockCard";
 import { withFirebase } from "../../Firebase";
 import { server } from "../../links";
+import { message } from "antd";
 
 function CardGrid(props) {
   const [positions, setPositions] = useState(new Map());
+  const [prices] = useState(new Map());
 
   function update() {
     let p = new Map();
+    let n = [];
 
     get(
       server + "positions/id=" + props.firebase.auth.currentUser.uid + "/active"
-    ).then(res => {
+    ).then((res) => {
       if (res) {
         for (let pos of res) {
           let ticker = pos["ticker"];
@@ -20,18 +23,46 @@ function CardGrid(props) {
             p.get(ticker).push(pos);
           } else {
             p.set(ticker, [pos]);
+            n.push(ticker);
           }
         }
       }
       setPositions(p);
+      if (p.size === 0) {
+        message.error("Error connecting to server. Attempting to reconnect.");
+      }
     });
+
+    const socket = new WebSocket(
+      "wss://ws.finnhub.io?token=bpleiinrh5r8m26im1dg"
+    );
+
+    let dataFunc = (event) => {
+      let data = JSON.parse(event.data).data;
+
+      if (data) {
+        prices.set(data[0]["s"], data[0]);
+      }
+    };
+    addConnections(socket, n);
+
+    socket.onmessage = dataFunc;
   }
+
+  function addConnections(socket, n) {
+    socket.onopen = () =>
+      n.forEach((val) => {
+        socket.send(JSON.stringify({ type: "subscribe", symbol: val }));
+      });
+  }
+
+  console.log(prices);
 
   useEffect(() => {
     update();
     let t = setInterval(() => {
-      //update();
-    }, 5000);
+      update();
+    }, 10000);
 
     return () => {
       clearInterval(t);
@@ -52,6 +83,7 @@ function CardGrid(props) {
           positions={val}
           key={key}
           clickFunc={props.clickFunc}
+          data={prices.get(key)}
         ></StockCard>
       );
     });
@@ -63,7 +95,7 @@ function CardGrid(props) {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "0.35fr 0.35fr 0.35fr"
+        gridTemplateColumns: "0.35fr 0.35fr 0.35fr",
       }}
     >
       {getCards()}
