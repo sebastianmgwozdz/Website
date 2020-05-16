@@ -1,14 +1,15 @@
 import axios from "axios";
+import { server } from "../links";
 
 export async function get(url) {
   let res;
 
   await axios
     .get(url)
-    .then(function(response) {
+    .then(function (response) {
       res = response.data;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 
@@ -16,13 +17,13 @@ export async function get(url) {
 }
 
 export function del(url) {
-  axios.delete(url).catch(function(error) {
+  axios.delete(url).catch(function (error) {
     console.log(error);
   });
 }
 
-export function post(url, data) {
-  axios.post(url, data).catch(function(error) {
+export async function post(url, data) {
+  axios.post(url, data).catch(function (error) {
     console.log(error);
   });
 }
@@ -39,4 +40,35 @@ export function isOpen(date) {
     currHour >= 20 ||
     (currHour === 13 && currMin < 30)
   );
+}
+
+export async function close(trade, incrementState) {
+  // trade = {user: ..., type: ..., price: ..., shareCount: ..., ticker: ..., positions: ... }
+  let type = trade["type"];
+  let price = trade["price"];
+  let shareCount = trade["shareCount"];
+  let positions = trade["positions"];
+
+  let closed = 0;
+  let am = 0;
+  for (let p of positions) {
+    if ((type === 1 && p["long"]) || (type === 3 && !p["long"])) {
+      let shares = p["remaining"];
+      let remSell = shareCount - closed;
+      let sellAll = shares <= remSell;
+
+      am +=
+        (sellAll ? remSell : shareCount) *
+        (type === 1 ? price : p["price"] - price);
+      closed += sellAll ? remSell : shareCount;
+      p["remaining"] = sellAll ? 0 : shares - shareCount;
+      let date = new Date();
+
+      p["closeDate"] = sellAll ? date : null;
+
+      await post(server + "positions/", p);
+    }
+  }
+
+  incrementState(am);
 }

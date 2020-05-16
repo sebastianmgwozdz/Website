@@ -3,7 +3,7 @@ import { Modal, Button } from "antd";
 import Autocomplete from "./Autocomplete";
 import AntRadio from "./AntRadio";
 import AntInput from "./AntInput";
-import { get, post } from "../Helpers";
+import { get, close, post } from "../Helpers";
 import { withFirebase } from "../../Firebase";
 import { server } from "../../links";
 import TradeText from "./TradeText";
@@ -31,7 +31,8 @@ function BuyModal(props) {
     setPrice("");
   }
 
-  async function activePositions(compareFunc, callback) {
+  async function activePositions() {
+    let pos;
     await get(
       server +
         "positions/id=" +
@@ -39,78 +40,45 @@ function BuyModal(props) {
         "/ticker=" +
         symbol +
         "/active"
-    ).then(res => {
-      let rel = res.sort(compareFunc);
-      res = rel;
-      callback(res);
+    ).then((res) => {
+      pos = res;
     });
-  }
 
-  function close() {
-    let mult = type === 1 ? 1 : -1;
-    activePositions(
-      (a, b) => {
-        return mult * (a["price"] - b["price"]);
-      },
-      res => {
-        let closed = 0;
-        let am = 0;
-        for (let p of res) {
-          if ((type === 1 && p["long"]) || (type === 3 && !p["long"])) {
-            let shares = p["remaining"];
-            let remSell = quantity - closed;
-            let sellAll = shares <= remSell;
-
-            am +=
-              (sellAll ? remSell : quantity) *
-              (type === 1 ? price : p["price"] - price);
-            closed += sellAll ? remSell : quantity;
-            p["remaining"] = sellAll ? 0 : shares - quantity;
-            let date = new Date();
-
-            p["closeDate"] = sellAll ? date : null;
-
-            post(server + "positions/", p);
-          }
-        }
-
-        props.updateBalance(props.balance + am);
-      }
-    );
+    return pos;
   }
 
   async function makeTrade() {
-    switch (type) {
-      case 1:
-        close();
-
-        break;
-
-      case 3:
-        close();
-        break;
-      default:
-        let long = true;
-
-        if (type === 2) {
-          long = false;
-        }
-
-        let position = {
-          ticker: symbol,
+    if (type === 1 || type === 3) {
+      let mult = type === 1 ? 1 : -1;
+      activePositions().then((res) => {
+        res.sort((a, b) => {
+          return mult * (a["price"] - b["price"]);
+        });
+        let trade = {
+          user: props.firebase.auth.currentUser.uid,
+          type: type,
           price: price,
-          initial: quantity,
-          remaining: quantity,
-          userId: props.firebase.auth.currentUser.uid,
-          isLong: long
+          shareCount: quantity,
+          positions: res,
         };
+        close(trade, props.incrementBalance);
+      });
+    } else {
+      let long = type !== 2;
 
-        post(server + "positions/", position);
-        if (type === 0) {
-          props.updateBalance(props.balance - quantity * price);
-        }
+      let position = {
+        ticker: symbol,
+        price: price,
+        initial: quantity,
+        remaining: quantity,
+        userId: props.firebase.auth.currentUser.uid,
+        isLong: long,
+      };
 
-        break;
+      post(server + "positions/", position);
+      if (long) {
+        props.incrementBalance(-1 * quantity * price);
+      }
     }
   }
 
@@ -131,7 +99,7 @@ function BuyModal(props) {
           disabled={!symbol || !quantity}
         >
           Confirm
-        </Button>
+        </Button>,
       ]}
       closable={false}
     >

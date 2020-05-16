@@ -5,14 +5,14 @@ import { get } from "../Helpers";
 let stocks = new Map();
 get(
   "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bpleiinrh5r8m26im1dg"
-).then(res => {
+).then((res) => {
   let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   for (let i = 0; i < 26; i++) {
     let char = chars[i];
     stocks.set(
       char,
       res
-        ? res.filter(val => {
+        ? res.filter((val) => {
             return val["displaySymbol"][0] === char;
           })
         : []
@@ -45,9 +45,19 @@ export default function Autocomplete(props) {
       if (curr.toLowerCase().includes(searchText.toLowerCase())) {
         arr.push({ value: curr });
       }
+      if (curr === searchText) {
+        selectStock(curr);
+      }
     }
 
     setOptions(arr);
+  }
+
+  function selectStock(symbol) {
+    props.setSelectedVal(symbol);
+    currPrice(symbol).then((res) => {
+      props.setPrice(res);
+    });
   }
 
   async function currPrice(ticker) {
@@ -57,7 +67,7 @@ export default function Autocomplete(props) {
       "https://finnhub.io/api/v1/quote?symbol=" +
         ticker +
         "&token=bpleiinrh5r8m26im1dg"
-    ).then(res => {
+    ).then((res) => {
       if (res) {
         currPrice = res["c"];
       }
@@ -66,23 +76,15 @@ export default function Autocomplete(props) {
     return currPrice;
   }
 
-  function onSelect(val) {
-    props.setSelectedVal(val);
-    currPrice(val).then(res => {
-      props.setPrice(res);
-    });
-  }
-
   return (
     <span>
       <AutoComplete
         options={options}
         style={{
           width: 200,
-          marginRight: "25px"
+          marginRight: "25px",
         }}
         onSearch={onSearch}
-        onSelect={onSelect}
         placeholder="Enter Stock Symbol"
       />
 

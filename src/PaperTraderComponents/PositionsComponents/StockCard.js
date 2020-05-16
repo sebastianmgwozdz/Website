@@ -103,7 +103,8 @@ function StockCard(props) {
       return null;
     }
 
-    let dayPercent = percentDiff(quote["pc"], quote["c"]);
+    let dayPercent =
+      (dayChange < 0 ? -1 : 1) * percentDiff(quote["pc"], quote["c"]);
     let total = totalValue();
     let netPercent = percentDiff(total, netChange + total);
 

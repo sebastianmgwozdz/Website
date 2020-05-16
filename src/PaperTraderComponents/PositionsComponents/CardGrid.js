@@ -15,23 +15,24 @@ function CardGrid(props) {
 
     get(
       server + "positions/id=" + props.firebase.auth.currentUser.uid + "/active"
-    ).then((res) => {
-      if (res) {
-        for (let pos of res) {
-          let ticker = pos["ticker"];
-          if (p.has(ticker)) {
-            p.get(ticker).push(pos);
-          } else {
-            p.set(ticker, [pos]);
-            n.push(ticker);
+    )
+      .then((res) => {
+        if (res) {
+          for (let pos of res) {
+            let ticker = pos["ticker"];
+            if (p.has(ticker)) {
+              p.get(ticker).push(pos);
+            } else {
+              p.set(ticker, [pos]);
+              n.push(ticker);
+            }
           }
         }
-      }
-      setPositions(p);
-      if (p.size === 0) {
+        setPositions(p);
+      })
+      .catch((err) => {
         message.error("Error connecting to server. Attempting to reconnect.");
-      }
-    });
+      });
 
     const socket = new WebSocket(
       "wss://ws.finnhub.io?token=bpleiinrh5r8m26im1dg"

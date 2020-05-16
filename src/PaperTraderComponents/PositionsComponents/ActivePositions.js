@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Tag } from "antd";
-import { get, post } from "../Helpers";
+import { get, post, close } from "../Helpers";
 import { server } from "../../links";
 import { withFirebase } from "../../Firebase";
 
@@ -8,30 +8,30 @@ const columns = [
   {
     title: "Date",
     dataIndex: "date",
-    key: "date"
+    key: "date",
   },
   {
     title: "Price",
     dataIndex: "price",
-    key: "price"
+    key: "price",
   },
   {
     title: "Initial",
     dataIndex: "initial",
-    key: "initial"
+    key: "initial",
   },
   {
     title: "Remaining",
     dataIndex: "remaining",
-    key: "remaining"
+    key: "remaining",
   },
   {
     title: "Type",
     key: "type",
     dataIndex: "tags",
-    render: tags => (
+    render: (tags) => (
       <span>
-        {tags.map(tag => {
+        {tags.map((tag) => {
           let color = tag === "Buy" ? "green" : "red";
 
           return (
@@ -41,18 +41,18 @@ const columns = [
           );
         })}
       </span>
-    )
+    ),
   },
   {
     title: "",
     key: "action",
     dataIndex: "action",
-    render: param => (
+    render: (param) => (
       <span>
         <a onClick={param.func}>{param.text}</a>
       </span>
-    )
-  }
+    ),
+  },
 ];
 
 function localTime(utc) {
@@ -64,21 +64,25 @@ function localTime(utc) {
 }
 
 function formattedDate(date) {
-  return date.getMonth() + "-" + date.getDate() + "-" + date.getFullYear();
+  return date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear();
 }
 
 function ActivePositions(props) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    update();
-  }, [update]);
-
-  function update() {
-    positions().then(res => {
+    get(
+      server +
+        "positions/id=" +
+        props.firebase.auth.currentUser.uid +
+        "/ticker=" +
+        props.ticker +
+        "/active"
+    ).then((res) => {
+      console.log(res);
       setData(res);
     });
-  }
+  }, []);
 
   function formattedData() {
     return data.map((entry, index) => {
@@ -91,46 +95,53 @@ function ActivePositions(props) {
         initial: entry["initial"],
         remaining: entry["remaining"],
         tags: [entry["long"] ? "Buy" : "Short"],
+        long: entry["long"],
         action: {
           text: entry["long"] ? "Sell All" : "Cover All",
           func: () => {
             action(index);
-          }
-        }
+          },
+        },
       };
     });
   }
 
-  async function action(id) {
-    let pos = data[id];
+  function incrementBalance(amt) {
+    get(server + "balances/" + props.firebase.auth.currentUser.uid).then(
+      (bal) => {
+        let b = {
+          userId: props.firebase.auth.currentUser.uid,
+          amount: bal["amount"] + amt,
+        };
 
-    console.log(id);
-    console.log(pos);
-    pos["remaining"] = 0;
-    pos["closeDate"] = new Date();
-    post(server + "positions/", pos);
-    update();
-  }
-
-  async function positions() {
-    let d = [];
-    let arr = await get(
-      server +
-        "positions/id=" +
-        props.firebase.auth.currentUser.uid +
-        "/ticker=" +
-        props.ticker
-    );
-
-    for (let i = 0; i < arr.length; i++) {
-      let entry = arr[i];
-      if (entry["remaining"] !== 0) {
-        d.push(entry);
+        post(server + "balances/", b);
       }
-    }
-
-    return d;
+    );
   }
+
+  function action(id) {
+    let pos = data[id];
+    get(
+      "https://finnhub.io/api/v1/quote?symbol=" +
+        props.ticker +
+        "&token=bpleiinrh5r8m26im1dg"
+    ).then((curr) => {
+      let trade = {
+        user: props.firebase.auth.currentUser.uid,
+        type: pos.long ? 1 : 3,
+        price: curr["c"],
+        shareCount: pos.remaining,
+        ticker: props.ticker,
+        positions: [pos],
+      };
+
+      close(trade, incrementBalance).then(() => {
+        let arr = data.slice(0, id).concat(data.slice(id + 1));
+        setData(arr);
+      });
+    });
+  }
+
   return <Table columns={columns} dataSource={formattedData()} />;
 }
 
