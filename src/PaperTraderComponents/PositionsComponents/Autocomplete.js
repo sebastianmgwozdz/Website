@@ -26,9 +26,6 @@ export default function Autocomplete(props) {
   console.log("Autocomplete");
 
   async function onSearch(searchText) {
-    props.setSelectedVal("");
-    props.setPrice("");
-
     let arr = [];
     if (!searchText) {
       setOptions([]);
@@ -45,12 +42,10 @@ export default function Autocomplete(props) {
       if (curr.toLowerCase().includes(searchText.toLowerCase())) {
         arr.push({ value: curr });
       }
-      if (curr === searchText) {
-        selectStock(curr);
-      }
     }
 
     setOptions(arr);
+    props.setSymbol(searchText);
   }
 
   function selectStock(symbol) {
@@ -77,18 +72,14 @@ export default function Autocomplete(props) {
   }
 
   return (
-    <span>
-      <AutoComplete
-        options={options}
-        style={{
-          width: 200,
-          marginRight: "25px",
-        }}
-        onSearch={onSearch}
-        placeholder="Enter Stock Symbol"
-      />
-
-      {props.price}
-    </span>
+    <AutoComplete
+      options={options}
+      style={{
+        width: 200,
+        marginRight: "25px",
+      }}
+      onSearch={onSearch}
+      placeholder="Enter Stock Symbol"
+    />
   );
 }

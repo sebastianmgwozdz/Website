@@ -5,8 +5,6 @@ import MarketCounter from "./MarketCounter";
 const menuLabels = ["Positions", "Companies", "Account"];
 
 export default function Sidebar(props) {
-  console.log("Sidebar");
-
   function getMenuItems() {
     let items = [];
     for (let i = 0; i < menuLabels.length; i++) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from "antd";
 import Autocomplete from "./Autocomplete";
 import AntRadio from "./AntRadio";
@@ -15,12 +15,32 @@ function BuyModal(props) {
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState("");
 
-  console.log("BuyModal");
-
   function onOk() {
     setConfirmLoading(true);
     makeTrade().then(reset);
   }
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      if (symbol) {
+        get(
+          "https://finnhub.io/api/v1/quote?symbol=" +
+            symbol +
+            "&token=bpleiinrh5r8m26im1dg"
+        ).then((res) => {
+          if (res) {
+            setPrice(res["c"]);
+          }
+        });
+      } else {
+        setPrice("");
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [symbol]);
 
   function reset() {
     props.setVisible(false);
@@ -45,6 +65,19 @@ function BuyModal(props) {
     });
 
     return pos;
+  }
+
+  function incrementBalance(val) {
+    get(server + "balances/" + props.firebase.auth.currentUser.uid).then(
+      (res) => {
+        let b = {
+          userId: res["userId"],
+          amount: res["amount"] + val,
+        };
+
+        post(server + "balances/", b);
+      }
+    );
   }
 
   async function makeTrade() {
@@ -77,7 +110,7 @@ function BuyModal(props) {
 
       post(server + "positions/", position);
       if (long) {
-        props.incrementBalance(-1 * quantity * price);
+        incrementBalance(-1 * quantity * price);
       }
     }
   }
@@ -103,11 +136,14 @@ function BuyModal(props) {
       ]}
       closable={false}
     >
-      <Autocomplete
-        setSelectedVal={setSymbol}
-        setPrice={setPrice}
-        price={price}
-      ></Autocomplete>
+      <span>
+        <Autocomplete
+          setSymbol={setSymbol}
+          setPrice={setPrice}
+          price={price}
+        ></Autocomplete>
+        {price}
+      </span>
 
       <AntRadio
         labels={["Buy", "Sell", "Short", "Cover Short"]}

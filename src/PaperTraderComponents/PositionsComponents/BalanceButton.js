@@ -12,6 +12,16 @@ function BalanceButton(props) {
   console.log("BalanceButton");
 
   useEffect(() => {
+    currBalance();
+
+    let interval = setInterval(currBalance, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  function currBalance() {
     get(server + "balances/" + props.firebase.auth.currentUser.uid).then(
       (res) => {
         if (res) {
@@ -19,24 +29,10 @@ function BalanceButton(props) {
         }
       }
     );
-  }, []);
+  }
 
   function showModal() {
     setVisible(true);
-  }
-
-  function incrementBalance(val) {
-    get(server + "balances/" + props.firebase.auth.currentUser.uid).then(
-      (res) => {
-        let b = {
-          userId: res["userId"],
-          amount: res["amount"] + val,
-        };
-
-        post(server + "balances/", b);
-      }
-    );
-    setBalance(balance + val);
   }
 
   if (balance === -1) {
@@ -66,7 +62,6 @@ function BalanceButton(props) {
         visible={visible}
         setVisible={setVisible}
         balance={balance}
-        incrementBalance={incrementBalance}
       ></BuyModal>
     </div>
   );
