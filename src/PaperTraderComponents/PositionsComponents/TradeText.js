@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Typography } from "antd";
+import { List } from "antd";
 import { get } from "../Helpers";
 import { server } from "../../links";
 import { withFirebase } from "../../Firebase";
-
-const { Text } = Typography;
 
 function TradeText(props) {
   const [text, setText] = useState(null);
@@ -57,17 +55,12 @@ function TradeText(props) {
           (type === 1 ? price : p["price"] - price);
         closed += sellAll ? remSell : quantity;
       }
-      setText(
-        <Text>
-          {"Current Shares: " + numShares}
-          <br />
-          {"Remaining Shares: " + (numShares - quantity)}
-          <br />
-          {"Current Balance: $" + balance}
-          <br />
-          {"New Balance: $" + (balance + am)}
-        </Text>
-      );
+      setText([
+        "Current Shares: " + numShares,
+        "Remaining Shares: " + (numShares - quantity),
+        "Current Balance: $" + balance,
+        "New Balance: $" + (balance + am),
+      ]);
     });
   }
 
@@ -79,13 +72,10 @@ function TradeText(props) {
 
     switch (type) {
       case 0:
-        setText(
-          <Text>
-            {"Current Balance: $" + balance.toFixed(2)}
-            <br />
-            {"New Balance: $" + (balance - price * quantity).toFixed(2)}
-          </Text>
-        );
+        setText([
+          "Current Balance: $" + balance.toFixed(2),
+          "New Balance: $" + (balance - price * quantity).toFixed(2),
+        ]);
         break;
 
       case 1:
@@ -94,7 +84,7 @@ function TradeText(props) {
         });
         break;
       case 2:
-        setText(<Text>{"Total Value: $" + quantity * price}</Text>);
+        setText(["Total Value: $" + quantity * price]);
         break;
       default:
         sharesOwned(true).then((res) => {
@@ -103,7 +93,21 @@ function TradeText(props) {
         break;
     }
   }
-  return text;
+
+  if (!text) {
+    return null;
+  }
+
+  return (
+    <List
+      size="small"
+      header={<div>Header</div>}
+      footer={<div>Footer</div>}
+      bordered
+      dataSource={text}
+      renderItem={(item) => <List.Item>{item}</List.Item>}
+    />
+  );
 }
 
 export default withFirebase(TradeText);

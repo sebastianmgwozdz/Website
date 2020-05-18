@@ -16,8 +16,6 @@ function StockCard(props) {
   const [tick, setTick] = useState(0);
   const { ticker, positions, clickFunc, data } = props;
 
-  console.log("StockCard");
-
   function updateQuote() {
     get(
       "https://finnhub.io/api/v1/quote?symbol=" +
@@ -81,6 +79,13 @@ function StockCard(props) {
     return diff;
   }
 
+  function correctSign(first, second) {
+    if ((first < 0 && second > 0) || (first > 0 && second < 0)) {
+      return second * -1;
+    }
+    return second;
+  }
+
   function percentDiff(old, updated) {
     if (isNaN(updated) || isNaN(old)) {
       return 0;
@@ -103,7 +108,10 @@ function StockCard(props) {
       return null;
     }
 
-    let dayPercent = percentDiff(quote["pc"], quote["c"]);
+    let dayPercent = correctSign(
+      dayChange,
+      percentDiff(quote["pc"], quote["c"])
+    );
     let total = totalValue();
     let netPercent = percentDiff(total, netChange + total);
 

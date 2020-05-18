@@ -15,24 +15,22 @@ function CardGrid(props) {
 
     get(
       server + "positions/id=" + props.firebase.auth.currentUser.uid + "/active"
-    )
-      .then((res) => {
-        if (res) {
-          for (let pos of res) {
-            let ticker = pos["ticker"];
-            if (p.has(ticker)) {
-              p.get(ticker).push(pos);
-            } else {
-              p.set(ticker, [pos]);
-              n.push(ticker);
-            }
+    ).then((res) => {
+      if (res) {
+        for (let pos of res) {
+          let ticker = pos["ticker"];
+          if (p.has(ticker)) {
+            p.get(ticker).push(pos);
+          } else {
+            p.set(ticker, [pos]);
+            n.push(ticker);
           }
         }
-        setPositions(p);
-      })
-      .catch((err) => {
+      } else {
         message.error("Error connecting to server. Attempting to reconnect.");
-      });
+      }
+      setPositions(p);
+    });
 
     const socket = new WebSocket(
       "wss://ws.finnhub.io?token=bpleiinrh5r8m26im1dg"
@@ -63,7 +61,7 @@ function CardGrid(props) {
     update();
     let t = setInterval(() => {
       update();
-    }, 10000);
+    }, 5000);
 
     return () => {
       clearInterval(t);
