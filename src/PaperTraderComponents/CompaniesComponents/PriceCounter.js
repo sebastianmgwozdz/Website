@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { get } from "../Helpers";
 import { Statistic, Typography } from "antd";
+import UpdatingText from "../PositionsComponents/UpdatingText";
 
 export default function PriceCounter(props) {
   const [currPrice, setCurrPrice] = useState(-1);
@@ -10,7 +11,7 @@ export default function PriceCounter(props) {
       "https://finnhub.io/api/v1/quote?symbol=" +
         props.ticker +
         "&token=bpleiinrh5r8m26im1dg"
-    ).then(res => {
+    ).then((res) => {
       if (res) {
         setCurrPrice(res);
       }
@@ -21,7 +22,7 @@ export default function PriceCounter(props) {
     update();
     let t = setInterval(() => {
       update();
-    }, 3000);
+    }, 10000);
     return () => {
       clearInterval(t);
     };
@@ -35,19 +36,22 @@ export default function PriceCounter(props) {
     return null;
   }
 
-  return (
-    <span style={{ textAlign: "center" }}>
-      <Statistic
-        value={
-          currPrice["c"] +
+  /**+
           " (" +
           (percentDiff > 0 ? "+" : "-") +
           (percentDiff * 100).toFixed(2) +
-          "%)"
-        }
-        precision={2}
-        valueStyle={{ color: "#3f8600", fontSize: "40px" }}
-      />
-    </span>
+          "%)" */
+
+  console.log(
+    " (" + (percentDiff > 0 ? "+" : "-") + (percentDiff * 100).toFixed(2) + "%)"
+  );
+
+  return (
+    <div
+      style={{ textAlign: "center", color: "#3f8600", fontSize: "40px" }}
+      id={"price"}
+    >
+      <UpdatingText value={currPrice["c"]}></UpdatingText>
+    </div>
   );
 }
