@@ -29,6 +29,7 @@ export default function Autocomplete(props) {
     let arr = [];
     if (!searchText) {
       setOptions([]);
+      props.setSymbol("");
       return;
     }
 

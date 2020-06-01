@@ -69,7 +69,7 @@ function StockCard(props) {
         ((!data ? quote["c"] : data["p"]) -
           (sinceClose ? quote["pc"] : pos["price"]));
 
-      if (pos["long"]) {
+      if (pos["isLong"]) {
         diff += d;
       } else {
         diff -= d;

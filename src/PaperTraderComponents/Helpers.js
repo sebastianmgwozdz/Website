@@ -52,7 +52,7 @@ export async function close(trade, incrementState) {
   let closed = 0;
   let am = 0;
   for (let p of positions) {
-    if ((type === 1 && p["long"]) || (type === 3 && !p["long"])) {
+    if ((type === 1 && p["isLong"]) || (type === 3 && !p["isLong"])) {
       let shares = p["remaining"];
       let remSell = shareCount - closed;
       let sellAll = shares <= remSell;
@@ -70,5 +70,7 @@ export async function close(trade, incrementState) {
     }
   }
 
-  incrementState(am);
+  if (incrementState) {
+    incrementState(am);
+  }
 }

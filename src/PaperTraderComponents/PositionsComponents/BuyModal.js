@@ -8,12 +8,14 @@ import { withFirebase } from "../../Firebase";
 import { server } from "../../links";
 import TradeText from "./TradeText";
 
+const style = { marginTop: "1vh", marginBottom: "1vh" };
+
 function BuyModal(props) {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [type, setType] = useState(0);
-  const [symbol, setSymbol] = useState("");
+  const [symbol, setSymbol] = useState(props.symbol);
   const [quantity, setQuantity] = useState(0);
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(props.price);
 
   function onOk() {
     setConfirmLoading(true);
@@ -22,7 +24,9 @@ function BuyModal(props) {
 
   useEffect(() => {
     let interval = setInterval(() => {
-      if (symbol) {
+      if (props.price) {
+        setPrice(props.price);
+      } else if (symbol) {
         get(
           "https://finnhub.io/api/v1/quote?symbol=" +
             symbol +
@@ -35,12 +39,12 @@ function BuyModal(props) {
       } else {
         setPrice("");
       }
-    }, 1000);
+    }, 2000);
 
     return () => {
       clearInterval(interval);
     };
-  }, [symbol]);
+  }, [symbol, props.price]);
 
   function reset() {
     props.setVisible(false);
@@ -136,18 +140,26 @@ function BuyModal(props) {
       ]}
       closable={false}
     >
-      <span>
-        <Autocomplete
-          setSymbol={setSymbol}
-          setPrice={setPrice}
-          price={price}
-        ></Autocomplete>
-        {price}
-      </span>
+      {price}
+      <div style={style}>
+        {props.symbol ? null : (
+          <Autocomplete
+            setSymbol={setSymbol}
+            setPrice={setPrice}
+            price={price}
+          ></Autocomplete>
+        )}
+      </div>
 
       <AntRadio
         labels={["Buy", "Sell", "Short", "Cover Short"]}
-        setVal={setType}
+        setVal={(val) => {
+          if (val !== type) {
+            setQuantity(0);
+          }
+          setType(val);
+        }}
+        style={style}
       ></AntRadio>
       <AntInput
         setVal={setQuantity}
@@ -156,6 +168,7 @@ function BuyModal(props) {
         quantity={quantity}
         type={type}
         ticker={symbol}
+        style={style}
       ></AntInput>
       <TradeText
         symbol={symbol}
@@ -163,6 +176,7 @@ function BuyModal(props) {
         price={price}
         balance={props.balance}
         type={type}
+        style={style}
       ></TradeText>
     </Modal>
   );

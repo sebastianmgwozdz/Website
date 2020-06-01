@@ -3,11 +3,21 @@ import { withFirebase } from "../../Firebase";
 import PositionSummary from "./PositionSummary";
 import CardGrid from "./CardGrid";
 import BalanceButton from "./BalanceButton";
+import MarketBar from "./MarketBar";
+
+const buttonStyle = {
+  position: "fixed",
+  top: "82vh",
+  left: "82vw",
+  width: "12vw",
+  height: "8vh",
+  fontSize: "22px",
+  backgroundColor: "#24e361",
+  borderColor: "#24e361",
+};
 
 function Positions() {
   const [selectedStock, setSelectedStock] = useState("");
-
-  console.log("Positions");
 
   if (selectedStock) {
     return (
@@ -20,8 +30,9 @@ function Positions() {
 
   return (
     <div>
+      <MarketBar></MarketBar>
       <CardGrid clickFunc={setSelectedStock}></CardGrid>
-      <BalanceButton></BalanceButton>
+      <BalanceButton style={buttonStyle}></BalanceButton>
     </div>
   );
 }

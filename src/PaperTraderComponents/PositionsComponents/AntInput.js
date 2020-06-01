@@ -5,8 +5,6 @@ import { server } from "../../links";
 import { withFirebase } from "../../Firebase";
 
 function AntInput(props) {
-  console.log("AntInput");
-
   async function sharesOwned(long) {
     let shares = 0;
 
@@ -17,7 +15,7 @@ function AntInput(props) {
         "/ticker=" +
         props.ticker +
         "/active"
-    ).then(res => {
+    ).then((res) => {
       for (let pos of res) {
         if (pos["long"] === long) {
           shares += pos["remaining"];
@@ -40,7 +38,7 @@ function AntInput(props) {
         }
         break;
       case 1:
-        sharesOwned(true).then(res => {
+        sharesOwned(true).then((res) => {
           if (res >= input) {
             props.setVal(input);
           }
@@ -51,7 +49,7 @@ function AntInput(props) {
         props.setVal(input);
         break;
       default:
-        sharesOwned(false).then(res => {
+        sharesOwned(false).then((res) => {
           if (res >= input) {
             props.setVal(input);
           }
@@ -62,10 +60,11 @@ function AntInput(props) {
 
   return (
     <Input
-      onChange={data => {
+      onChange={(data) => {
         onChange(data);
       }}
       value={props.quantity}
+      style={props.style}
     />
   );
 }

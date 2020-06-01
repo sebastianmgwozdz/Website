@@ -2,8 +2,6 @@ import React from "react";
 import { Radio } from "antd";
 
 export default function AntRadio(props) {
-  console.log("AntRadio");
-
   function getButtons() {
     let buttons = [];
     for (let i = 0; i < props.labels.length; i++) {
@@ -20,9 +18,10 @@ export default function AntRadio(props) {
     <Radio.Group
       defaultValue={0}
       buttonStyle="solid"
-      onChange={e => {
+      onChange={(e) => {
         props.setVal(e.target.value);
       }}
+      style={props.style}
     >
       {getButtons()}
     </Radio.Group>

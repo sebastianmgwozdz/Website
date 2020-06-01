@@ -3,17 +3,14 @@ import { Statistic } from "antd";
 import { isOpen } from "../Helpers";
 
 export default function MarketCounter() {
-  const [tick, setTick] = useState(0);
   const [d, setD] = useState(-1);
-
-  console.log("MarketCounter");
 
   function update() {
     let date = new Date();
 
     if (isOpen(date)) {
       date.setUTCHours(20);
-      date.setUTCMinutes(0);
+      date.setUTCMinutes(1);
     } else {
       if (date.getUTCHours() > 19) {
         date.setUTCDate(date.getUTCDate() + 1);

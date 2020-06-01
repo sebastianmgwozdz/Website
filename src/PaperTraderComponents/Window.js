@@ -8,10 +8,9 @@ let views = [
   <Companies></Companies>,
   <Account></Account>,
   <div>view4</div>,
-  <div>view5</div>
+  <div>view5</div>,
 ];
 
 export default function Window(props) {
-  console.log("Window");
   return views[props.menuOption];
 }

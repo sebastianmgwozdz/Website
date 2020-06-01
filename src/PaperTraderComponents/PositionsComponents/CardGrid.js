@@ -55,8 +55,6 @@ function CardGrid(props) {
       });
   }
 
-  console.log(prices);
-
   useEffect(() => {
     update();
     let t = setInterval(() => {
@@ -76,6 +74,8 @@ function CardGrid(props) {
     }
 
     positions.forEach((val, key, map) => {
+      console.log(val);
+      console.log(prices.get(key));
       cards.push(
         <StockCard
           ticker={key}

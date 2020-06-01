@@ -58,7 +58,6 @@ const columns = [
 function localTime(utc) {
   let local = utc.valueOf();
   let offset = utc.getTimezoneOffset() * 60 * 1000;
-  console.log(utc.getTimezoneOffset());
   local -= offset;
   return new Date(local);
 }
@@ -79,7 +78,6 @@ function ActivePositions(props) {
         props.ticker +
         "/active"
     ).then((res) => {
-      console.log(res);
       setData(res);
     });
   }, []);
@@ -94,10 +92,10 @@ function ActivePositions(props) {
         price: entry["price"],
         initial: entry["initial"],
         remaining: entry["remaining"],
-        tags: [entry["long"] ? "Buy" : "Short"],
-        long: entry["long"],
+        tags: [entry["isLong"] ? "Buy" : "Short"],
+        long: entry["isLong"],
         action: {
-          text: entry["long"] ? "Sell All" : "Cover All",
+          text: entry["isLong"] ? "Sell All" : "Cover All",
           func: () => {
             action(index);
           },
@@ -128,7 +126,7 @@ function ActivePositions(props) {
     ).then((curr) => {
       let trade = {
         user: props.firebase.auth.currentUser.uid,
-        type: pos.long ? 1 : 3,
+        type: pos.isLong ? 1 : 3,
         price: curr["c"],
         shareCount: pos.remaining,
         ticker: props.ticker,

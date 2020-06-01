@@ -78,11 +78,6 @@ function TradeText(props) {
         ]);
         break;
 
-      case 1:
-        sharesOwned(true).then((res) => {
-          close(res);
-        });
-        break;
       case 2:
         setText(["Total Value: $" + quantity * price]);
         break;
@@ -101,11 +96,10 @@ function TradeText(props) {
   return (
     <List
       size="small"
-      header={<div>Header</div>}
-      footer={<div>Footer</div>}
       bordered
       dataSource={text}
       renderItem={(item) => <List.Item>{item}</List.Item>}
+      style={props.style}
     />
   );
 }

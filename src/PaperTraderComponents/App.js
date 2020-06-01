@@ -15,8 +15,6 @@ function App(props) {
     props.history.replace("/papertrader/home");
   }
 
-  console.log("App");
-
   return (
     <Router>
       <div>

@@ -18,21 +18,19 @@ function ValidationField(props) {
   function handleButtonClick() {
     props
       .submit("test@gmail.com", "lolweed")
-      .then(res => {
+      .then((res) => {
         props.history.replace("/papertrader/dashboard");
       })
-      .catch(err => {
+      .catch((err) => {
         setError(true);
       });
   }
-
-  console.log("ValidationField");
 
   return (
     <div>
       <InputField
         type="user"
-        changeFunc={us => {
+        changeFunc={(us) => {
           setError(false);
           setUser(us);
         }}
@@ -40,7 +38,7 @@ function ValidationField(props) {
       ></InputField>
       <InputField
         type="pass"
-        changeFunc={us => {
+        changeFunc={(us) => {
           setError(false);
           setPass(us);
         }}

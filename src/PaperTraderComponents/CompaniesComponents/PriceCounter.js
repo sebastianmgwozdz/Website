@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { get } from "../Helpers";
-import { Statistic, Typography } from "antd";
-import UpdatingText from "../PositionsComponents/UpdatingText";
+import "./PriceCounter.css";
+import { Skeleton } from "antd";
 
 export default function PriceCounter(props) {
-  const [currPrice, setCurrPrice] = useState(-1);
+  const [currPrice] = useState([-1]);
+  const [tick, setTick] = useState(0);
 
   function update() {
     get(
@@ -13,45 +14,68 @@ export default function PriceCounter(props) {
         "&token=bpleiinrh5r8m26im1dg"
     ).then((res) => {
       if (res) {
-        setCurrPrice(res);
+        let col = color(res);
+        let pr = document.getElementById("price");
+        if (pr && col) {
+          pr.classList.add(col);
+          currPrice[0] = res;
+          setTick((tick) => tick + 1);
+          setTimeout(() => {
+            pr.classList.remove(col);
+          }, 2000);
+        } else {
+          currPrice[0] = res;
+          setTick((tick) => tick + 1);
+        }
+        props.setPrice(res["c"]);
       }
     });
+  }
+
+  function color(updated) {
+    if (
+      currPrice.length < 1 ||
+      Math.abs(updated["c"] - currPrice[0]["c"]) < 0.01
+    ) {
+      return "";
+    } else if (updated["c"] > currPrice[0]["c"]) {
+      return "flashGreen";
+    } else {
+      return "flashRed";
+    }
   }
 
   useEffect(() => {
     update();
     let t = setInterval(() => {
       update();
-    }, 10000);
+    }, 5000);
     return () => {
       clearInterval(t);
     };
   }, []);
 
-  let percentDiff = Math.abs(
-    (currPrice["c"] - currPrice["pc"]) / currPrice["pc"]
-  );
-
-  if (isNaN(percentDiff)) {
-    return null;
+  let pr = document.getElementById("price");
+  if (pr && tick === 1 && pr.classList.length === 1) {
+    pr.classList.remove(pr.classList.value);
   }
 
-  /**+
-          " (" +
-          (percentDiff > 0 ? "+" : "-") +
-          (percentDiff * 100).toFixed(2) +
-          "%)" */
-
-  console.log(
-    " (" + (percentDiff > 0 ? "+" : "-") + (percentDiff * 100).toFixed(2) + "%)"
+  let element = currPrice[0]["c"] ? (
+    currPrice[0]["c"].toFixed(2)
+  ) : (
+    <Skeleton.Input
+      style={{ width: "270px", height: "60px" }}
+      active={true}
+      size={"default"}
+    />
   );
 
   return (
     <div
-      style={{ textAlign: "center", color: "#3f8600", fontSize: "40px" }}
-      id={"price"}
+      style={{ textAlign: "center", fontSize: "40px", marginTop: "10px" }}
+      id="price"
     >
-      <UpdatingText value={currPrice["c"]}></UpdatingText>
+      {element}
     </div>
   );
 }
