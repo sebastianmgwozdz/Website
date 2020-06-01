@@ -149,7 +149,12 @@ function StockCard(props) {
       <CoverCard
         cover={
           quote ? (
-            <Graph dataPoint={dayChange} quote={quote} ticker={ticker}></Graph>
+            <Graph
+              dataPoint={dayChange}
+              quote={quote}
+              ticker={ticker}
+              reference={0}
+            ></Graph>
           ) : (
             <Loading></Loading>
           )

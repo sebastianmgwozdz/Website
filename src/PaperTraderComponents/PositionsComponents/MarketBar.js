@@ -19,7 +19,7 @@ export default function MarketBar() {
         <MarketCard name="DJIA" symbol="DIA"></MarketCard>
       </TabPane>
       <TabPane tab="Tab 3" key="3">
-        <MarketCard name="S&P 500" symbol="QQQ"></MarketCard>
+        <MarketCard name="S&P 500" symbol="SPY"></MarketCard>
       </TabPane>
     </Tabs>
   );
