@@ -5,7 +5,7 @@ export default function Graph(props) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if (props.data && data.length === 0) {
+    if (props.data) {
       setData(props.data);
       console.log(props.data);
     }
@@ -35,7 +35,10 @@ export default function Graph(props) {
     return [min, max];
   }
 
-  let color = data[data.length - 1] > props.reference ? "#24e361" : "#f55936";
+  let color =
+    (props.data && data[data.length - 1]) || props.dataPoint > 0
+      ? "#24e361"
+      : "#f55936";
 
   if (data.length <= 1) {
     return null;
@@ -52,11 +55,7 @@ export default function Graph(props) {
         margin={{ top: 40, right: 30, left: 30, bottom: 10 }}
       >
         <YAxis type="number" domain={minMax()} hide></YAxis>
-        <ReferenceLine
-          y={props.reference}
-          strokeDasharray="3 3"
-          ifOverflow="visible"
-        />
+        <ReferenceLine y={props.reference} strokeDasharray="3 3" alwaysShow />
         <Line
           type="monotone"
           dataKey="uv"

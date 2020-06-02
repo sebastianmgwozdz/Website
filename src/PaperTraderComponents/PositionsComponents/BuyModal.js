@@ -46,13 +46,19 @@ function BuyModal(props) {
     };
   }, [symbol, props.price]);
 
+  console.log(props.price);
+
   function reset() {
     props.setVisible(false);
     setConfirmLoading(false);
     setType(0);
-    setSymbol("");
+    if (!props.symbol) {
+      setSymbol("");
+    }
+    if (!props.price) {
+      setPrice("");
+    }
     setQuantity(0);
-    setPrice("");
   }
 
   async function activePositions() {

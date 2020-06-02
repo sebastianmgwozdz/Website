@@ -3,26 +3,36 @@ import Graph from "./Graph";
 import { get } from "../Helpers";
 
 export default function MarketCard(props) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
 
   useEffect(() => {
-    get(
-      "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" +
-        props.symbol +
-        "&interval=5min&apikey=MZVTEZTGKT653IH3"
-    ).then((res) => {
-      if (res) {
-        let series = Object.values(res)[1];
+    function update() {
+      get(
+        "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" +
+          props.symbol +
+          "&interval=5min&apikey=MZVTEZTGKT653IH3"
+      ).then((res) => {
+        if (res) {
+          let series = Object.values(res)[1];
+          setData(series);
+        }
+      });
+    }
 
-        setData(series);
-      }
-    });
+    update();
+
+    let timer = setInterval(update, 300000);
+
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   function firstDataPoint() {
-    for (let i = 0; i < Object.keys(data).length - 1; i++) {
-      let date = Object.keys(data)[i].substring(0, 10);
-      let next = Object.keys(data)[i + 1].substring(0, 10);
+    let keys = Object.keys(data);
+    for (let i = 0; i < keys.length - 1; i++) {
+      let date = keys[i].substring(0, 10);
+      let next = keys[i + 1].substring(0, 10);
       if (date !== next) {
         return i;
       }
@@ -32,11 +42,12 @@ export default function MarketCard(props) {
   }
 
   function prevClose() {
-    if (data.length <= 1) {
-      return data;
+    let keys = Object.keys(data);
+
+    if (keys.length <= 1) {
+      return 0;
     }
 
-    let keys = Object.keys(data);
     for (let i = 1; i < keys.length; i++) {
       let k = keys[i];
       let date = k.substring(0, 10);
@@ -50,7 +61,9 @@ export default function MarketCard(props) {
   }
 
   function formattedData() {
-    console.log(data);
+    if (Object.keys(data).length === 0) {
+      return [];
+    }
     let vals = Object.values(data);
     return vals
       .map((val, index) => {

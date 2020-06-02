@@ -1,26 +1,24 @@
 import React from "react";
 import MarketCard from "./MarketCard";
 
-import { Tabs } from "antd";
+import { Tabs, Popover, Button } from "antd";
 
-const { TabPane } = Tabs;
-
-function callback(key) {
-  console.log(key);
-}
+const c1 = <MarketCard name="NASDAQ" symbol="QQQ"></MarketCard>;
+const c2 = <MarketCard name="DJIA" symbol="DIA"></MarketCard>;
+const c3 = <MarketCard name="S&P 500" symbol="SPY"></MarketCard>;
 
 export default function MarketBar() {
   return (
-    <Tabs defaultActiveKey="1" onChange={callback}>
-      <TabPane tab="Tab 1" key="1">
-        <MarketCard name="NASDAQ" symbol="QQQ"></MarketCard>
-      </TabPane>
-      <TabPane tab="Tab 2" key="2">
-        <MarketCard name="DJIA" symbol="DIA"></MarketCard>
-      </TabPane>
-      <TabPane tab="Tab 3" key="3">
-        <MarketCard name="S&P 500" symbol="SPY"></MarketCard>
-      </TabPane>
-    </Tabs>
+    <div>
+      <Popover content={c1} title="Title">
+        <Button type="primary">Hover me</Button>
+      </Popover>
+      <Popover content={c2} title="Title">
+        <Button type="primary">Hover me</Button>
+      </Popover>
+      <Popover content={c3} title="Title">
+        <Button type="primary">Hover me</Button>
+      </Popover>
+    </div>
   );
 }

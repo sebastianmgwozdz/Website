@@ -91,7 +91,9 @@ function ClosedPositions(props) {
     });
   }
 
-  return <Table columns={columns} dataSource={formattedData()} />;
+  return (
+    <Table columns={columns} dataSource={formattedData()} style={props.style} />
+  );
 }
 
 export default withFirebase(ClosedPositions);
