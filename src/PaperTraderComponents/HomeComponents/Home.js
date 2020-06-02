@@ -2,12 +2,24 @@ import React, { useState } from "react";
 import { withFirebase } from "../../Firebase";
 import ValidationField from "./ValidationField";
 import { Button } from "antd";
+import HomeGraph from "./HomeGraph";
+import Landing from "./Landing";
+import Login from "./Login";
+import Register from "./Register";
 
 function Home(props) {
-  const [login, setLogin] = useState(true);
+  const [view, setView] = useState(0);
 
-  return (
+  const views = [
+    <Landing setView={setView}></Landing>,
+    <Login></Login>,
+    <Register></Register>,
+  ];
+
+  {
+    /** 
     <div>
+      <HomeGraph></HomeGraph>
       <ValidationField
         submit={
           login
@@ -29,8 +41,10 @@ function Home(props) {
       >
         {login ? "Create an account" : "Sign in to existing account"}
       </Button>
-    </div>
-  );
+      </div>*/
+  }
+
+  return views[view];
 }
 
 export default withFirebase(Home);

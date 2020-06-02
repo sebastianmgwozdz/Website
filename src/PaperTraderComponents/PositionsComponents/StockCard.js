@@ -23,6 +23,8 @@ function StockCard(props) {
         "&token=bpleiinrh5r8m26im1dg"
     ).then((res) => {
       if (res) {
+        res["pc"] = res["pc"] * 100;
+        res["c"] = res["c"] * 100;
         setQuote(res);
       }
     });
@@ -76,6 +78,8 @@ function StockCard(props) {
       }
     }
 
+    console.log(quote);
+
     return diff;
   }
 
@@ -126,7 +130,7 @@ function StockCard(props) {
             color: dayChange > 0 ? GREEN : RED,
           }}
         >
-          ${dayChange.toFixed(2)} ({dayPercent.toFixed(2)}%)
+          ${(dayChange / 100).toFixed(2)} ({dayPercent.toFixed(2)}%)
         </Text>
         <br />
         <Text style={{ color: BLACK }}>Net Change: </Text>
@@ -135,7 +139,7 @@ function StockCard(props) {
             color: netChange > 0 ? GREEN : RED,
           }}
         >
-          ${netChange.toFixed(2)} ({netPercent.toFixed(2)}%)
+          ${(netChange / 100).toFixed(2)} ({netPercent.toFixed(2)}%)
         </Text>
       </div>
     );

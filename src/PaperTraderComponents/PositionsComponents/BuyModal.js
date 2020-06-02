@@ -33,7 +33,7 @@ function BuyModal(props) {
             "&token=bpleiinrh5r8m26im1dg"
         ).then((res) => {
           if (res) {
-            setPrice(res["c"]);
+            setPrice(res["c"] * 100);
           }
         });
       } else {
@@ -118,6 +118,8 @@ function BuyModal(props) {
         isLong: long,
       };
 
+      console.log(price);
+
       post(server + "positions/", position);
       if (long) {
         incrementBalance(-1 * quantity * price);
@@ -146,14 +148,10 @@ function BuyModal(props) {
       ]}
       closable={false}
     >
-      {price}
+      {price ? price / 100 : ""}
       <div style={style}>
         {props.symbol ? null : (
-          <Autocomplete
-            setSymbol={setSymbol}
-            setPrice={setPrice}
-            price={price}
-          ></Autocomplete>
+          <Autocomplete setSymbol={setSymbol}></Autocomplete>
         )}
       </div>
 

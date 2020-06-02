@@ -83,7 +83,7 @@ function ClosedPositions(props) {
         key: index,
         openDate: formattedDate(openDate),
         closeDate: formattedDate(closeDate),
-        price: entry["price"],
+        price: entry["price"] / 100,
         initial: entry["initial"],
         tags: [entry["isLong"] ? "Buy" : "Short"],
         long: entry["isLong"],

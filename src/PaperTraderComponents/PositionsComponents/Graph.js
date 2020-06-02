@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { YAxis, ReferenceLine, LineChart, Line } from "recharts";
+import {
+  YAxis,
+  ReferenceLine,
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+} from "recharts";
 
 export default function Graph(props) {
   const [data, setData] = useState([]);
@@ -46,13 +53,12 @@ export default function Graph(props) {
 
   console.log(minMax());
 
-  return (
-    <div>
-      <LineChart
-        width={350}
-        height={155}
+  {
+    /**<LineChart
+        width={props.width ? props.width : 350}
+        height={props.height ? props.height : 155}
         data={data}
-        margin={{ top: 40, right: 30, left: 30, bottom: 10 }}
+        margin={{ top: 10, right: 30, left: 30, bottom: 10 }}
       >
         <YAxis type="number" domain={minMax()} hide></YAxis>
         <ReferenceLine y={props.reference} strokeDasharray="3 3" alwaysShow />
@@ -62,8 +68,39 @@ export default function Graph(props) {
           stroke={color}
           dot={false}
           isAnimationActive={false}
+          strokeWidth={props.strokeWidth}
         />
-      </LineChart>
+      </LineChart> */
+  }
+
+  return (
+    <div>
+      <AreaChart
+        width={props.width ? props.width : 350}
+        height={props.height ? props.height : 155}
+        data={data}
+        margin={{ top: 10, right: 30, left: 30, bottom: 10 }}
+      >
+        <YAxis type="number" domain={minMax()} hide></YAxis>
+        <ReferenceLine y={props.reference} strokeDasharray="3 3" alwaysShow />
+        <defs>
+          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor={color} stopOpacity={0.3} />
+            <stop offset="100%" stopColor={color} stopOpacity={0} />
+          </linearGradient>
+        </defs>
+
+        <Area
+          type="monotone"
+          dataKey="uv"
+          stroke={color}
+          dot={false}
+          isAnimationActive={false}
+          strokeWidth={props.strokeWidth}
+          fillOpacity={1}
+          fill="url(#colorUv)"
+        />
+      </AreaChart>
     </div>
   );
 }

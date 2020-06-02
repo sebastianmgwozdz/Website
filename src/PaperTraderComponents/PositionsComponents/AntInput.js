@@ -17,7 +17,7 @@ function AntInput(props) {
         "/active"
     ).then((res) => {
       for (let pos of res) {
-        if (pos["long"] === long) {
+        if (pos["isLong"] === long) {
           shares += pos["remaining"];
         }
       }
@@ -25,6 +25,8 @@ function AntInput(props) {
 
     return shares;
   }
+
+  console.log(props.balance + " " + props.price);
 
   function onChange(data) {
     let input = Number(data.target.value);

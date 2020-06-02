@@ -40,7 +40,7 @@ function CardGrid(props) {
       let data = JSON.parse(event.data).data;
 
       if (data) {
-        prices.set(data[0]["s"], data[0]);
+        prices.set(data[0]["s"], data[0] * 100);
       }
     };
     addConnections(socket, n);
@@ -74,8 +74,6 @@ function CardGrid(props) {
     }
 
     positions.forEach((val, key, map) => {
-      console.log(val);
-      console.log(prices.get(key));
       cards.push(
         <StockCard
           ticker={key}

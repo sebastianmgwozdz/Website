@@ -89,7 +89,7 @@ function ActivePositions(props) {
       return {
         key: index,
         date: formattedDate(date),
-        price: entry["price"],
+        price: entry["price"] / 100,
         initial: entry["initial"],
         remaining: entry["remaining"],
         tags: [entry["isLong"] ? "Buy" : "Short"],
@@ -127,7 +127,7 @@ function ActivePositions(props) {
       let trade = {
         user: props.firebase.auth.currentUser.uid,
         type: pos.isLong ? 1 : 3,
-        price: curr["c"],
+        price: curr["c"] * 100,
         shareCount: pos.remaining,
         ticker: props.ticker,
         positions: [pos],

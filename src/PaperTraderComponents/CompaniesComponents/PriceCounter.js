@@ -27,7 +27,7 @@ export default function PriceCounter(props) {
           currPrice[0] = res;
           setTick((tick) => tick + 1);
         }
-        props.setPrice(res["c"]);
+        props.setPrice(res["c"] * 100);
       }
     });
   }

@@ -25,7 +25,7 @@ function TradeText(props) {
         "/active"
     ).then((res) => {
       for (let pos of res) {
-        if (pos["long"] === long) {
+        if (pos["isLong"] === long) {
           shares += pos["remaining"];
         }
       }
@@ -52,14 +52,14 @@ function TradeText(props) {
 
         am +=
           (sellAll ? remSell : quantity) *
-          (type === 1 ? price : p["price"] - price);
+          (type === 1 ? price : p["price"] * 100 - price);
         closed += sellAll ? remSell : quantity;
       }
       setText([
         "Current Shares: " + numShares,
         "Remaining Shares: " + (numShares - quantity),
-        "Current Balance: $" + balance,
-        "New Balance: $" + (balance + am),
+        "Current Balance: $" + balance / 100,
+        "New Balance: $" + (balance + am) / 100,
       ]);
     });
   }
@@ -73,13 +73,13 @@ function TradeText(props) {
     switch (type) {
       case 0:
         setText([
-          "Current Balance: $" + balance.toFixed(2),
-          "New Balance: $" + (balance - price * quantity).toFixed(2),
+          "Current Balance: $" + (balance / 100).toFixed(2),
+          "New Balance: $" + ((balance - price * quantity) / 100).toFixed(2),
         ]);
         break;
 
       case 2:
-        setText(["Total Value: $" + quantity * price]);
+        setText(["Total Value: $" + ((quantity * price) / 100).toFixed(2)]);
         break;
       default:
         sharesOwned(true).then((res) => {

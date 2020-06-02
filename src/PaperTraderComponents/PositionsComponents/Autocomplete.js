@@ -49,29 +49,6 @@ export default function Autocomplete(props) {
     props.setSymbol(searchText);
   }
 
-  function selectStock(symbol) {
-    props.setSelectedVal(symbol);
-    currPrice(symbol).then((res) => {
-      props.setPrice(res);
-    });
-  }
-
-  async function currPrice(ticker) {
-    let currPrice;
-
-    await get(
-      "https://finnhub.io/api/v1/quote?symbol=" +
-        ticker +
-        "&token=bpleiinrh5r8m26im1dg"
-    ).then((res) => {
-      if (res) {
-        currPrice = res["c"];
-      }
-    });
-
-    return currPrice;
-  }
-
   return (
     <AutoComplete
       options={options}

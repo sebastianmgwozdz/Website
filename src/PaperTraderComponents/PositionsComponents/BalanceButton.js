@@ -45,7 +45,7 @@ function BalanceButton(props) {
         style={props.style}
         onClick={showModal}
       >
-        {props.text ? props.text : "$" + balance.toFixed(2)}
+        {props.text ? props.text : "$" + (balance / 100).toFixed(2)}
       </Button>
       <BuyModal
         visible={visible}
