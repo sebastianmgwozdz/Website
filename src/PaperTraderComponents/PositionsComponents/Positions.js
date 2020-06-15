@@ -4,6 +4,7 @@ import PositionSummary from "./PositionSummary";
 import CardGrid from "./CardGrid";
 import BalanceButton from "./BalanceButton";
 import MarketBar from "./MarketBar";
+import { PageHeader } from "antd";
 
 const buttonStyle = {
   position: "fixed",
@@ -16,7 +17,7 @@ const buttonStyle = {
   borderColor: "#24e361",
 };
 
-function Positions() {
+function Positions(props) {
   const [selectedStock, setSelectedStock] = useState("");
 
   if (selectedStock) {
@@ -28,9 +29,12 @@ function Positions() {
     );
   }
 
+  console.log(props.marketData);
+
   return (
     <div>
-      <MarketBar></MarketBar>
+      <MarketBar marketData={props.marketData}></MarketBar>
+
       <CardGrid clickFunc={setSelectedStock}></CardGrid>
       <BalanceButton style={buttonStyle}></BalanceButton>
     </div>

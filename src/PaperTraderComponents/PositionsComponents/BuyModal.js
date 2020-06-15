@@ -78,16 +78,14 @@ function BuyModal(props) {
   }
 
   function incrementBalance(val) {
-    get(server + "balances/" + props.firebase.auth.currentUser.uid).then(
-      (res) => {
-        let b = {
-          userId: res["userId"],
-          amount: res["amount"] + val,
-        };
+    let b = {
+      userId: props.firebase.auth.currentUser.uid,
+      amount: props.balance + val,
+    };
 
-        post(server + "balances/", b);
-      }
-    );
+    post(server + "balances/", b).then(() => {
+      props.setBalance(b.amount);
+    });
   }
 
   async function makeTrade() {
@@ -104,7 +102,7 @@ function BuyModal(props) {
           shareCount: quantity,
           positions: res,
         };
-        close(trade, props.incrementBalance);
+        close(trade, incrementBalance);
       });
     } else {
       let long = type !== 2;
@@ -116,6 +114,7 @@ function BuyModal(props) {
         remaining: quantity,
         userId: props.firebase.auth.currentUser.uid,
         isLong: long,
+        openDate: new Date(),
       };
 
       console.log(price);

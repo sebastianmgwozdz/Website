@@ -7,11 +7,11 @@ function Account(props) {
   console.log("Account");
 
   async function reset() {
-    del(server + "positions/userId=" + props.firebase.auth.currentUser.uid);
+    del(server + "positions/id=" + props.firebase.auth.currentUser.uid);
 
     let data = {
       userId: props.firebase.auth.currentUser.uid,
-      amount: 100000
+      amount: 10000000,
     };
     post(server + "balances/", data);
   }

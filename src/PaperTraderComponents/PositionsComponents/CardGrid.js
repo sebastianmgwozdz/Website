@@ -29,6 +29,7 @@ function CardGrid(props) {
       } else {
         message.error("Error connecting to server. Attempting to reconnect.");
       }
+
       setPositions(p);
     });
 
@@ -55,11 +56,13 @@ function CardGrid(props) {
       });
   }
 
+  console.log(positions);
+
   useEffect(() => {
     update();
     let t = setInterval(() => {
       update();
-    }, 5000);
+    }, 3000);
 
     return () => {
       clearInterval(t);

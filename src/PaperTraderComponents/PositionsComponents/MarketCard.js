@@ -3,30 +3,11 @@ import Graph from "./Graph";
 import { get } from "../Helpers";
 
 export default function MarketCard(props) {
-  const [data, setData] = useState({});
+  const [data, setData] = useState(undefined);
 
   useEffect(() => {
-    function update() {
-      get(
-        "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" +
-          props.symbol +
-          "&interval=5min&apikey=MZVTEZTGKT653IH3"
-      ).then((res) => {
-        if (res) {
-          let series = Object.values(res)[1];
-          setData(series);
-        }
-      });
-    }
-
-    update();
-
-    let timer = setInterval(update, 300000);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+    setData(props.data);
+  }, [props.data]);
 
   function firstDataPoint() {
     let keys = Object.keys(data);
@@ -66,18 +47,24 @@ export default function MarketCard(props) {
     }
     let vals = Object.values(data);
     return vals
-      .map((val, index) => {
-        return { uv: Object.values(val)[0], amt: index };
+      .map((v, index) => {
+        return { val: Object.values(v)[0], x: index };
       })
       .slice(0, firstDataPoint() + 1)
       .reverse();
   }
 
-  console.log(firstDataPoint());
-
   return (
     <div>
-      <Graph data={formattedData()} reference={prevClose()}></Graph>
+      {data ? (
+        <Graph
+          data={formattedData()}
+          reference={prevClose()}
+          width={300}
+          height={105}
+        ></Graph>
+      ) : null}
+
       <div>{props.name + " " + props.symbol}</div>
     </div>
   );

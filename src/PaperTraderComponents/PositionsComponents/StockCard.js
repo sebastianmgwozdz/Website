@@ -13,7 +13,6 @@ const RED = "#f55936";
 
 function StockCard(props) {
   const [quote, setQuote] = useState(null);
-  const [tick, setTick] = useState(0);
   const { ticker, positions, clickFunc, data } = props;
 
   function updateQuote() {
@@ -23,6 +22,7 @@ function StockCard(props) {
         "&token=bpleiinrh5r8m26im1dg"
     ).then((res) => {
       if (res) {
+        console.log(res);
         res["pc"] = res["pc"] * 100;
         res["c"] = res["c"] * 100;
         setQuote(res);
@@ -41,8 +41,7 @@ function StockCard(props) {
     if (isOpen(curr)) {
       updateQuote();
     }
-    setTick(tick + 1);
-  }, [data]);
+  }, [positions]);
 
   function isToday(date) {
     const today = new Date();
@@ -77,8 +76,6 @@ function StockCard(props) {
         diff -= d;
       }
     }
-
-    console.log(quote);
 
     return diff;
   }

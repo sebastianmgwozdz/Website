@@ -12,12 +12,14 @@ function BalanceButton(props) {
   useEffect(() => {
     currBalance();
 
-    let interval = setInterval(currBalance, 5000);
+    let interval = setInterval(currBalance, 10000);
 
     return () => {
       clearInterval(interval);
     };
   }, []);
+
+  console.log(props.firebase.auth.currentUser.uid);
 
   function currBalance() {
     get(server + "balances/" + props.firebase.auth.currentUser.uid).then(
@@ -51,6 +53,7 @@ function BalanceButton(props) {
         visible={visible}
         setVisible={setVisible}
         balance={balance}
+        setBalance={setBalance}
         symbol={props.symbol}
       ></BuyModal>
     </div>
