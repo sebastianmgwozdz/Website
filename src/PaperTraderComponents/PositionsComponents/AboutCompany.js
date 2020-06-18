@@ -53,8 +53,10 @@ export default function AboutCompany(props) {
 
     if (num >= 1000000) {
       return (num / 1000000).toFixed(2) + "T";
-    } else {
+    } else if (num >= 1000) {
       return (num / 1000).toFixed(2) + "B";
+    } else {
+      return num.toFixed(2) + "M";
     }
   }
 
@@ -63,7 +65,7 @@ export default function AboutCompany(props) {
 
     let currDate = new Date().toISOString().substring(0, 10);
     let lastDate =
-      Number(currDate.substring(0, 4)) - 1 + currDate.substring(4, 10);
+      Number(currDate.substring(0, 4)) - 2 + currDate.substring(4, 10);
 
     await get(
       "https://finnhub.io/api/v1/calendar/earnings?from=" +
@@ -73,14 +75,18 @@ export default function AboutCompany(props) {
         "&symbol=" +
         props.ticker +
         "&token=bpleiinrh5r8m26im1dg"
-    ).then((p) => {
-      console.log(p);
-      if (p["earningsCalendar"][0] && p["earningsCalendar"][0]["epsActual"]) {
-        p = "P/E Ratio: " + props.price / p["earningsCalendar"][0]["epsActual"];
+    ).then((res) => {
+      let eps = 0;
+
+      if (res["earningsCalendar"]) {
+        for (let i = 0; i < 4; i++) {
+          eps += res["earningsCalendar"][i]["epsActual"];
+        }
+        p = props.price / eps / 100;
       }
     });
 
-    return p;
+    return "P/E Ratio: " + p.toFixed(2);
   }
 
   useEffect(() => {

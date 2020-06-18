@@ -67,7 +67,9 @@ function PositionSummary(props) {
         style={tableStyle}
       ></ClosedPositions>
       <Divider>Summary</Divider>
-      <AboutCompany ticker={props.ticker} price={price}></AboutCompany>
+      {price ? (
+        <AboutCompany ticker={props.ticker} price={price}></AboutCompany>
+      ) : null}
     </div>
   );
 }
