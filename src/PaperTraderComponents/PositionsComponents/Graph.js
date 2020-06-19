@@ -51,7 +51,7 @@ export default function Graph(props) {
       width={props.width ? props.width : 350}
       height={props.height ? props.height : 155}
       data={data}
-      margin={{ top: 10, right: 32, bottom: 10 }}
+      margin={{ top: 15, left: 15, right: 25, bottom: 10 }}
     >
       <YAxis type="number" domain={minMax()} hide></YAxis>
       <ReferenceLine y={props.reference} strokeDasharray="3 3" alwaysShow />
