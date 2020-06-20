@@ -1,11 +1,19 @@
 import axios from "axios";
 import { server } from "../links";
 
+const https = require("https");
+
+const agent = new https.Agent({
+  rejectUnauthorized: false,
+});
+
 export async function get(url) {
   let res;
 
+  console.log(url);
+
   await axios
-    .get(url)
+    .get(url, { httpsAgent: agent })
     .then(function (response) {
       res = response.data;
     })
@@ -17,13 +25,13 @@ export async function get(url) {
 }
 
 export function del(url) {
-  axios.delete(url).catch(function (error) {
+  axios.delete(url, { httpsAgent: agent }).catch(function (error) {
     console.log(error);
   });
 }
 
 export async function post(url, data) {
-  axios.post(url, data).catch(function (error) {
+  axios.post(url, data, { httpsAgent: agent }).catch(function (error) {
     console.log(error);
   });
 }
