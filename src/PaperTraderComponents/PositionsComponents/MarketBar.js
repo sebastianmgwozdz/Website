@@ -1,5 +1,5 @@
 import React from "react";
-import MarketCard from "./MarketCard";
+import DayCard from "./DayCard";
 
 export default function MarketBar(props) {
   return (
@@ -8,23 +8,29 @@ export default function MarketBar(props) {
         display: "flex",
         border: "1px solid rgb(235, 237, 240)",
         width: "83vw",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
       }}
     >
-      <MarketCard
+      <DayCard
         name="NASDAQ"
-        symbol="QQQ"
         data={props.marketData["QQQ"]}
-      ></MarketCard>
-      <MarketCard
+        width={300}
+        height={105}
+      ></DayCard>
+      <DayCard
         name="DJIA"
-        symbol="DIA"
         data={props.marketData["DIA"]}
-      ></MarketCard>
-      <MarketCard
+        width={300}
+        height={105}
+      ></DayCard>
+      <DayCard
         name="S&P 500"
-        symbol="SPY"
         data={props.marketData["SPY"]}
-      ></MarketCard>
+        width={300}
+        height={105}
+      ></DayCard>
     </div>
   );
 }

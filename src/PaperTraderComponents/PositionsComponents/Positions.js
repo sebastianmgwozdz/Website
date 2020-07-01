@@ -4,7 +4,6 @@ import PositionSummary from "./PositionSummary";
 import CardGrid from "./CardGrid";
 import BalanceButton from "./BalanceButton";
 import MarketBar from "./MarketBar";
-import { PageHeader } from "antd";
 
 const buttonStyle = {
   position: "fixed",
@@ -28,8 +27,6 @@ function Positions(props) {
       ></PositionSummary>
     );
   }
-
-  console.log(props.marketData);
 
   return (
     <div>

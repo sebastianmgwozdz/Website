@@ -6,17 +6,14 @@ let stocks = new Map();
 get(
   "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bpleiinrh5r8m26im1dg"
 ).then((res) => {
-  let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  for (let i = 0; i < 26; i++) {
-    let char = chars[i];
-    stocks.set(
-      char,
-      res
-        ? res.filter((val) => {
-            return val["displaySymbol"][0] === char;
-          })
-        : []
-    );
+  for (let stock of res) {
+    let symbol = stock["displaySymbol"];
+    let firstChar = symbol[0];
+    if (stocks.has(firstChar)) {
+      stocks.get(firstChar).push(symbol);
+    } else {
+      stocks.set(firstChar, []);
+    }
   }
 });
 
@@ -39,7 +36,7 @@ export default function Autocomplete(props) {
       return;
     }
     for (let i = 0; i < filtered.length; i++) {
-      let curr = filtered[i]["displaySymbol"];
+      let curr = filtered[i];
       if (curr.toLowerCase().includes(searchText.toLowerCase())) {
         arr.push({ value: curr });
       }

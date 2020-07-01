@@ -17,10 +17,8 @@ function App(props) {
 
   return (
     <Router>
-      <div>
-        <Route exact path="/papertrader/home" component={Home} />
-        <Route exact path="/papertrader/dashboard" component={Main} />
-      </div>
+      <Route exact path="/papertrader/home" component={Home} />
+      <Route exact path="/papertrader/dashboard" component={Main} />
     </Router>
   );
 }

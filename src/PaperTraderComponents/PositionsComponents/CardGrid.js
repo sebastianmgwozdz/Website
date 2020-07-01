@@ -56,13 +56,11 @@ function CardGrid(props) {
       });
   }
 
-  console.log(positions);
-
   useEffect(() => {
     update();
     let t = setInterval(() => {
       update();
-    }, 3000);
+    }, 7500);
 
     return () => {
       clearInterval(t);

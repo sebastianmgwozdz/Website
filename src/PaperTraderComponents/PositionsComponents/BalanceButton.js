@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "antd";
 import BuyModal from "./BuyModal";
-import { get, post } from "../Helpers";
+import { get } from "../Helpers";
 import { withFirebase } from "../../Firebase";
 import { server } from "../../links";
 
@@ -18,8 +18,6 @@ function BalanceButton(props) {
       clearInterval(interval);
     };
   }, []);
-
-  console.log(props.firebase.auth.currentUser.uid);
 
   function currBalance() {
     get(server + "balances/" + props.firebase.auth.currentUser.uid).then(

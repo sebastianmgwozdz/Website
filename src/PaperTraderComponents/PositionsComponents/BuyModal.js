@@ -46,8 +46,6 @@ function BuyModal(props) {
     };
   }, [symbol, props.price]);
 
-  console.log(props.price);
-
   function reset() {
     props.setVisible(false);
     setConfirmLoading(false);
@@ -116,8 +114,6 @@ function BuyModal(props) {
         isLong: long,
         openDate: new Date(),
       };
-
-      console.log(price);
 
       post(server + "positions/", position);
       if (long) {

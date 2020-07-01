@@ -78,7 +78,6 @@ function ActivePositions(props) {
         props.ticker +
         "/active"
     ).then((res) => {
-      console.log(res);
       setData(res);
     });
   }, []);

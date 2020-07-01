@@ -26,7 +26,7 @@ export default function Sidebar(props) {
   return (
     <Menu
       mode="inline"
-      style={{ maxWidth: "17vw", height: "100vh" }}
+      style={{ maxWidth: "17vw" }}
       defaultSelectedKeys={["0"]}
     >
       <MarketCounter></MarketCounter>

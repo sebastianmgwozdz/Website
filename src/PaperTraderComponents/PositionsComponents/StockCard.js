@@ -22,7 +22,6 @@ function StockCard(props) {
         "&token=bpleiinrh5r8m26im1dg"
     ).then((res) => {
       if (res) {
-        console.log(res);
         res["pc"] = res["pc"] * 100;
         res["c"] = res["c"] * 100;
         setQuote(res);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Calendar, Select, Radio, Col, Row, Typography, Badge } from "antd";
+import { Calendar, Select, Col, Row, Typography, Badge } from "antd";
 
 function getListData(value) {
   let listData;
@@ -33,6 +33,7 @@ function getListData(value) {
 }
 
 function dateCellRender(value) {
+  console.log(value);
   const listData = getListData(value);
   return (
     <ul className="events">

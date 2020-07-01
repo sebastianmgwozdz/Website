@@ -10,8 +10,6 @@ const agent = new https.Agent({
 export async function get(url) {
   let res;
 
-  console.log(url);
-
   await axios
     .get(url, { httpsAgent: agent })
     .then(function (response) {

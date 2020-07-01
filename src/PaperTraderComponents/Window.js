@@ -8,8 +8,6 @@ import EarningsCalendar from "./CalendarComponents/EarningsCalendar";
 export default function Window(props) {
   const [marketData, setMarketData] = useState([]);
 
-  console.log(typeof marketData);
-
   useEffect(() => {
     function update() {
       let q = getData("QQQ");
@@ -22,7 +20,6 @@ export default function Window(props) {
           DIA: Object.values(values[1])[1],
           SPY: Object.values(values[2])[1],
         });
-        console.log(Object.values(values[2])[1]);
       });
     }
 

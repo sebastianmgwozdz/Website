@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Graph from "./Graph";
-import { get } from "../Helpers";
+import { Spin } from "antd";
 
-export default function MarketCard(props) {
+export default function DayCard(props) {
   const [data, setData] = useState(undefined);
 
   useEffect(() => {
@@ -19,7 +19,9 @@ export default function MarketCard(props) {
       }
     }
 
-    return -1;
+    console.log(keys.length - 1);
+
+    return keys.length - 1;
   }
 
   function prevClose() {
@@ -38,7 +40,7 @@ export default function MarketCard(props) {
       }
     }
 
-    return null;
+    return props.reference;
   }
 
   function formattedData() {
@@ -46,26 +48,32 @@ export default function MarketCard(props) {
       return [];
     }
     let vals = Object.values(data);
-    return vals
+    let form = vals
       .map((v, index) => {
         return { val: Object.values(v)[0], x: index };
       })
       .slice(0, firstDataPoint() + 1)
       .reverse();
+
+    console.log(firstDataPoint());
+    console.log(data);
+
+    return [...form, { val: Object.values(vals[0])[3], x: vals.length }];
   }
 
-  return (
+  return data ? (
     <div>
-      {data ? (
-        <Graph
-          data={formattedData()}
-          reference={prevClose()}
-          width={300}
-          height={105}
-        ></Graph>
-      ) : null}
-
-      <div>{props.name + " " + props.symbol}</div>
+      <Graph
+        data={formattedData()}
+        reference={prevClose()}
+        width={props.width}
+        height={props.height}
+      ></Graph>
+      {props.name ? props.name : null}
+    </div>
+  ) : (
+    <div style={{ width: props.width, height: props.height, marginTop: "4vh" }}>
+      <Spin></Spin>
     </div>
   );
 }

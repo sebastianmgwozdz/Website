@@ -8,6 +8,8 @@ import { get } from "../Helpers";
 import BalanceButton from "./BalanceButton";
 import AboutCompany from "./AboutCompany";
 import { Divider } from "antd";
+import CompanyNews from "./CompanyNews";
+import DayCard from "./DayCard";
 
 const headerStyle = {
   fontSize: "40px",
@@ -32,6 +34,7 @@ const tableStyle = {
 function PositionSummary(props) {
   const [companyName, setCompanyName] = useState("");
   const [price, setPrice] = useState("");
+  const [graphData, setGraphData] = useState(undefined);
 
   useEffect(() => {
     get(
@@ -41,7 +44,16 @@ function PositionSummary(props) {
     ).then((res) => {
       setCompanyName(res["name"]);
     });
+    get(
+      "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" +
+        props.ticker +
+        "&interval=5min&apikey=MZVTEZTGKT653IH3"
+    ).then((res) => {
+      setGraphData(Object.values(res)[1]);
+    });
   }, [props.ticker]);
+
+  console.log(graphData);
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -54,8 +66,17 @@ function PositionSummary(props) {
         style={buttonStyle}
         symbol={props.ticker}
         text={"Trade"}
-        price={price}
       ></BalanceButton>
+      <DayCard
+        data={graphData}
+        width={750}
+        height={450}
+        reference={price["pc"]}
+      ></DayCard>
+      <Divider>Summary</Divider>
+      {price ? (
+        <AboutCompany ticker={props.ticker} price={price}></AboutCompany>
+      ) : null}
       <Divider>Active Positions</Divider>
       <ActivePositions
         ticker={props.ticker}
@@ -66,10 +87,8 @@ function PositionSummary(props) {
         ticker={props.ticker}
         style={tableStyle}
       ></ClosedPositions>
-      <Divider>Summary</Divider>
-      {price ? (
-        <AboutCompany ticker={props.ticker} price={price}></AboutCompany>
-      ) : null}
+      <Divider>Related News</Divider>
+      <CompanyNews ticker={props.ticker}></CompanyNews>
     </div>
   );
 }

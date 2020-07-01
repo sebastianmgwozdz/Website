@@ -2,7 +2,6 @@ import React from "react";
 import { RiseOutlined } from "@ant-design/icons";
 
 import { Button } from "antd";
-import HomeGraph from "./HomeGraph";
 
 const buttonStyle = {
   width: "12vw",
@@ -10,48 +9,58 @@ const buttonStyle = {
   fontSize: "18px",
   backgroundColor: "#f55936",
   borderColor: "#f55936",
-  marginTop: "6vh",
+  marginRight: "3vh",
+  marginLeft: "3vh",
 };
 
 export default function Landing(props) {
   return (
-    <div
-      style={{
-        position: "absolute",
-        margin: 0,
-        top: "50%",
-        left: "50%",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)",
-        textAlign: "center",
-      }}
-    >
-      <RiseOutlined
-        style={{ fontSize: "17vh", marginBottom: "2vh" }}
-      ></RiseOutlined>
-      <HomeGraph></HomeGraph>
-      <span>
-        <Button
-          style={buttonStyle}
-          type="primary"
-          shape="round"
-          onClick={() => {
-            props.setView(1);
-          }}
-        >
-          Login
-        </Button>
-        <Button
-          style={buttonStyle}
-          type="primary"
-          shape="round"
-          onClick={() => {
-            props.setView(2);
-          }}
-        >
-          Register
-        </Button>
-      </span>
+    <div>
+      <div
+        style={{
+          textAlign: "center",
+          backgroundColor: "rgba(116, 232, 49, 0.5)",
+          width: "100vw",
+          height: "70vh",
+          borderBottom: "3px solid",
+        }}
+      >
+        <RiseOutlined
+          style={{ fontSize: "23vh", paddingTop: "24vh" }}
+        ></RiseOutlined>
+      </div>{" "}
+      <div
+        style={{
+          justifyContent: "center",
+          textAlign: "center",
+          backgroundColor: "rgba(81, 114, 232, 0.5)",
+          height: "30vh",
+          paddingTop: "10vh",
+        }}
+      >
+        <span>
+          <Button
+            style={buttonStyle}
+            type="primary"
+            shape="round"
+            onClick={() => {
+              props.setView(1);
+            }}
+          >
+            Login
+          </Button>
+          <Button
+            style={buttonStyle}
+            type="primary"
+            shape="round"
+            onClick={() => {
+              props.setView(2);
+            }}
+          >
+            Register
+          </Button>
+        </span>
+      </div>
     </div>
   );
 }

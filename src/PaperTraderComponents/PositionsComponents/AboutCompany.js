@@ -13,9 +13,21 @@ export default function AboutCompany(props) {
     quote: undefined,
     mktCap: undefined,
     pe: undefined,
+    lowHigh: undefined,
   });
 
-  console.log(values);
+  async function lowHigh() {
+    let data = [];
+    await get(
+      "https://finnhub.io/api/v1/stock/metric?symbol=" +
+        props.ticker +
+        "&metric=price&token=bpleiinrh5r8m26im1dg"
+    ).then((res) => {
+      data.push("52 Week High: " + res["metric"]["52WeekHigh"].toFixed(2));
+      data.push("52 Week Low: " + res["metric"]["52WeekLow"].toFixed(2));
+    });
+    return data;
+  }
 
   async function quote() {
     let data = [];
@@ -82,7 +94,7 @@ export default function AboutCompany(props) {
         for (let i = 0; i < 4; i++) {
           eps += res["earningsCalendar"][i]["epsActual"];
         }
-        p = props.price / eps / 100;
+        p = props.price["c"] / eps;
       }
     });
 
@@ -90,20 +102,18 @@ export default function AboutCompany(props) {
   }
 
   useEffect(() => {
-    async function fetch() {
-      let q = await quote();
-      let m = await mktCap();
-      let p = await pe();
-      return [q, m, p];
-    }
-    fetch().then((res) => {
-      setValues({ quote: res[0], mktCap: res[1], pe: res[2] });
+    let vals = [quote(), mktCap(), pe(), lowHigh()];
+    Promise.all(vals).then((res) => {
+      setValues({
+        quote: res[0],
+        mktCap: res[1],
+        pe: res[2],
+        lowHigh: res[3],
+      });
     });
   }, []);
 
   function data() {
-    console.log(values);
-
     let arr = [];
 
     for (let i of Object.values(values)) {
@@ -123,7 +133,6 @@ export default function AboutCompany(props) {
       return "";
     }
 
-    console.log(str);
     let colon = str.indexOf(":");
 
     let label = str.substring(0, colon + 1);
@@ -140,14 +149,21 @@ export default function AboutCompany(props) {
   let d = data();
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <span style={{ display: "flex", justifyContent: "center" }}>
       <List
         size="large"
         bordered
-        dataSource={d}
+        dataSource={d.slice(0, 4)}
         renderItem={(item) => <List.Item>{item}</List.Item>}
-        style={{ width: "45vh" }}
+        style={{ width: "45vh", marginBottom: "10vh" }}
       />
-    </div>
+      <List
+        size="large"
+        bordered
+        dataSource={d.slice(4, 8)}
+        renderItem={(item) => <List.Item>{item}</List.Item>}
+        style={{ width: "45vh", marginBottom: "10vh" }}
+      />
+    </span>
   );
 }
