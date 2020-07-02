@@ -28,7 +28,7 @@ export default function Graph(props) {
 
     let diff = max - min;
 
-    return [min - diff / 2, max + diff / 2];
+    return [min - diff / 4, max + diff / 4];
   }
 
   let color =
@@ -41,17 +41,19 @@ export default function Graph(props) {
     return null;
   }
 
+  console.log(data);
+
   return (
     <AreaChart
       width={props.width ? props.width : 350}
       height={props.height ? props.height : 155}
       data={data}
-      margin={{ top: 15, left: 15, right: 25, bottom: 10 }}
+      margin={{ top: 15, left: 25, right: 25, bottom: 10 }}
     >
       <defs>
-        <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%" stopColor={color} stopOpacity={0.8} />
-          <stop offset="95%" stopColor={color} stopOpacity={0} />
+        <linearGradient id={props.reference} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor={color} stopOpacity={0.2} />
+          <stop offset="50%" stopColor={color} stopOpacity={0} />
         </linearGradient>
       </defs>
       <YAxis type="number" domain={minMax()} hide></YAxis>
@@ -64,7 +66,7 @@ export default function Graph(props) {
         isAnimationActive={false}
         strokeWidth={props.strokeWidth}
         fillOpacity={1}
-        fill="url(#colorUv)"
+        fill={"url(#" + props.reference + ")"}
       />
     </AreaChart>
   );

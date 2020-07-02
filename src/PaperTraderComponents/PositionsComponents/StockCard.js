@@ -21,6 +21,8 @@ function StockCard(props) {
         ticker +
         "&token=bpleiinrh5r8m26im1dg"
     ).then((res) => {
+      console.log(res);
+
       if (res) {
         res["pc"] = res["pc"] * 100;
         res["c"] = res["c"] * 100;

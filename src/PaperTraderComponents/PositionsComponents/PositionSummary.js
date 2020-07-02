@@ -25,7 +25,6 @@ const buttonStyle = {
 
 const tableStyle = {
   marginBottom: "5vh",
-
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -56,7 +55,7 @@ function PositionSummary(props) {
   console.log(graphData);
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <div style={{ textAlign: "center", width: "100vw" }}>
       <Header returnFunc={props.returnFunc}></Header>
       <div style={headerStyle}>
         {props.ticker + (companyName ? " (" + companyName + ")" : "")}
@@ -67,6 +66,7 @@ function PositionSummary(props) {
         symbol={props.ticker}
         text={"Trade"}
       ></BalanceButton>
+      <Divider></Divider>
       <DayCard
         data={graphData}
         width={750}

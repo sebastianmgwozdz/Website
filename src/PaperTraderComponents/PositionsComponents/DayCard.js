@@ -61,19 +61,31 @@ export default function DayCard(props) {
     return [...form, { val: Object.values(vals[0])[3], x: vals.length }];
   }
 
-  return data ? (
-    <div>
-      <Graph
-        data={formattedData()}
-        reference={prevClose()}
-        width={props.width}
-        height={props.height}
-      ></Graph>
-      {props.name ? props.name : null}
-    </div>
-  ) : (
-    <div style={{ width: props.width, height: props.height, marginTop: "4vh" }}>
-      <Spin></Spin>
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: props.height + 30,
+
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        display: "flex",
+      }}
+    >
+      {data ? (
+        <div>
+          <Graph
+            data={formattedData()}
+            reference={prevClose()}
+            width={props.width}
+            height={props.height}
+          ></Graph>
+          {props.name ? props.name : null}
+        </div>
+      ) : (
+        <Spin></Spin>
+      )}
     </div>
   );
 }
