@@ -23,27 +23,21 @@ function BuyModal(props) {
   }
 
   useEffect(() => {
-    let interval = setInterval(() => {
-      if (props.price) {
-        setPrice(props.price);
-      } else if (symbol) {
-        get(
-          "https://finnhub.io/api/v1/quote?symbol=" +
-            symbol +
-            "&token=bpleiinrh5r8m26im1dg"
-        ).then((res) => {
-          if (res) {
-            setPrice(res["c"] * 100);
-          }
-        });
-      } else {
-        setPrice("");
-      }
-    }, 2000);
-
-    return () => {
-      clearInterval(interval);
-    };
+    if (props.price) {
+      setPrice(props.price);
+    } else if (symbol) {
+      get(
+        "https://finnhub.io/api/v1/quote?symbol=" +
+          symbol +
+          "&token=bpleiinrh5r8m26im1dg"
+      ).then((res) => {
+        if (res) {
+          setPrice(res["c"] * 100);
+        }
+      });
+    } else {
+      setPrice("");
+    }
   }, [symbol, props.price]);
 
   function reset() {
@@ -146,7 +140,10 @@ function BuyModal(props) {
       {price ? price / 100 : ""}
       <div style={style}>
         {props.symbol ? null : (
-          <Autocomplete setSymbol={setSymbol}></Autocomplete>
+          <Autocomplete
+            setSymbol={setSymbol}
+            setQuantity={setQuantity}
+          ></Autocomplete>
         )}
       </div>
 

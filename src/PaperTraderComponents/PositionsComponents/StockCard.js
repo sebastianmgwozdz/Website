@@ -8,6 +8,7 @@ import Loading from "./Loading";
 
 const { Text } = Typography;
 const BLACK = "#000000";
+const GRAY = "#787777";
 const GREEN = "#24e361";
 const RED = "#f55936";
 
@@ -21,8 +22,6 @@ function StockCard(props) {
         ticker +
         "&token=bpleiinrh5r8m26im1dg"
     ).then((res) => {
-      console.log(res);
-
       if (res) {
         res["pc"] = res["pc"] * 100;
         res["c"] = res["c"] * 100;
@@ -117,6 +116,21 @@ function StockCard(props) {
     let total = totalValue();
     let netPercent = percentDiff(total, netChange + total);
 
+    let dayColor;
+    let netColor;
+
+    if (Math.abs(dayChange) < 0.005) {
+      dayColor = GRAY;
+    } else {
+      dayColor = dayChange > 0 ? GREEN : RED;
+    }
+
+    if (Math.abs(netChange) < 0.005) {
+      netColor = GRAY;
+    } else {
+      netColor = netChange > 0 ? GREEN : RED;
+    }
+
     return (
       <div>
         <Text style={{ color: BLACK, fontSize: "20px" }}>{ticker}</Text>
@@ -125,7 +139,7 @@ function StockCard(props) {
         <Text style={{ color: BLACK }}>Day Change: </Text>
         <Text
           style={{
-            color: dayChange > 0 ? GREEN : RED,
+            color: dayColor,
           }}
         >
           ${(dayChange / 100).toFixed(2)} ({dayPercent.toFixed(2)}%)
@@ -134,7 +148,7 @@ function StockCard(props) {
         <Text style={{ color: BLACK }}>Net Change: </Text>
         <Text
           style={{
-            color: netChange > 0 ? GREEN : RED,
+            color: netColor,
           }}
         >
           ${(netChange / 100).toFixed(2)} ({netPercent.toFixed(2)}%)

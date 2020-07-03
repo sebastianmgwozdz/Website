@@ -20,8 +20,6 @@ get(
 export default function Autocomplete(props) {
   const [options, setOptions] = useState([]);
 
-  console.log("Autocomplete");
-
   async function onSearch(searchText) {
     let arr = [];
     if (!searchText) {
@@ -31,19 +29,18 @@ export default function Autocomplete(props) {
     }
 
     let filtered = stocks.get(searchText[0].toUpperCase());
-    if (!filtered) {
-      setOptions([]);
-      return;
-    }
-    for (let i = 0; i < filtered.length; i++) {
-      let curr = filtered[i];
-      if (curr.toLowerCase().includes(searchText.toLowerCase())) {
-        arr.push({ value: curr });
+
+    if (filtered) {
+      for (let i = 0; i < filtered.length; i++) {
+        let curr = filtered[i];
+        if (curr.toLowerCase().includes(searchText.toLowerCase())) {
+          arr.push({ value: curr });
+        }
       }
     }
 
     setOptions(arr);
-    props.setSymbol(searchText);
+    props.setSymbol(arr.length === 0 ? "" : searchText);
   }
 
   return (
@@ -55,6 +52,7 @@ export default function Autocomplete(props) {
       }}
       onSearch={onSearch}
       placeholder="Enter Stock Symbol"
+      onSelect={onSearch}
     />
   );
 }

@@ -26,8 +26,6 @@ function AntInput(props) {
     return shares;
   }
 
-  console.log(props.balance + " " + props.price);
-
   function onChange(data) {
     let input = Number(data.target.value);
     if (isNaN(input)) {
