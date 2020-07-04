@@ -19,6 +19,7 @@ get(
 
 export default function Autocomplete(props) {
   const [options, setOptions] = useState([]);
+  console.log("auto complete");
 
   async function onSearch(searchText) {
     let arr = [];

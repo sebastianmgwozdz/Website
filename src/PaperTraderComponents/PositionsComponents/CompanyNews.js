@@ -46,6 +46,7 @@ export default function CompanyNews(props) {
             textAlign: "center",
             width: 800,
           }}
+          key={i}
         >
           <Card
             style={{

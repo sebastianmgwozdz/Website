@@ -16,6 +16,7 @@ function BuyModal(props) {
   const [symbol, setSymbol] = useState(props.symbol);
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(props.price);
+  console.log("buy modal");
 
   function onOk() {
     setConfirmLoading(true);

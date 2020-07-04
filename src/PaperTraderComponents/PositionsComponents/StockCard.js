@@ -36,8 +36,9 @@ function StockCard(props) {
 
   useEffect(() => {
     let curr = new Date();
+    let past = curr.setMinutes(curr.getMinutes() - 1);
 
-    if (isOpen(curr)) {
+    if (isOpen(curr) && !isOpen(past)) {
       updateQuote();
     }
   }, [positions]);
@@ -66,7 +67,7 @@ function StockCard(props) {
 
       d =
         pos["remaining"] *
-        ((!data ? quote["c"] : data["p"]) -
+        ((!data ? quote["c"] : data) -
           (sinceClose ? quote["pc"] : pos["price"]));
 
       if (pos["isLong"]) {
@@ -108,10 +109,10 @@ function StockCard(props) {
       return null;
     }
 
-    let dayPercent = correctSign(
-      dayChange,
-      percentDiff(quote["pc"], quote["c"])
-    );
+    let dayPercent =
+      Math.abs(dayChange) < 0.005
+        ? 0
+        : correctSign(dayChange, percentDiff(quote["pc"], quote["c"]));
     let total = totalValue();
     let netPercent = percentDiff(total, netChange + total);
 

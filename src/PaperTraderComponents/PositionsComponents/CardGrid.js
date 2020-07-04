@@ -8,6 +8,7 @@ import { message } from "antd";
 function CardGrid(props) {
   const [positions, setPositions] = useState(new Map());
   const [prices] = useState(new Map());
+  console.log(prices);
 
   function update() {
     let p = new Map();
@@ -41,7 +42,7 @@ function CardGrid(props) {
       let data = JSON.parse(event.data).data;
 
       if (data) {
-        prices.set(data[0]["s"], data[0] * 100);
+        prices.set(data[0]["s"], data[0]["p"] * 100);
       }
     };
     addConnections(socket, n);

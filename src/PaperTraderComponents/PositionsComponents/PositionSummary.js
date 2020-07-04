@@ -52,8 +52,6 @@ function PositionSummary(props) {
     });
   }, [props.ticker]);
 
-  console.log(graphData);
-
   return (
     <div style={{ textAlign: "center", width: "100vw" }}>
       <Header returnFunc={props.returnFunc}></Header>

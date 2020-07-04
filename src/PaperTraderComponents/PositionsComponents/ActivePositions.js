@@ -69,6 +69,8 @@ function formattedDate(date) {
 function ActivePositions(props) {
   const [data, setData] = useState([]);
 
+  console.log("active positions");
+
   useEffect(() => {
     get(
       server +

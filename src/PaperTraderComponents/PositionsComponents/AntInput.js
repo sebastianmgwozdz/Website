@@ -5,6 +5,8 @@ import { server } from "../../links";
 import { withFirebase } from "../../Firebase";
 
 function AntInput(props) {
+  console.log("ant input");
+
   async function sharesOwned(long) {
     let shares = 0;
 

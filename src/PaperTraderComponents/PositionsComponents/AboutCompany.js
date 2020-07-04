@@ -16,6 +16,8 @@ export default function AboutCompany(props) {
     lowHigh: undefined,
   });
 
+  console.log("About company");
+
   async function lowHigh() {
     let data = [];
     await get(

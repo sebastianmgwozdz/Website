@@ -2,6 +2,8 @@ import React from "react";
 import { Radio } from "antd";
 
 export default function AntRadio(props) {
+  console.log("ant radio");
+
   function getButtons() {
     let buttons = [];
     for (let i = 0; i < props.labels.length; i++) {

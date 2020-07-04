@@ -8,6 +8,7 @@ import { server } from "../../links";
 function BalanceButton(props) {
   const [visible, setVisible] = useState(false);
   const [balance, setBalance] = useState(-1);
+  console.log("balance button");
 
   useEffect(() => {
     currBalance();
