@@ -29,7 +29,7 @@ function GameDisplay(props) {
           borderStyle: "solid",
           borderRadius: "50px",
           padding: "5%",
-          boxShadow: "0px 15px 10px #b7b9bd"
+          boxShadow: "0px 15px 10px #b7b9bd",
         }}
       >
         <span style={{ backgroundColor: "#88D669" }}>{completedString}</span>
@@ -75,7 +75,7 @@ function GameDisplay(props) {
   return (
     <div>
       {getHighlightedText()}
-      <div style={{ padding: "10%" }}>
+      <div style={{ margin: "5%" }}>
         <InputField changeFunc={handleChange} value={currInput}></InputField>
       </div>
     </div>

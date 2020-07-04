@@ -13,11 +13,11 @@ export default function SetupScreen(props) {
     onDiscreteChange,
     discreteVal,
     rangeVal,
-    onRangeChange
+    onRangeChange,
   } = props;
 
   return (
-    <div style={{ marginTop: "10%" }}>
+    <div style={{ paddingTop: "10%" }}>
       <div className="centeredSetup">
         <DiscreteSlider
           text="Game Length (Seconds)"
