@@ -25,6 +25,7 @@ function StockCard(props) {
       if (res) {
         res["pc"] = res["pc"] * 100;
         res["c"] = res["c"] * 100;
+        res["t"] = Number(res["t"] + "000");
         setQuote(res);
       }
     });
@@ -35,10 +36,12 @@ function StockCard(props) {
   }, []);
 
   useEffect(() => {
-    let curr = new Date();
-    let past = curr.setMinutes(curr.getMinutes() - 1);
+    console.log(data);
 
-    if (isOpen(curr) && !isOpen(past)) {
+    let curr = Date.now();
+    let past = curr - 1000 * 60;
+
+    if (isOpen(new Date(curr)) && !isOpen(new Date(past))) {
       updateQuote();
     }
   }, [positions]);
@@ -54,6 +57,22 @@ function StockCard(props) {
     );
   }
 
+  function currPrice() {
+    let curr;
+
+    if (data) {
+      if (data["t"] > quote["t"]) {
+        curr = data["p"] * 100;
+      } else {
+        curr = quote["c"];
+      }
+    } else {
+      curr = quote["c"];
+    }
+
+    return curr;
+  }
+
   function calcDiff(type) {
     let diff = 0;
 
@@ -63,12 +82,17 @@ function StockCard(props) {
 
     for (let pos of positions) {
       let d;
-      let sinceClose = !isToday(pos["openDate"]) && type === "day";
+      let sinceClose =
+        isToday(pos["openDate"]) && !isOpen(new Date(pos["openDate"]));
 
       d =
         pos["remaining"] *
-        ((!data ? quote["c"] : data) -
-          (sinceClose ? quote["pc"] : pos["price"]));
+        (currPrice() -
+          (type === "day"
+            ? sinceClose
+              ? currPrice()
+              : quote["pc"]
+            : pos["price"]));
 
       if (pos["isLong"]) {
         diff += d;
@@ -104,32 +128,31 @@ function StockCard(props) {
     return val;
   }
 
+  function color(val) {
+    if (Math.abs(val) < 0.005) {
+      return GRAY;
+    } else if (val > 0) {
+      return GREEN;
+    } else {
+      return RED;
+    }
+  }
+
   function text(dayChange, netChange) {
     if (!quote) {
       return null;
     }
 
-    let dayPercent =
-      Math.abs(dayChange) < 0.005
-        ? 0
-        : correctSign(dayChange, percentDiff(quote["pc"], quote["c"]));
     let total = totalValue();
-    let netPercent = percentDiff(total, netChange + total);
 
-    let dayColor;
-    let netColor;
+    let dayPercent =
+      Math.abs(dayChange) < 0.005 ? 0 : percentDiff(total, dayChange + total);
 
-    if (Math.abs(dayChange) < 0.005) {
-      dayColor = GRAY;
-    } else {
-      dayColor = dayChange > 0 ? GREEN : RED;
-    }
+    let netPercent =
+      Math.abs(netChange) < 0.005 ? 0 : percentDiff(total, netChange + total);
 
-    if (Math.abs(netChange) < 0.005) {
-      netColor = GRAY;
-    } else {
-      netColor = netChange > 0 ? GREEN : RED;
-    }
+    let dayColor = color(dayChange);
+    let netColor = color(netChange);
 
     return (
       <div>
@@ -167,8 +190,7 @@ function StockCard(props) {
           quote ? (
             <Graph
               dataPoint={dayChange}
-              quote={quote}
-              ticker={ticker}
+              positions={positions}
               reference={0}
             ></Graph>
           ) : (

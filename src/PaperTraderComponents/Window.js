@@ -36,7 +36,7 @@ export default function Window(props) {
     return await get(
       "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" +
         symbol +
-        "&interval=5min&apikey=MZVTEZTGKT653IH3"
+        "&interval=5min&outputsize=full&apikey=MZVTEZTGKT653IH3"
     );
   }
 

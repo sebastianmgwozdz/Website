@@ -15,6 +15,8 @@ let projects = [
     function: "function",
     tools: "tools",
     demo: "demo",
+    link:
+      "https://github.com/sebastianmgwozdz/Website/tree/master/src/PaperTraderComponents",
   },
   {
     title: "Typing Test",
@@ -26,6 +28,8 @@ let projects = [
     function: "function",
     tools: "tools",
     demo: "demo",
+    link:
+      "https://github.com/sebastianmgwozdz/Website/tree/master/src/TypingGameComponents",
   },
   {
     title: "Shortest Path Visualizer",
@@ -37,6 +41,7 @@ let projects = [
     function: "function",
     tools: "tools",
     demo: "demo",
+    link: "https://github.com/sebastianmgwozdz/Shortest-Path",
   },
   {
     title: "Evasive Maneuvers",
@@ -48,6 +53,7 @@ let projects = [
     function: "function",
     tools: "tools",
     demo: "demo",
+    link: "https://github.com/sebastianmgwozdz/Evasive-Maneuvers",
   },
 ];
 

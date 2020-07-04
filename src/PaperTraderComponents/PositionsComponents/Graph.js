@@ -10,20 +10,15 @@ export default function Graph(props) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    let curr = new Date();
-
-    if (!isNaN(props.dataPoint) && isOpen(curr)) {
-      setData([
-        ...data,
-        {
-          val: props.dataPoint,
-          x: data.length,
-        },
-      ]);
+    if (!isNaN(props.dataPoint)) {
+      data.push({
+        val: props.dataPoint,
+        x: data.length,
+      });
     } else if (props.data) {
       setData(props.data);
     }
-  }, [props.quote, props.data, props.dataPoint]);
+  }, [props.data, props.dataPoint]);
 
   function minMax() {
     let arr = data.map((dp) => {
@@ -50,6 +45,8 @@ export default function Graph(props) {
   } else {
     color = diff > 0 ? GREEN : RED;
   }
+
+  console.log(props.ticker);
 
   // || props.dataPoint > 0
 

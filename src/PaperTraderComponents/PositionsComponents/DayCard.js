@@ -14,7 +14,10 @@ export default function DayCard(props) {
     for (let i = 0; i < keys.length - 1; i++) {
       let date = keys[i].substring(0, 10);
       let next = keys[i + 1].substring(0, 10);
-      if (date !== next) {
+      if (
+        date !== next ||
+        keys[i].substring(11, keys[i].length) === "09:30:00"
+      ) {
         return i;
       }
     }

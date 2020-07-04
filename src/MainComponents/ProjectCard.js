@@ -55,15 +55,11 @@ export default function ProjectCard(props) {
         </CardContent>
         <CardActions>
           <Router>
-            <Button
-              size="small"
-              color="primary"
-              onClick={() => {
-                setOpen(true);
-              }}
-            >
-              More Info
-            </Button>
+            <a target="_blank" rel="noopener noreferrer" href={data["link"]}>
+              <Button size="small" color="primary">
+                More Info
+              </Button>
+            </a>
           </Router>
         </CardActions>
       </Card>
