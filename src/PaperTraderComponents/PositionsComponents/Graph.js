@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { YAxis, ReferenceLine, AreaChart, Area } from "recharts";
+import { isOpen } from "../Helpers";
+
+const GRAY = "#787777";
+const GREEN = "#24e361";
+const RED = "#f55936";
 
 export default function Graph(props) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if (props.dataPoint) {
+    let curr = new Date();
+
+    if (!isNaN(props.dataPoint) && isOpen(curr)) {
       setData([
         ...data,
         {
@@ -16,7 +23,7 @@ export default function Graph(props) {
     } else if (props.data) {
       setData(props.data);
     }
-  }, [props.dataPoint, props.data]);
+  }, [props.quote, props.data, props.dataPoint]);
 
   function minMax() {
     let arr = data.map((dp) => {
@@ -31,17 +38,20 @@ export default function Graph(props) {
     return [min - diff / 4, max + diff / 4];
   }
 
-  let color =
-    (data.length > 0 && data[data.length - 1]["val"] > props.reference) ||
-    props.dataPoint > 0
-      ? "#24e361"
-      : "#f55936";
-
   if (data.length <= 1) {
     return null;
   }
 
-  console.log(data);
+  let color;
+  let diff = data[data.length - 1]["val"] - props.reference;
+
+  if (Math.abs(diff) < 0.005) {
+    color = GRAY;
+  } else {
+    color = diff > 0 ? GREEN : RED;
+  }
+
+  // || props.dataPoint > 0
 
   return (
     <AreaChart

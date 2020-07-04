@@ -36,7 +36,6 @@ function StockCard(props) {
 
   useEffect(() => {
     let curr = new Date();
-    curr.setMinutes(curr.getMinutes - 1);
 
     if (isOpen(curr)) {
       updateQuote();
