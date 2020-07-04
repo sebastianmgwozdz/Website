@@ -8,15 +8,15 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     maxWidth: 360,
-    backgroundColor: "gray"
+    backgroundColor: "gray",
   },
   inline: {
-    display: "inline"
-  }
+    display: "inline",
+  },
 }));
 
 export default function About() {
@@ -30,9 +30,9 @@ export default function About() {
           From an early age, I have always had a place in my heart for
           technology. I appreciate tech in all forms, from cars to smartphones,
           though computers have interested me the most. When I am not studying,
-          reading, or listening to music, I will be channeling my creativity to
-          build something that leaves me feeling fulfilled. Programming is one
-          of many tools I use to achieve that.
+          playing guitar, or listening to music, I will be channeling my
+          creativity to build something that leaves me feeling fulfilled.
+          Programming is one of the many tools I use to achieve that.
         </span>
         <span style={{ marginBottom: "2%", marginTop: "2%" }}>Skills</span>
         <div>

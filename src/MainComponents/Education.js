@@ -15,12 +15,12 @@ export default function Education() {
           label="Degree"
           text="BS in Computer Science (2018-2022)"
         ></FadeButton>
-        <FadeButton label="Performance" text="3.9 cumulative GPA"></FadeButton>
+        <FadeButton label="GPA" text="3.9 / 4.0"></FadeButton>
       </div>
       <FadeButton
         label="Relevant Classes"
         text={
-          "Intro to Programming, Intro to Data Structures, Intro to Computer Systems"
+          "Intro to Programming, Intro to Data Structures, Intro to Computer Systems, Data Structures and Algorithms, Object Oriented Design"
         }
       ></FadeButton>
       <img
@@ -28,6 +28,7 @@ export default function Education() {
         height="200"
         width="200"
         alt="SJSU Logo"
+        style={{ paddingBottom: "2vh" }}
       />
     </div>
   );
