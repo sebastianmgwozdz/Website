@@ -78,6 +78,8 @@ export default function DayCard(props) {
             reference={prevClose()}
             width={props.width}
             height={props.height}
+            ticker={props.ticker}
+            hide={props.hide}
           ></Graph>
           {props.name ? props.name : null}
         </div>

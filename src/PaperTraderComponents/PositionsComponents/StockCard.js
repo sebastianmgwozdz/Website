@@ -81,18 +81,21 @@ function StockCard(props) {
     }
 
     for (let pos of positions) {
-      let d;
+      let d = pos["remaining"];
       let sinceClose =
         isToday(pos["openDate"]) && !isOpen(new Date(pos["openDate"]));
+      let sinceOpen = isToday(
+        pos["openDate"] && isOpen(new Date(pos["openDate"]))
+      );
+      let currPr = currPrice();
 
-      d =
-        pos["remaining"] *
-        (currPrice() -
-          (type === "day"
-            ? sinceClose
-              ? currPrice()
-              : quote["pc"]
-            : pos["price"]));
+      if (sinceClose) {
+        d *= currPr - (type === "day" ? currPr : pos["price"]);
+      } else if (sinceOpen) {
+        d *= currPr - pos["price"];
+      } else {
+        d *= currPr - (type === "day" ? quote["pc"] : pos["price"]);
+      }
 
       if (pos["isLong"]) {
         diff += d;
@@ -102,13 +105,6 @@ function StockCard(props) {
     }
 
     return diff;
-  }
-
-  function correctSign(first, second) {
-    if ((first < 0 && second > 0) || (first > 0 && second < 0)) {
-      return second * -1;
-    }
-    return second;
   }
 
   function percentDiff(old, updated) {
@@ -192,6 +188,8 @@ function StockCard(props) {
               dataPoint={dayChange}
               positions={positions}
               reference={0}
+              ticker={ticker}
+              hide
             ></Graph>
           ) : (
             <Loading></Loading>

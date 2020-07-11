@@ -4,9 +4,9 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
+import { Button } from "antd";
+
 import Typography from "@material-ui/core/Typography";
-import { BrowserRouter as Router } from "react-router-dom";
 import { Modal } from "antd";
 
 const useStyles = makeStyles({
@@ -36,12 +36,25 @@ export default function ProjectCard(props) {
         onCancel={() => {
           setOpen(false);
         }}
+        footer={null}
+        width={700}
       >
-        <p>{data["video"]}</p>
+        <p style={{ display: "flex", justifyContent: "center" }}>
+          <img
+            src={data["demo"]}
+            width="600"
+            height="300"
+            alt="WORK IN PROGRESS"
+          ></img>
+        </p>
         <p>{data["features"]}</p>
         <p>{data["function"]}</p>
         <p>{data["tools"]}</p>
-        <p>{data["demo"]}</p>
+        <p>
+          <a target="_blank" rel="noopener noreferrer" href={data["link"]}>
+            <Button type="dashed">GitHub Repository</Button>
+          </a>
+        </p>
       </Modal>
       <Card className={classes.card}>
         <CardMedia className={classes.media} image={data["image"]} />
@@ -53,14 +66,21 @@ export default function ProjectCard(props) {
             {data["description"]}
           </Typography>
         </CardContent>
-        <CardActions>
-          <Router>
-            <a target="_blank" rel="noopener noreferrer" href={data["link"]}>
-              <Button size="small" color="primary">
-                More Info
-              </Button>
-            </a>
-          </Router>
+        <CardActions
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            type="primary"
+            onClick={() => {
+              setOpen(true);
+            }}
+            style={{ backgroundColor: "#ee8040", borderColor: "#ee8040" }}
+          >
+            More Info
+          </Button>
         </CardActions>
       </Card>
     </div>

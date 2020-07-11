@@ -1,6 +1,5 @@
 import React from "react";
 import "./css/Projects.css";
-import ProjectTable from "./ProjectTable";
 import ProjectCard from "./ProjectCard";
 import { withRouter } from "react-router-dom";
 
@@ -40,7 +39,7 @@ let projects = [
     features: ["feature 1, feature 2"],
     function: "function",
     tools: "tools",
-    demo: "demo",
+    demo: "icons/ShortestPath.gif",
     link: "https://github.com/sebastianmgwozdz/Shortest-Path",
   },
   {
@@ -52,7 +51,7 @@ let projects = [
     features: ["feature 1, feature 2"],
     function: "function",
     tools: "tools",
-    demo: "demo",
+    demo: "icons/EvasiveManeuvers.gif",
     link: "https://github.com/sebastianmgwozdz/Evasive-Maneuvers",
   },
 ];

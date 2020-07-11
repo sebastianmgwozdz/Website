@@ -20,7 +20,7 @@ const buttonStyle = {
   width: "12vw",
   height: "8vh",
   fontSize: "22px",
-  margin: "6vh",
+  marginTop: "3vh",
 };
 
 const tableStyle = {
@@ -67,8 +67,8 @@ function PositionSummary(props) {
       <Divider></Divider>
       <DayCard
         data={graphData}
-        width={750}
-        height={450}
+        width={700}
+        height={400}
         reference={price["pc"]}
       ></DayCard>
       <Divider>Summary</Divider>

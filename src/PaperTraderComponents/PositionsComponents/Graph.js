@@ -18,7 +18,7 @@ export default function Graph(props) {
     } else if (props.data) {
       setData(props.data);
     }
-  }, [props.data, props.dataPoint]);
+  }, [props.data, props.dataPoint, props.positions]);
 
   function minMax() {
     let arr = data.map((dp) => {
@@ -31,6 +31,19 @@ export default function Graph(props) {
     let diff = max - min;
 
     return [min - diff / 4, max + diff / 4];
+  }
+
+  function ticks(domain) {
+    let t = [];
+    let diff = domain[1] - domain[0];
+    let gap = Math.round(diff / 3);
+    console.log(domain);
+    console.log(gap);
+    for (let i = Math.floor(domain[0]); i <= Math.ceil(domain[1]); i += gap) {
+      t.push(Math.round(i));
+    }
+    console.log(t);
+    return t;
   }
 
   if (data.length <= 1) {
@@ -46,9 +59,9 @@ export default function Graph(props) {
     color = diff > 0 ? GREEN : RED;
   }
 
-  console.log(props.ticker);
-
   // || props.dataPoint > 0
+
+  let domain = minMax();
 
   return (
     <AreaChart
@@ -58,12 +71,17 @@ export default function Graph(props) {
       margin={{ top: 15, left: 25, right: 25, bottom: 10 }}
     >
       <defs>
-        <linearGradient id={props.reference} x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={props.ticker} x1="0" y1="0" x2="0" y2="1">
           <stop offset="5%" stopColor={color} stopOpacity={0.2} />
           <stop offset="50%" stopColor={color} stopOpacity={0} />
         </linearGradient>
       </defs>
-      <YAxis type="number" domain={minMax()} hide></YAxis>
+      <YAxis
+        type="number"
+        domain={[domain[0] - 1, domain[1] + 1]}
+        ticks={ticks(domain)}
+        hide={props.hide}
+      ></YAxis>
       <ReferenceLine y={props.reference} strokeDasharray="3 3" />
       <Area
         type="monotone"
@@ -73,7 +91,7 @@ export default function Graph(props) {
         isAnimationActive={false}
         strokeWidth={props.strokeWidth}
         fillOpacity={1}
-        fill={"url(#" + props.reference + ")"}
+        fill={"url(#" + props.ticker + ")"}
       />
     </AreaChart>
   );

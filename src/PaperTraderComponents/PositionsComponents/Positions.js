@@ -33,7 +33,7 @@ function Positions(props) {
       <MarketBar marketData={props.marketData}></MarketBar>
 
       <CardGrid clickFunc={setSelectedStock}></CardGrid>
-      <BalanceButton style={buttonStyle}></BalanceButton>
+      <BalanceButton style={buttonStyle} shape="round"></BalanceButton>
     </div>
   );
 }

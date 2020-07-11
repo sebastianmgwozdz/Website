@@ -7,7 +7,7 @@ import { message } from "antd";
 
 function CardGrid(props) {
   const [positions, setPositions] = useState(new Map());
-  const [prices, setPrices] = useState(new Map());
+  const [prices] = useState(new Map());
 
   function update() {
     let p = new Map();
@@ -61,7 +61,7 @@ function CardGrid(props) {
     update();
     let t = setInterval(() => {
       update();
-    }, 7500);
+    }, 5000);
 
     return () => {
       clearInterval(t);
@@ -70,10 +70,6 @@ function CardGrid(props) {
 
   function getCards() {
     let cards = [];
-
-    if (positions.size === 0) {
-      return cards;
-    }
 
     positions.forEach((val, key, map) => {
       cards.push(

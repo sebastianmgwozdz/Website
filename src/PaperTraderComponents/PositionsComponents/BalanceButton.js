@@ -42,7 +42,7 @@ function BalanceButton(props) {
     <div>
       <Button
         type="primary"
-        shape="round"
+        shape={props.shape}
         style={props.style}
         onClick={showModal}
       >
