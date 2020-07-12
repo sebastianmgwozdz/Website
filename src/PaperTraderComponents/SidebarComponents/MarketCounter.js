@@ -35,12 +35,20 @@ export default function MarketCounter() {
   const { Countdown } = Statistic;
 
   return (
-    <div style={{ textAlign: "center", marginBottom: "2vh", marginTop: "2vh" }}>
+    <div
+      style={{
+        textAlign: "center",
+        paddingTop: "3vh",
+        marginBottom: "4vh",
+        height: 105,
+      }}
+    >
       <Countdown
         title={isOpen(new Date()) ? "Market Closes In:" : "Market Opens In:"}
         value={d}
         format="HH:mm"
         onFinish={update}
+        valueStyle={{ fontSize: 32 }}
       />
     </div>
   );

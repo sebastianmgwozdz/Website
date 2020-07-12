@@ -90,11 +90,11 @@ function StockCard(props) {
       let currPr = currPrice();
 
       if (sinceClose) {
-        d *= currPr - (type === "day" ? currPr : pos["price"]);
-      } else if (sinceOpen) {
+        d = 0;
+      } else if (type === "net" || sinceOpen) {
         d *= currPr - pos["price"];
       } else {
-        d *= currPr - (type === "day" ? quote["pc"] : pos["price"]);
+        d *= currPr - quote["pc"];
       }
 
       if (pos["isLong"]) {
@@ -188,7 +188,6 @@ function StockCard(props) {
               dataPoint={dayChange}
               positions={positions}
               reference={0}
-              ticker={ticker}
               hide
             ></Graph>
           ) : (

@@ -1,8 +1,20 @@
 import React from "react";
 import { Menu } from "antd";
 import MarketCounter from "./MarketCounter";
+import {
+  UserOutlined,
+  StockOutlined,
+  UnorderedListOutlined,
+  CalendarOutlined,
+} from "@ant-design/icons";
 
 const menuLabels = ["Positions", "Companies", "Earnings Calendar", "Account"];
+const menuIcons = [
+  <StockOutlined />,
+  <UnorderedListOutlined />,
+  <CalendarOutlined />,
+  <UserOutlined />,
+];
 
 export default function Sidebar(props) {
   function getMenuItems() {
@@ -14,6 +26,7 @@ export default function Sidebar(props) {
           onClick={() => {
             props.setMenuOption(i);
           }}
+          icon={menuIcons[i]}
         >
           {menuLabels[i]}
         </Menu.Item>
