@@ -12,10 +12,10 @@ import { Modal } from "antd";
 const useStyles = makeStyles({
   card: {
     maxWidth: 300,
-    maxHeight: 350,
+    maxHeight: 750,
   },
   media: {
-    height: 100,
+    height: 300,
   },
 });
 
@@ -38,22 +38,44 @@ export default function ProjectCard(props) {
         }}
         footer={null}
         width={700}
+        centered
       >
         <p style={{ display: "flex", justifyContent: "center" }}>
           <img
-            src={data["demo"]}
+            src={data["video"]}
             width="600"
             height="300"
             alt="WORK IN PROGRESS"
           ></img>
         </p>
-        <p>{data["features"]}</p>
-        <p>{data["function"]}</p>
-        <p>{data["tools"]}</p>
         <p>
-          <a target="_blank" rel="noopener noreferrer" href={data["link"]}>
-            <Button type="dashed">GitHub Repository</Button>
-          </a>
+          Features:
+          <ul>
+            {data["features"].map((val) => {
+              return <li>{val}</li>;
+            })}
+          </ul>
+        </p>
+        <p>{data["function"]}</p>
+        <p>
+          Tools Used:
+          <ul>
+            {data["tools"].map((val) => {
+              return <li>{val}</li>;
+            })}
+          </ul>
+        </p>
+        <p style={{ textAlign: "center" }}>
+          <span>
+            <a target="_blank" rel="noopener noreferrer" href={data["link"]}>
+              <Button type="dashed">GitHub Repository</Button>
+            </a>
+            {data["demo"] ? (
+              <a target="_blank" rel="noopener noreferrer" href={data["demo"]}>
+                <Button type="dashed">Demo</Button>
+              </a>
+            ) : null}
+          </span>
         </p>
       </Modal>
       <Card className={classes.card}>

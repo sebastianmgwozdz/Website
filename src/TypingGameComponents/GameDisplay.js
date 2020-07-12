@@ -27,7 +27,6 @@ function GameDisplay(props) {
       <div
         style={{
           borderStyle: "solid",
-          borderRadius: "50px",
           padding: "5%",
           boxShadow: "0px 15px 10px #b7b9bd",
         }}

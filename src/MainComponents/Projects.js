@@ -2,6 +2,7 @@ import React from "react";
 import "./css/Projects.css";
 import ProjectCard from "./ProjectCard";
 import { withRouter } from "react-router-dom";
+import { main } from "../links";
 
 let projects = [
   {
@@ -10,10 +11,16 @@ let projects = [
       "Platform for users to track their favorite stocks and make trades with paper money",
     image: require("./images/test.jpeg"),
     video: "video",
-    features: ["feature 1, feature 2"],
-    function: "function",
-    tools: "tools",
-    demo: "demo",
+    features: [
+      "Simulates brokerage account with initial $100,000 balance",
+      "Displays stock movements graphically in real time",
+      "Displays profits for each long and short position",
+    ],
+    function:
+      "Retrieves real time stock data from Finnhub Stock API and user's positions from MySQL database through RESTful Spring Boot API",
+    tools: [
+      "JavaScript, Java, Spring Boot, React, MySQL, Firebase Authentication",
+    ],
     link:
       "https://github.com/sebastianmgwozdz/Website/tree/master/src/PaperTraderComponents",
   },
@@ -23,10 +30,14 @@ let projects = [
       "A lightweight application that provides user with feedback regarding typing ability",
     image: require("./images/test.jpeg"),
     video: "video",
-    features: ["feature 1, feature 2"],
-    function: "function",
-    tools: "tools",
-    demo: "demo",
+    features: [
+      "Highlights texts dynamically to display user's current progress",
+      "Displays typing accuracy and speed in real time",
+      "Allows user to modify word length and game duration",
+    ],
+    function: null,
+    tools: ["JavaScript, React"],
+    demo: main + "typingtest",
     link:
       "https://github.com/sebastianmgwozdz/Website/tree/master/src/TypingGameComponents",
   },
@@ -35,11 +46,13 @@ let projects = [
     description:
       "Visualization of the shortest possible path between two specified points in a 2D grid",
     image: require("./images/test.jpeg"),
-    video: "video",
-    features: ["feature 1, feature 2"],
-    function: "function",
-    tools: "tools",
-    demo: "icons/ShortestPath.gif",
+    video: "icons/ShortestPath.gif",
+    features: [
+      "Color-codes and displays all traversed squares",
+      "Gives user ability to place obstacles affecting algorithm's behavior",
+    ],
+    function: "Calculates shortest path using Dijkstra/A* algorithms",
+    tools: ["Java", "JavaFX"],
     link: "https://github.com/sebastianmgwozdz/Shortest-Path",
   },
   {
@@ -47,11 +60,10 @@ let projects = [
     description:
       "2D Game inspired by Helicopter Game and Flappy Bird where the user maneuvers through a series of obstacles",
     image: require("./images/test.jpeg"),
-    video: "video",
-    features: ["feature 1, feature 2"],
-    function: "function",
-    tools: "tools",
-    demo: "icons/EvasiveManeuvers.gif",
+    video: "icons/EvasiveManeuvers.gif",
+    features: ["Sidescroller perspective", "Point system to track score"],
+    function: null,
+    tools: ["Python", "Pygame"],
     link: "https://github.com/sebastianmgwozdz/Evasive-Maneuvers",
   },
 ];
