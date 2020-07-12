@@ -60,9 +60,7 @@ export default function ProjectCard(props) {
         <p>
           Tools Used:
           <ul>
-            {data["tools"].map((val) => {
-              return <li>{val}</li>;
-            })}
+            <li>{data["tools"]}</li>
           </ul>
         </p>
         <p style={{ textAlign: "center" }}>

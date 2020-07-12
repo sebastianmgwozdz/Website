@@ -18,9 +18,9 @@ let projects = [
     ],
     function:
       "Retrieves real time stock data from Finnhub Stock API and user's positions from MySQL database through RESTful Spring Boot API",
-    tools: [
+    tools:
       "JavaScript, Java, Spring Boot, React, MySQL, Firebase Authentication",
-    ],
+
     link:
       "https://github.com/sebastianmgwozdz/Website/tree/master/src/PaperTraderComponents",
   },
@@ -28,15 +28,15 @@ let projects = [
     title: "Typing Test",
     description:
       "A lightweight application that provides user with feedback regarding typing ability",
-    image: require("./images/test.jpeg"),
-    video: "video",
+    image: require("./images/TypingTestCover.png"),
+    video: "icons/TypingGame.gif",
     features: [
       "Highlights texts dynamically to display user's current progress",
       "Displays typing accuracy and speed in real time",
       "Allows user to modify word length and game duration",
     ],
     function: null,
-    tools: ["JavaScript, React"],
+    tools: "JavaScript, React",
     demo: main + "typingtest",
     link:
       "https://github.com/sebastianmgwozdz/Website/tree/master/src/TypingGameComponents",
@@ -52,7 +52,7 @@ let projects = [
       "Gives user ability to place obstacles affecting algorithm's behavior",
     ],
     function: "Calculates shortest path using Dijkstra/A* algorithms",
-    tools: ["Java", "JavaFX"],
+    tools: "Java, JavaFX",
     link: "https://github.com/sebastianmgwozdz/Shortest-Path",
   },
   {
@@ -63,7 +63,7 @@ let projects = [
     video: "icons/EvasiveManeuvers.gif",
     features: ["Sidescroller perspective", "Point system to track score"],
     function: null,
-    tools: ["Python", "Pygame"],
+    tools: "Python, Pygame",
     link: "https://github.com/sebastianmgwozdz/Evasive-Maneuvers",
   },
 ];
