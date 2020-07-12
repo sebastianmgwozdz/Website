@@ -45,7 +45,7 @@ let projects = [
     title: "Shortest Path Visualizer",
     description:
       "Visualization of the shortest possible path between two specified points in a 2D grid",
-    image: require("./images/test.jpeg"),
+    image: require("./images/ShortestPathCover.png"),
     video: "icons/ShortestPath.gif",
     features: [
       "Color-codes and displays all traversed squares",
@@ -59,7 +59,7 @@ let projects = [
     title: "Evasive Maneuvers",
     description:
       "2D Game inspired by Helicopter Game and Flappy Bird where the user maneuvers through a series of obstacles",
-    image: require("./images/test.jpeg"),
+    image: require("./images/EvasiveCover.png"),
     video: "icons/EvasiveManeuvers.gif",
     features: ["Sidescroller perspective", "Point system to track score"],
     function: null,

@@ -9,7 +9,7 @@ function WPMCounter(props) {
     correctCharCount,
     charCount,
     restart,
-    durationFunc
+    durationFunc,
   } = props;
   const [wpm, setWpm] = useState(0);
   const [percentAccuracy, setPercentAccuracy] = useState(100);
@@ -22,7 +22,7 @@ function WPMCounter(props) {
       setTimer(
         setInterval(() => {
           setSecondsElapsed((Date.now() - start) / 1000);
-        }, 150)
+        }, 1000)
       );
     }
 
@@ -37,7 +37,7 @@ function WPMCounter(props) {
     if (charCount > 0) {
       updateStats();
     }
-  }, [props]);
+  }, [secondsElapsed]);
 
   function updateStats() {
     let words = correctCharCount / 5;

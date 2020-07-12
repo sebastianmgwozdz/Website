@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { YAxis, ReferenceLine, Line, LineChart } from "recharts";
+import { isOpen } from "../Helpers";
 
 const GRAY = "#787777";
 const GREEN = "#24e361";
@@ -9,7 +10,7 @@ export default function Graph(props) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if (!isNaN(props.dataPoint)) {
+    if (!isNaN(props.dataPoint) && isOpen(new Date())) {
       data.push({
         val: props.dataPoint,
         x: data.length,

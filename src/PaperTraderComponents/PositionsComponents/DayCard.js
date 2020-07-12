@@ -84,7 +84,7 @@ export default function DayCard(props) {
           {props.name ? props.name : null}
         </div>
       ) : (
-        <Spin></Spin>
+        <Spin size="large"></Spin>
       )}
     </div>
   );

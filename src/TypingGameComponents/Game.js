@@ -13,7 +13,7 @@ function Game(props) {
     duration,
     durationFunc,
     restart,
-    setRestart
+    setRestart,
   } = props;
   const [done, setDone] = useState(false);
   const [correctChars, setCorrectChars] = useState(-1);
@@ -24,8 +24,8 @@ function Game(props) {
     let set = [];
     await $.getJSON(
       "https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json",
-      data => {
-        const words = Object.keys(data).filter(e => {
+      (data) => {
+        const words = Object.keys(data).filter((e) => {
           return e.length >= length[0] && e.length <= length[1];
         });
         for (let i = 0; i < 100; i++) {
