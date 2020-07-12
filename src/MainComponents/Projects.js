@@ -83,7 +83,14 @@ function Projects() {
   return (
     <div className="Projects-Background" id="projects">
       <header className="Projects-Header">Projects</header>
-      <span className="w-50 p-3" style={{ display: "flex", marginLeft: "2%" }}>
+      <span
+        className="w-50 p-3"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         {cards()}
       </span>
     </div>
