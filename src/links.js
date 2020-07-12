@@ -1,4 +1,4 @@
-let main = "http://localhost:3000/";
+let main = "https://sebastiangwo.com/";
 let papertrader = main + "papertrader/home";
 let server = "http://localhost:8080/";
 
