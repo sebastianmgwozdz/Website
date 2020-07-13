@@ -62,7 +62,7 @@ export default function EarningsCalendar() {
 
     console.log(data);
 
-    return data;
+    return data.reverse();
   }
 
   return <div>{getListData()}</div>;

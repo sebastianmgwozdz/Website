@@ -114,6 +114,16 @@ function StockCard(props) {
     return ((updated - old) / old) * 100;
   }
 
+  function initialInvestment() {
+    let val = 0;
+
+    for (let pos of positions) {
+      val += pos["initial"] * pos["price"];
+    }
+
+    return val;
+  }
+
   function totalValue() {
     let val = 0;
 
@@ -139,13 +149,19 @@ function StockCard(props) {
       return null;
     }
 
-    let total = totalValue();
+    let initial = initialInvestment();
+
+    let curr = currPrice();
 
     let dayPercent =
-      Math.abs(dayChange) < 0.005 ? 0 : percentDiff(total, dayChange + total);
+      Math.abs(dayChange) < 0.005
+        ? 0
+        : percentDiff(initial, dayChange + initial);
 
     let netPercent =
-      Math.abs(netChange) < 0.005 ? 0 : percentDiff(total, netChange + total);
+      Math.abs(netChange) < 0.005
+        ? 0
+        : percentDiff(initial, netChange + initial);
 
     let dayColor = color(dayChange);
     let netColor = color(netChange);
