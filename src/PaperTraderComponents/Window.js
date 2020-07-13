@@ -4,9 +4,11 @@ import Positions from "./PositionsComponents/Positions";
 import Account from "./Account";
 import Companies from "./CompaniesComponents/Companies";
 import EarningsCalendar from "./CalendarComponents/EarningsCalendar";
+import PositionSummary from "./PositionsComponents/PositionSummary";
 
 export default function Window(props) {
   const [marketData, setMarketData] = useState([]);
+  const [selectedStock, setSelectedStock] = useState("");
 
   useEffect(() => {
     function update() {
@@ -40,10 +42,22 @@ export default function Window(props) {
     );
   }
 
+  if (selectedStock) {
+    return (
+      <PositionSummary
+        returnFunc={setSelectedStock}
+        ticker={selectedStock}
+      ></PositionSummary>
+    );
+  }
+
   let views = [
-    <Positions marketData={marketData}></Positions>,
+    <Positions
+      marketData={marketData}
+      setSelectedStock={setSelectedStock}
+    ></Positions>,
     <Companies></Companies>,
-    <EarningsCalendar></EarningsCalendar>,
+    <EarningsCalendar setSelectedStock={setSelectedStock}></EarningsCalendar>,
     <Account></Account>,
     <div>view5</div>,
   ];

@@ -1,122 +1,69 @@
-import React from "react";
-import { Calendar, Select, Col, Row, Typography, Badge } from "antd";
-
-function getListData(value) {
-  let listData;
-  switch (value.date()) {
-    case 8:
-      listData = [
-        { type: "warning", content: "This is warning event." },
-        { type: "success", content: "This is usual event." },
-      ];
-      break;
-    case 10:
-      listData = [
-        { type: "warning", content: "This is warning event." },
-        { type: "success", content: "This is usual event." },
-        { type: "error", content: "This is error event." },
-      ];
-      break;
-    case 15:
-      listData = [
-        { type: "warning", content: "This is warning event" },
-        { type: "success", content: "This is very long usual event。。...." },
-        { type: "error", content: "This is error event 1." },
-        { type: "error", content: "This is error event 2." },
-        { type: "error", content: "This is error event 3." },
-        { type: "error", content: "This is error event 4." },
-      ];
-      break;
-    default:
-  }
-  return listData || [];
-}
-
-function dateCellRender(value) {
-  console.log(value);
-  const listData = getListData(value);
-  return (
-    <ul className="events">
-      {listData.map((item) => (
-        <li key={item.content}>
-          <Badge status={item.type} text={item.content} />
-        </li>
-      ))}
-    </ul>
-  );
-}
+import React, { useState, useEffect } from "react";
+import { Calendar, Select, Col, Row, Typography, Badge, Card } from "antd";
+import { get } from "../Helpers";
 
 export default function EarningsCalendar() {
-  return (
-    <Calendar
-      dateCellRender={dateCellRender}
-      headerRender={({ value, type, onChange, onTypeChange }) => {
-        const start = 0;
-        const end = 12;
-        const monthOptions = [];
+  const [earnings, setEarnings] = useState(undefined);
 
-        const current = value.clone();
-        const localeData = value.localeData();
-        const months = [];
-        for (let i = 0; i < 12; i++) {
-          current.month(i);
-          months.push(localeData.monthsShort(current));
-        }
+  useEffect(() => {
+    let start = Date.now();
+    let end = start + 2628000000;
 
-        for (let index = start; index < end; index++) {
-          monthOptions.push(
-            <Select.Option className="month-item" key={`${index}`}>
-              {months[index]}
-            </Select.Option>
-          );
-        }
-        const month = value.month();
+    let startForm = new Date(start).toISOString().substring(0, 10);
+    let endForm = new Date(end).toISOString().substring(0, 10);
 
-        const year = value.year();
-        const options = [];
-        for (let i = year - 10; i < year + 10; i += 1) {
-          options.push(
-            <Select.Option key={i} value={i} className="year-item">
-              {i}
-            </Select.Option>
-          );
-        }
-        return (
-          <div style={{ padding: 8 }}>
-            <Typography.Title level={4}>Custom header</Typography.Title>
-            <Row gutter={8}>
-              <Col>
-                <Select
-                  size="small"
-                  dropdownMatchSelectWidth={false}
-                  className="my-year-select"
-                  onChange={(newYear) => {
-                    const now = value.clone().year(newYear);
-                    onChange(now);
-                  }}
-                  value={String(year)}
-                >
-                  {options}
-                </Select>
-              </Col>
-              <Col>
-                <Select
-                  size="small"
-                  dropdownMatchSelectWidth={false}
-                  value={String(month)}
-                  onChange={(selectedMonth) => {
-                    const newValue = value.clone();
-                    newValue.month(parseInt(selectedMonth, 10));
-                    onChange(newValue);
-                  }}
-                >
-                  {monthOptions}
-                </Select>
-              </Col>
-            </Row>
-          </div>
-        );
-      }}
-    />
-  );
+    get(
+      "https://finnhub.io/api/v1/calendar/earnings?from=" +
+        startForm +
+        "&to=" +
+        endForm +
+        "&token=bpleiinrh5r8m26im1dg"
+    ).then((res) => {
+      if (res) {
+        setEarnings(getMapped(res["earningsCalendar"]));
+        console.log(getMapped(res["earningsCalendar"]));
+      }
+    });
+  }, []);
+
+  function getMapped(earnings) {
+    let m = new Map();
+    for (let e of earnings) {
+      let date = e["date"];
+      if (m.has(date)) {
+        m.get(date).push(e);
+      } else {
+        m.set(date, [e]);
+      }
+    }
+    return m;
+  }
+
+  function symbolList(earnings) {}
+
+  function getListData() {
+    if (!earnings) {
+      return [];
+    }
+
+    let data = [];
+
+    for (let d of earnings.keys()) {
+      let e = earnings.get(d).map((val) => {
+        return <li>{val["symbol"]}</li>;
+      });
+
+      data.push(
+        <Card title={d} style={{ width: 300 }}>
+          {<ul>{e}</ul>}
+        </Card>
+      );
+    }
+
+    console.log(data);
+
+    return data;
+  }
+
+  return <div>{getListData()}</div>;
 }
