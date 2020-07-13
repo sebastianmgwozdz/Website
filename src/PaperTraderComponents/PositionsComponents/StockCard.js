@@ -84,9 +84,8 @@ function StockCard(props) {
       let d = pos["remaining"];
       let sinceClose =
         isToday(pos["openDate"]) && !isOpen(new Date(pos["openDate"]));
-      let sinceOpen = isToday(
-        pos["openDate"] && isOpen(new Date(pos["openDate"]))
-      );
+      let sinceOpen =
+        isToday(pos["openDate"]) && isOpen(new Date(pos["openDate"]));
       let currPr = currPrice();
 
       if (sinceClose) {
@@ -150,8 +149,6 @@ function StockCard(props) {
     }
 
     let initial = initialInvestment();
-
-    let curr = currPrice();
 
     let dayPercent =
       Math.abs(dayChange) < 0.005
