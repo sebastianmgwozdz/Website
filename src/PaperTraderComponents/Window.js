@@ -34,6 +34,10 @@ export default function Window(props) {
     };
   }, []);
 
+  useEffect(() => {
+    setSelectedStock("");
+  }, [props.menuOption]);
+
   async function getData(symbol) {
     return await get(
       "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" +

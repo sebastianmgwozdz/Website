@@ -48,8 +48,7 @@ export default function Autocomplete(props) {
     <AutoComplete
       options={options}
       style={{
-        width: 200,
-        marginRight: "25px",
+        width: "100%",
       }}
       onSearch={onSearch}
       placeholder="Enter Stock Symbol"

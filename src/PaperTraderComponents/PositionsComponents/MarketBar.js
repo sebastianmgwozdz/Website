@@ -6,7 +6,7 @@ export default function MarketBar(props) {
     <div
       style={{
         display: "flex",
-        border: "1px solid rgb(235, 237, 240)",
+        borderBottom: "1px solid rgb(235, 237, 240)",
         width: "83vw",
         justifyContent: "center",
         alignItems: "center",

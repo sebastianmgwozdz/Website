@@ -67,6 +67,7 @@ function AntInput(props) {
       }}
       value={props.quantity}
       style={props.style}
+      allowClear
     />
   );
 }

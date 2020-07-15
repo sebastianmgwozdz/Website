@@ -43,7 +43,7 @@ export default function Sidebar(props) {
       defaultSelectedKeys={["0"]}
     >
       <MarketCounter></MarketCounter>
-
+      <Menu.Divider></Menu.Divider>
       {getMenuItems()}
     </Menu>
   );
