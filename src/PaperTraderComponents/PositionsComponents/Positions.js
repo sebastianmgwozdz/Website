@@ -17,22 +17,11 @@ const buttonStyle = {
 };
 
 function Positions(props) {
-  const [selectedStock, setSelectedStock] = useState("");
-
-  if (selectedStock) {
-    return (
-      <PositionSummary
-        returnFunc={setSelectedStock}
-        ticker={selectedStock}
-      ></PositionSummary>
-    );
-  }
-
   return (
     <div>
       <MarketBar marketData={props.marketData}></MarketBar>
 
-      <CardGrid clickFunc={setSelectedStock}></CardGrid>
+      <CardGrid clickFunc={props.setSelectedStock}></CardGrid>
       <BalanceButton style={buttonStyle} shape="round"></BalanceButton>
     </div>
   );

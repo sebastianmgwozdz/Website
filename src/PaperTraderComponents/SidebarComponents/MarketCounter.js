@@ -39,8 +39,7 @@ export default function MarketCounter() {
       style={{
         textAlign: "center",
         paddingTop: "3vh",
-        marginBottom: "4vh",
-        height: 105,
+        height: 134,
       }}
     >
       <Countdown

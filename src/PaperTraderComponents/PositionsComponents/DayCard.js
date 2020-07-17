@@ -56,7 +56,9 @@ export default function DayCard(props) {
       .slice(0, firstDataPoint() + 1)
       .reverse();
 
-    return [...form, { val: Object.values(vals[0])[3], x: vals.length }];
+    console.log([...form, { val: Object.values(vals[0])[3] }]);
+
+    return [...form, { val: Object.values(vals[0])[3] }];
   }
 
   return (

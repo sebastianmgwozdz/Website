@@ -8,7 +8,14 @@ import { withFirebase } from "../../Firebase";
 import { server } from "../../links";
 import TradeText from "./TradeText";
 
-const style = { marginTop: "1vh", marginBottom: "1vh" };
+const style = { marginTop: "2vh", marginBottom: "1vh" };
+const radioStyle = {
+  marginTop: "2vh",
+  marginBottom: "1vh",
+  display: "flex",
+  justifyContent: "center",
+  textAlign: "center",
+};
 
 function BuyModal(props) {
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -138,26 +145,26 @@ function BuyModal(props) {
       ]}
       closable={false}
     >
-      {price ? price / 100 : ""}
+      <div
+        style={{
+          height: "2vh",
+          fontSize: "24px",
+          marginBottom: "5vh",
+          textAlign: "center",
+        }}
+      >
+        {price ? (price / 100).toFixed(2) : ""}
+      </div>
       <div style={style}>
         {props.symbol ? null : (
           <Autocomplete
             setSymbol={setSymbol}
             setQuantity={setQuantity}
+            width="100%"
           ></Autocomplete>
         )}
       </div>
 
-      <AntRadio
-        labels={["Buy", "Sell", "Short", "Cover Short"]}
-        setVal={(val) => {
-          if (val !== type) {
-            setQuantity(0);
-          }
-          setType(val);
-        }}
-        style={style}
-      ></AntRadio>
       <AntInput
         setVal={setQuantity}
         balance={props.balance}
@@ -167,6 +174,16 @@ function BuyModal(props) {
         ticker={symbol}
         style={style}
       ></AntInput>
+      <AntRadio
+        labels={["Buy", "Sell", "Short", "Cover Short"]}
+        setVal={(val) => {
+          if (val !== type) {
+            setQuantity(0);
+          }
+          setType(val);
+        }}
+        style={radioStyle}
+      ></AntRadio>
       <TradeText
         symbol={symbol}
         quantity={quantity}

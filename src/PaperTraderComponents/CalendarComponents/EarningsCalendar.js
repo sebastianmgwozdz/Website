@@ -1,122 +1,120 @@
-import React from "react";
-import { Calendar, Select, Col, Row, Typography, Badge } from "antd";
+import React, { useState, useEffect } from "react";
+import { Card, Tabs, Badge } from "antd";
+import { get } from "../Helpers";
 
-function getListData(value) {
-  let listData;
-  switch (value.date()) {
-    case 8:
-      listData = [
-        { type: "warning", content: "This is warning event." },
-        { type: "success", content: "This is usual event." },
-      ];
-      break;
-    case 10:
-      listData = [
-        { type: "warning", content: "This is warning event." },
-        { type: "success", content: "This is usual event." },
-        { type: "error", content: "This is error event." },
-      ];
-      break;
-    case 15:
-      listData = [
-        { type: "warning", content: "This is warning event" },
-        { type: "success", content: "This is very long usual event。。...." },
-        { type: "error", content: "This is error event 1." },
-        { type: "error", content: "This is error event 2." },
-        { type: "error", content: "This is error event 3." },
-        { type: "error", content: "This is error event 4." },
-      ];
-      break;
-    default:
-  }
-  return listData || [];
-}
-
-function dateCellRender(value) {
-  console.log(value);
-  const listData = getListData(value);
-  return (
-    <ul className="events">
-      {listData.map((item) => (
-        <li key={item.content}>
-          <Badge status={item.type} text={item.content} />
-        </li>
-      ))}
-    </ul>
-  );
-}
+const { TabPane } = Tabs;
 
 export default function EarningsCalendar() {
+  const [earnings, setEarnings] = useState(undefined);
+
+  useEffect(() => {
+    let start = Date.now();
+    let end = start + 2628000000;
+
+    console.log(new Date(start));
+
+    let startForm = new Date(start).toISOString().substring(0, 10);
+    let endForm = new Date(end).toISOString().substring(0, 10);
+
+    get(
+      "https://finnhub.io/api/v1/calendar/earnings?from=" +
+        startForm +
+        "&to=" +
+        endForm +
+        "&token=bpleiinrh5r8m26im1dg"
+    ).then((res) => {
+      if (res) {
+        setEarnings(getMapped(res["earningsCalendar"]));
+        console.log(getMapped(res["earningsCalendar"]));
+      }
+    });
+  }, []);
+
+  function getMapped(earnings) {
+    let m = new Map();
+    for (let e of earnings) {
+      let date = e["date"];
+      if (m.has(date)) {
+        m.get(date).push(e);
+      } else {
+        m.set(date, [e]);
+      }
+    }
+    return m;
+  }
+
+  function getBadgeColor(value) {
+    let hour = value["hour"];
+
+    switch (hour) {
+      case "bmo":
+        return "red";
+      case "dmh":
+        return "green";
+      default:
+        return "blue";
+    }
+  }
+
+  function getListData(date) {
+    let arr = earnings.get(date);
+
+    let data = arr.map((val) => {
+      return (
+        <div>
+          <Badge
+            color={getBadgeColor(val)}
+            text={val["symbol"]}
+            style={{ paddingLeft: "6vw" }}
+          />
+        </div>
+      );
+    });
+
+    return (
+      <span>
+        <ul style={{ float: "left" }}>{data.slice(0, data.length / 2)}</ul>
+        <ul style={{ float: "left" }}>
+          {data.slice(data.length / 2, data.length)}
+        </ul>
+      </span>
+    );
+  }
+
+  function getTabs() {
+    if (!earnings) {
+      return [];
+    }
+
+    let t = [];
+
+    let arr = Array.from(earnings.keys()).sort((a, b) => {
+      return a.localeCompare(b);
+    });
+
+    console.log(arr);
+
+    for (let i = 0; i < arr.length; i++) {
+      let date = arr[i];
+
+      t.push(
+        <TabPane tab={date} key={i}>
+          <Card>{getListData(date)}</Card>
+        </TabPane>
+      );
+    }
+
+    return t;
+  }
+
+  //<Badge color={"red"} text={"Test"} />
+
   return (
-    <Calendar
-      dateCellRender={dateCellRender}
-      headerRender={({ value, type, onChange, onTypeChange }) => {
-        const start = 0;
-        const end = 12;
-        const monthOptions = [];
-
-        const current = value.clone();
-        const localeData = value.localeData();
-        const months = [];
-        for (let i = 0; i < 12; i++) {
-          current.month(i);
-          months.push(localeData.monthsShort(current));
-        }
-
-        for (let index = start; index < end; index++) {
-          monthOptions.push(
-            <Select.Option className="month-item" key={`${index}`}>
-              {months[index]}
-            </Select.Option>
-          );
-        }
-        const month = value.month();
-
-        const year = value.year();
-        const options = [];
-        for (let i = year - 10; i < year + 10; i += 1) {
-          options.push(
-            <Select.Option key={i} value={i} className="year-item">
-              {i}
-            </Select.Option>
-          );
-        }
-        return (
-          <div style={{ padding: 8 }}>
-            <Typography.Title level={4}>Custom header</Typography.Title>
-            <Row gutter={8}>
-              <Col>
-                <Select
-                  size="small"
-                  dropdownMatchSelectWidth={false}
-                  className="my-year-select"
-                  onChange={(newYear) => {
-                    const now = value.clone().year(newYear);
-                    onChange(now);
-                  }}
-                  value={String(year)}
-                >
-                  {options}
-                </Select>
-              </Col>
-              <Col>
-                <Select
-                  size="small"
-                  dropdownMatchSelectWidth={false}
-                  value={String(month)}
-                  onChange={(selectedMonth) => {
-                    const newValue = value.clone();
-                    newValue.month(parseInt(selectedMonth, 10));
-                    onChange(newValue);
-                  }}
-                >
-                  {monthOptions}
-                </Select>
-              </Col>
-            </Row>
-          </div>
-        );
-      }}
-    />
+    <header
+      style={{ width: "100%", display: "flex", justifyContent: "center" }}
+    >
+      <Tabs defaultActiveKey="1">{getTabs()}</Tabs>
+    </header>
   );
+  //return <div>{getListData()}</div>;
 }

@@ -9,7 +9,7 @@ let projects = [
     title: "Paper Trader",
     description:
       "Platform for users to track their favorite stocks and make trades with paper money",
-    image: require("./images/test.jpeg"),
+    image: require("./images/PaperTrader.png"),
     video: "video",
     features: [
       "Simulates brokerage account with initial $100,000 balance",

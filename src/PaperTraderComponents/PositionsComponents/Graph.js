@@ -11,10 +11,12 @@ export default function Graph(props) {
 
   useEffect(() => {
     if (!isNaN(props.dataPoint) && isOpen(new Date())) {
-      data.push({
-        val: props.dataPoint,
-        x: data.length,
-      });
+      setData([
+        ...data,
+        {
+          val: props.dataPoint,
+        },
+      ]);
     } else if (props.data) {
       setData(props.data);
     }
@@ -37,12 +39,10 @@ export default function Graph(props) {
     let t = [];
     let diff = domain[1] - domain[0];
     let gap = Math.round(diff / 3);
-    console.log(domain);
-    console.log(gap);
+
     for (let i = Math.floor(domain[0]); i <= Math.ceil(domain[1]); i += gap) {
       t.push(Math.round(i));
     }
-    console.log(t);
     return t;
   }
 
