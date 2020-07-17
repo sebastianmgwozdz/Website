@@ -62,12 +62,23 @@ export default function EarningsCalendar() {
     let data = arr.map((val) => {
       return (
         <div>
-          <Badge color={getBadgeColor(val)} text={val["symbol"]} />
+          <Badge
+            color={getBadgeColor(val)}
+            text={val["symbol"]}
+            style={{ paddingLeft: "6vw" }}
+          />
         </div>
       );
     });
 
-    return <ul>{data}</ul>;
+    return (
+      <span>
+        <ul style={{ float: "left" }}>{data.slice(0, data.length / 2)}</ul>
+        <ul style={{ float: "left" }}>
+          {data.slice(data.length / 2, data.length)}
+        </ul>
+      </span>
+    );
   }
 
   function getTabs() {
@@ -88,7 +99,7 @@ export default function EarningsCalendar() {
 
       t.push(
         <TabPane tab={date} key={i}>
-          {getListData(date)}
+          <Card>{getListData(date)}</Card>
         </TabPane>
       );
     }

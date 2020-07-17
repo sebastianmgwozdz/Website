@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AutoComplete } from "antd";
+import { AutoComplete, Input } from "antd";
 import { get } from "../Helpers";
 
 let stocks = new Map();
@@ -34,8 +34,16 @@ export default function Autocomplete(props) {
     if (filtered) {
       for (let i = 0; i < filtered.length; i++) {
         let curr = filtered[i];
-        if (curr.toLowerCase().includes(searchText.toLowerCase())) {
-          arr.push({ value: curr });
+
+        if (curr.toLowerCase().indexOf(searchText.toLowerCase()) === 0) {
+          arr.push({
+            value: (
+              <span>
+                <b> {searchText}</b>
+                {curr.substring(searchText.length, curr.length)}
+              </span>
+            ),
+          });
         }
       }
     }
@@ -48,11 +56,20 @@ export default function Autocomplete(props) {
     <AutoComplete
       options={options}
       style={{
-        width: "100%",
+        width: props.width,
       }}
       onSearch={onSearch}
-      placeholder="Enter Stock Symbol"
       onSelect={onSearch}
-    />
+      placeholder={props.search ? "" : "Enter Stock Symbol"}
+      autoFocus
+    >
+      {props.search ? (
+        <Input.Search
+          size="large"
+          placeholder="Enter Stock Symbol"
+          enterButton
+        />
+      ) : null}
+    </AutoComplete>
   );
 }
