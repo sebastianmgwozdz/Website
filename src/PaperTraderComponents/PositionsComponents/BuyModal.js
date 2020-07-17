@@ -160,6 +160,7 @@ function BuyModal(props) {
           <Autocomplete
             setSymbol={setSymbol}
             setQuantity={setQuantity}
+            width="100%"
           ></Autocomplete>
         )}
       </div>
