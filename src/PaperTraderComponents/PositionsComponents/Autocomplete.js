@@ -19,9 +19,12 @@ get(
 
 export default function Autocomplete(props) {
   const [options, setOptions] = useState([]);
-  console.log("auto complete");
 
-  async function onSearch(searchText) {
+  function onSelect(searchText) {
+    props.setSymbol(searchText);
+  }
+
+  function onSearch(searchText) {
     let arr = [];
     if (!searchText) {
       setOptions([]);
@@ -37,9 +40,10 @@ export default function Autocomplete(props) {
 
         if (curr.toLowerCase().indexOf(searchText.toLowerCase()) === 0) {
           arr.push({
-            value: (
+            value: curr,
+            label: (
               <span>
-                <b> {searchText}</b>
+                <b>{searchText.toUpperCase()}</b>
                 {curr.substring(searchText.length, curr.length)}
               </span>
             ),
@@ -59,7 +63,7 @@ export default function Autocomplete(props) {
         width: props.width,
       }}
       onSearch={onSearch}
-      onSelect={onSearch}
+      onSelect={onSelect}
       placeholder={props.search ? "" : "Enter Stock Symbol"}
       autoFocus
     >

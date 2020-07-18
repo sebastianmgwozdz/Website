@@ -36,8 +36,6 @@ function StockCard(props) {
   }, []);
 
   useEffect(() => {
-    console.log(data);
-
     let curr = Date.now();
     let past = curr - 1000 * 60;
 
@@ -51,9 +49,9 @@ function StockCard(props) {
     const d = new Date(date);
 
     return (
-      d.getDate() === today.getUTCDate() &&
-      d.getMonth() === today.getUTCMonth() &&
-      d.getFullYear() === today.getUTCFullYear()
+      d.getUTCDate() === today.getUTCDate() &&
+      d.getUTCMonth() === today.getUTCMonth() &&
+      d.getUTCFullYear() === today.getUTCFullYear()
     );
   }
 
@@ -118,16 +116,6 @@ function StockCard(props) {
 
     for (let pos of positions) {
       val += pos["initial"] * pos["price"];
-    }
-
-    return val;
-  }
-
-  function totalValue() {
-    let val = 0;
-
-    for (let pos of positions) {
-      val += pos["remaining"] * pos["price"];
     }
 
     return val;

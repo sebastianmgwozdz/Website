@@ -11,12 +11,9 @@ export default function Graph(props) {
 
   useEffect(() => {
     if (!isNaN(props.dataPoint) && isOpen(new Date())) {
-      setData([
-        ...data,
-        {
-          val: props.dataPoint,
-        },
-      ]);
+      data.push({
+        val: props.dataPoint,
+      });
     } else if (props.data) {
       setData(props.data);
     }
