@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 export default function ProjectCard(props) {
-  const { switchFunc, data } = props;
+  const { data } = props;
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -48,22 +48,21 @@ export default function ProjectCard(props) {
             alt="WORK IN PROGRESS"
           ></img>
         </p>
-        <p>
+        <div>
           Features:
           <ul>
-            {data["features"].map((val) => {
-              return <li>{val}</li>;
+            {data["features"].map((val, index) => {
+              return <li key={index}>{val}</li>;
             })}
           </ul>
-        </p>
-        <p>{data["function"]}</p>
-        <p>
+        </div>
+        <div>
           Tools Used:
           <ul>
             <li>{data["tools"]}</li>
           </ul>
-        </p>
-        <p style={{ textAlign: "center" }}>
+        </div>
+        <div style={{ textAlign: "center" }}>
           <span>
             <a target="_blank" rel="noopener noreferrer" href={data["link"]}>
               <Button type="dashed">GitHub Repository</Button>
@@ -74,7 +73,7 @@ export default function ProjectCard(props) {
               </a>
             ) : null}
           </span>
-        </p>
+        </div>
       </Modal>
       <Card className={classes.card}>
         <CardMedia className={classes.media} image={data["image"]} />
