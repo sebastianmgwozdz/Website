@@ -12,17 +12,16 @@ let projects = [
     image: require("./images/PaperTrader.png"),
     video: "video",
     features: [
-      "Simulates brokerage account with initial $100,000 balance",
-      "Displays stock movements graphically in real time",
-      "Displays profits for each long and short position",
-    ],
-    function:
+      "Simulates brokerage account with initial $100,000 balance, displays stock movements graphically in real time, and records profits for long and short positions",
+      "Allows user to search individual stocks, providing information ranging from related news to company financials",
+      "Compiles all company earnings for the upcoming week",
       "Retrieves real time stock data from Finnhub Stock API and user's positions from MySQL database through RESTful Spring Boot API",
+    ],
+
     tools:
       "JavaScript, Java, Spring Boot, React, MySQL, Firebase Authentication",
 
-    link:
-      "https://github.com/sebastianmgwozdz/Website/tree/master/src/PaperTraderComponents",
+    link: "https://github.com/sebastianmgwozdz/PaperTrader",
   },
   {
     title: "Typing Test",
@@ -35,7 +34,6 @@ let projects = [
       "Displays typing accuracy and speed in real time",
       "Allows user to modify word length and game duration",
     ],
-    function: null,
     tools: "JavaScript, React",
     demo: main + "typingtest",
     link:
@@ -48,10 +46,10 @@ let projects = [
     image: require("./images/ShortestPathCover.png"),
     video: "icons/ShortestPath.gif",
     features: [
+      "Calculates shortest path using Dijkstra/A* algorithms",
       "Color-codes and displays all traversed squares",
       "Gives user ability to place obstacles affecting algorithm's behavior",
     ],
-    function: "Calculates shortest path using Dijkstra/A* algorithms",
     tools: "Java, JavaFX",
     link: "https://github.com/sebastianmgwozdz/Shortest-Path",
   },
@@ -61,21 +59,18 @@ let projects = [
       "2D Game inspired by Helicopter Game and Flappy Bird where the user maneuvers through a series of obstacles",
     image: require("./images/EvasiveCover.png"),
     video: "icons/EvasiveManeuvers.gif",
-    features: ["Sidescroller perspective", "Point system to track score"],
-    function: null,
+    features: [
+      "Offers sidescroller perspective",
+      "Tracks the user's progress using a point system",
+    ],
     tools: "Python, Pygame",
     link: "https://github.com/sebastianmgwozdz/Evasive-Maneuvers",
   },
 ];
 
 function cards() {
-  console.log(
-    projects.map((val) => {
-      return <ProjectCard data={val}></ProjectCard>;
-    })
-  );
-  return projects.map((val) => {
-    return <ProjectCard data={val}></ProjectCard>;
+  return projects.map((val, index) => {
+    return <ProjectCard data={val} key={index}></ProjectCard>;
   });
 }
 
