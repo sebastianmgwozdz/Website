@@ -6,6 +6,7 @@ import Projects from "./MainComponents/Projects";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TypingApp from "./TypingGameComponents/App";
 import "./App.css";
+import { BackTop } from "antd";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <TypingApp></TypingApp>
         </Route>
         <Route path="/">
+          <BackTop />
           <Front></Front>
           <About></About>
           <Education></Education>
