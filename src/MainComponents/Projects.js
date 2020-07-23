@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./css/Projects.css";
 import ProjectCard from "./ProjectCard";
 import { withRouter } from "react-router-dom";
 import { main } from "../links";
+import { Carousel } from "antd";
 
 let projects = [
   {
     title: "Paper Trader",
     description:
-      "Platform for users to track their favorite stocks and make trades with paper money",
+      "A platform for users to track and trade stocks according to real market value",
     image: require("./images/PaperTrader.png"),
     video: "video",
     features: [
@@ -74,20 +75,12 @@ function cards() {
   });
 }
 
-function Projects() {
+function Projects(props) {
   return (
     <div className="Projects-Background" id="projects">
-      <header className="Projects-Header">Projects</header>
-      <span
-        className="w-50 p-3"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <Carousel autoplay style={{ paddingTop: "12vh", height: "90vh" }}>
         {cards()}
-      </span>
+      </Carousel>
     </div>
   );
 }

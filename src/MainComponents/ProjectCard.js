@@ -11,11 +11,11 @@ import { Modal } from "antd";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 300,
+    maxWidth: 400,
     maxHeight: 750,
   },
   media: {
-    height: 300,
+    height: 350,
   },
 });
 
@@ -26,7 +26,9 @@ export default function ProjectCard(props) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div style={{ marginLeft: "2%" }}>
+    <div
+      style={{ marginLeft: "2%", display: "flex", justifyContent: "center" }}
+    >
       <Modal
         title={data["title"]}
         visible={open}

@@ -1,0 +1,7 @@
+.fade-in {
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: background 0.3s linear;
+}
+.fade-in:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}

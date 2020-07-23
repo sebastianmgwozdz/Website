@@ -1,68 +1,69 @@
 import React from "react";
-import "./css/FrontPage.css";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-scroll";
+import "./css/NavBar.css";
+import { Divider } from "antd";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    "& > *": {
-      margin: theme.spacing(1)
-    }
+export default function NavBar(props) {
+  function change(val) {
+    props.setPage(val);
   }
-}));
 
-export default function NavBar() {
-  const classes = useStyles();
+  const labels = ["Home", "About Me", "Projects", "Education"];
+
+  function menuItems() {
+    let items = [];
+    for (let i = 0; i < labels.length; i++) {
+      let value = labels[i];
+      let item = (
+        <a
+          onClick={() => {
+            change(i);
+          }}
+          style={{
+            fontSize: props.page === i ? "22px" : "18px",
+            textShadow: props.page === i ? "0 0 3px #d9d7d7" : null,
+            color: "#ffffff",
+          }}
+        >
+          {value}
+        </a>
+      );
+
+      items.push(item);
+
+      if (i < labels.length - 1) {
+        items.push(
+          <span
+            style={{
+              marginLeft: "1vw",
+              marginRight: "1vw",
+              color: "#ffffff",
+              fontSize: "24px",
+            }}
+          >
+            /
+          </span>
+        );
+      }
+    }
+
+    return items;
+  }
 
   return (
-    <div className={classes.root}>
-      <ButtonGroup
-        variant="contained"
-        color="primary"
-        aria-label="contained primary button group"
+    <div
+      class="fade-in"
+      style={{
+        height: "8vh",
+        zIndex: 9,
+        position: "absolute",
+        width: "100vw",
+      }}
+    >
+      <div
+        style={{ paddingTop: "1.5vh", textAlign: "right", paddingRight: "5vw" }}
       >
-        <Button>
-          <Link
-            activeClass="active"
-            to="about"
-            spy={true}
-            smooth={true}
-            offset={0}
-            duration={850}
-          >
-            About Me
-          </Link>
-        </Button>
-        <Button>
-          <Link
-            activeClass="active"
-            to="education"
-            spy={true}
-            smooth={true}
-            offset={0}
-            duration={850}
-          >
-            Education
-          </Link>
-        </Button>
-        <Button>
-          <Link
-            activeClass="active"
-            to="projects"
-            spy={true}
-            smooth={true}
-            offset={0}
-            duration={850}
-          >
-            Projects
-          </Link>
-        </Button>
-      </ButtonGroup>
+        {menuItems()}
+      </div>
     </div>
   );
 }

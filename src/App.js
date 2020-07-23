@@ -1,8 +1,5 @@
 import React from "react";
-import Front from "./MainComponents/Front";
-import About from "./MainComponents/About";
-import Education from "./MainComponents/Education";
-import Projects from "./MainComponents/Projects";
+import Main from "./MainComponents/Main";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TypingApp from "./TypingGameComponents/App";
 import "./App.css";
@@ -16,11 +13,8 @@ export default function App() {
           <TypingApp></TypingApp>
         </Route>
         <Route path="/">
-          <BackTop />
-          <Front></Front>
-          <About></About>
-          <Education></Education>
-          <Projects></Projects>
+          <BackTop></BackTop>
+          <Main></Main>
         </Route>
       </Switch>
     </Router>
