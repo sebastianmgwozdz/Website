@@ -27,7 +27,7 @@ export default function Main() {
   console.log(page);
 
   return (
-    <div>
+    <div style={{ height: "100vh", width: "100vh" }}>
       <NavBar setPage={setPage} page={page}></NavBar>
       {
         <div style={{ height: "100vh", backgroundColor: "rgb(36, 35, 35)" }}>
