@@ -24,10 +24,14 @@ export default function Main() {
     </FadeIn>,
   ];
 
-  console.log(page);
-
   return (
-    <div style={{ height: "100vh", width: "100vw" }}>
+    <div
+      style={{
+        height: "100vh",
+        width: "100vw",
+        fontFamily: "Open Sans, sans-serif",
+      }}
+    >
       <NavBar setPage={setPage} page={page}></NavBar>
       {
         <div style={{ height: "100%", backgroundColor: "rgb(36, 35, 35)" }}>
