@@ -76,10 +76,10 @@ export default function Education() {
 
       <img
         src="https://cdn.swimswam.com/wp-content/uploads/2019/02/San-Jose-State-University-logo.png"
-        height="200"
-        width="200"
+        height="185vmin"
+        width="185vmin"
         alt="SJSU Logo"
-        style={{ marginTop: "4vh" }}
+        style={{ marginTop: "5vh" }}
       />
     </div>
   );

@@ -78,7 +78,7 @@ function cards() {
 function Projects(props) {
   return (
     <div className="Projects-Background" id="projects">
-      <Carousel autoplay style={{ paddingTop: "12vh", height: "90vh" }}>
+      <Carousel autoplay style={{ paddingTop: "15vh", height: "90vh" }}>
         {cards()}
       </Carousel>
     </div>
