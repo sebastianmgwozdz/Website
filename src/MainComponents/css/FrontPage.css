@@ -28,12 +28,9 @@
 }
 
 .Image {
-  margin-right: 1.5vmin;
-  margin-left: 1.5vmin;
-}
-
-.Image:hover {
-  box-shadow: 0 0.5vmin 1.5vmin rgba(255, 255, 255, 0.75);
+  margin-right: 3vmin;
+  margin-left: 3vmin;
+  float: left;
 }
 
 .Icon {
