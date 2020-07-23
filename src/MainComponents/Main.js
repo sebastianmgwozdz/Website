@@ -30,7 +30,7 @@ export default function Main() {
     <div style={{ height: "100vh", width: "100vw" }}>
       <NavBar setPage={setPage} page={page}></NavBar>
       {
-        <div style={{ height: "100vh", backgroundColor: "rgb(36, 35, 35)" }}>
+        <div style={{ height: "100%", backgroundColor: "rgb(36, 35, 35)" }}>
           {pages[page]}
         </div>
       }
