@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./css/Projects.css";
 import ProjectCard from "./ProjectCard";
 import { withRouter } from "react-router-dom";

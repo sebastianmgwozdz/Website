@@ -1,6 +1,5 @@
 import React from "react";
 import "./css/NavBar.css";
-import { Divider } from "antd";
 
 export default function NavBar(props) {
   function change(val) {
