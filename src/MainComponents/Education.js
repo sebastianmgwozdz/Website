@@ -1,6 +1,5 @@
 import React from "react";
 import "./css/Education.css";
-import FadeButton from "./FadeButton";
 import { Card, Avatar, Row, Col } from "antd";
 import {
   ReadFilled,
