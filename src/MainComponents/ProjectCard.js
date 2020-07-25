@@ -26,9 +26,7 @@ export default function ProjectCard(props) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div
-      style={{ marginLeft: "2%", display: "flex", justifyContent: "center" }}
-    >
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <Modal
         title={data["title"]}
         visible={open}
