@@ -14,10 +14,17 @@ const { Meta } = Card;
 export default function Education() {
   return (
     <div className="Education-Background" id="education">
+      <img
+        src="https://cdn.swimswam.com/wp-content/uploads/2019/02/San-Jose-State-University-logo.png"
+        height="200"
+        width="200"
+        alt="SJSU Logo"
+        style={{ marginTop: "10vh" }}
+      />
       <div
         style={{
-          paddingLeft: "5vw",
-          paddingTop: "12vh",
+          paddingLeft: "7vw",
+          marginTop: "5vh",
         }}
       >
         <Row gutter={10}>
@@ -73,14 +80,6 @@ export default function Education() {
           </Col>
         </Row>
       </div>
-
-      <img
-        src="https://cdn.swimswam.com/wp-content/uploads/2019/02/San-Jose-State-University-logo.png"
-        height="185vmin"
-        width="185vmin"
-        alt="SJSU Logo"
-        style={{ marginTop: "5vh" }}
-      />
     </div>
   );
 }

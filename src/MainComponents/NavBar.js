@@ -60,7 +60,11 @@ export default function NavBar(props) {
       }}
     >
       <div
-        style={{ paddingTop: "1.5vh", textAlign: "right", paddingRight: "5vw" }}
+        style={{
+          paddingTop: "1.5vh",
+          textAlign: "right",
+          paddingRight: "7vw",
+        }}
       >
         {menuItems()}
       </div>
