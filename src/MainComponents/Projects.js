@@ -9,18 +9,16 @@ let projects = [
   {
     title: "Paper Trader",
     description:
-      "A platform for users to track and trade stocks according to real market value",
+      "A platform for users to track and trade stocks according to market value",
     image: require("./images/PaperTrader.png"),
-    video: "video",
+    video: "icons/PaperTrader.gif",
     features: [
-      "Simulates brokerage account with initial $100,000 balance, displays stock movements graphically in real time, and records profits for long and short positions",
-      "Allows user to search individual stocks, providing information ranging from related news to company financials",
-      "Compiles all company earnings for the upcoming week",
-      "Retrieves real time stock data from Finnhub Stock API and user's positions from MySQL database through RESTful Spring Boot API",
+      "Simulates account with initial $100,000 balance, displays stock movements graphically in real time, and records profits for long and short positions",
+      "Allows user to search individual stocks, providing information ranging from financials to related news",
+      "Compiles earnings calendar for upcoming week",
     ],
 
-    tools:
-      "JavaScript, Java, Spring Boot, React, MySQL, Firebase Authentication",
+    tools: "JavaScript, Java, Spring Boot, React, MySQL",
 
     link: "https://github.com/sebastianmgwozdz/PaperTrader",
   },
@@ -75,7 +73,7 @@ function cards() {
   });
 }
 
-function Projects(props) {
+function Projects() {
   return (
     <div className="Projects-Background" id="projects">
       <Carousel autoplay style={{ paddingTop: "15vh", height: "90vh" }}>
