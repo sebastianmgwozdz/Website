@@ -23,11 +23,13 @@
 
 .Image {
   margin-right: 6vmin;
+  margin-left: 5vmin;
   transition: all 0.2s ease-in-out;
 }
 
 .Icon {
-  margin-top: 12vh;
+  margin-top: 8vh;
+  height: 12vh;
 }
 
 .Image:hover {
@@ -72,4 +74,29 @@
   height: 50ch;
   cursor: pointer;
   will-change: transform, opacity;
+}
+
+.transitions-item {
+  overflow: hidden;
+  width: 100%;
+  color: white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 5em;
+  font-weight: 800;
+  text-transform: uppercase;
+  will-change: transform, opacity, height;
+  white-space: nowrap;
+  cursor: pointer;
+  line-height: 80px;
+}
+
+.simple-trans-main > div {
+  position: absolute;
+  color: white;
+  font-weight: 800;
+  font-size: 5em;
+  will-change: transform, opacity;
+  text-shadow: 0px 2px 40px #00000020, 0px 2px 5px #00000030;
 }
