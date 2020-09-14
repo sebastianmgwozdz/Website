@@ -1,37 +1,64 @@
-import { render } from "react-dom";
-import React, { useState } from "react";
-import { useSpring, animated, useTrail } from "react-spring";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { animated, useTransition } from "react-spring";
 import "./css/FrontPage.css";
 
-const config = { mass: 5, tension: 2000, friction: 200 };
-const items = ["Sebastian", "Gwozdz"];
-
 export default function NameCard() {
-  const [flipped, set] = useState(false);
-  const { transform, opacity } = useSpring({
-    opacity: flipped ? 1 : 0,
-    transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
-    config: { mass: 5, tension: 500, friction: 80 },
+  const ref = useRef([]);
+  const [items, set] = useState([]);
+
+  const transitions = useTransition(items, null, {
+    from: {
+      opacity: 0,
+      height: 0,
+      innerHeight: 0,
+      transform: "perspective(600px) rotateX(0deg)",
+      color: "#8fa5b6",
+    },
+    enter: [{ opacity: 1, height: 80, innerHeight: 80 }, { color: "#28d79f" }],
+    leave: [
+      { color: "#c23369" },
+      { innerHeight: 0 },
+      { opacity: 0, height: 0 },
+    ],
+    update: { color: "#28b4d7" },
   });
 
-  const trail = useTrail(items.length, {
-    config,
-    opacity: 1,
-    x: 0,
-    height: 80,
-    from: { opacity: 0, x: 20, height: 0 },
-  });
+  useEffect(() => {
+    reset();
+  }, []);
 
-  return trail.map(({ x, height, ...rest }, index) => (
-    <animated.div
-      key={items[index]}
-      className="trails-text"
-      style={{
-        ...rest,
-        transform: x.interpolate((x) => `translate3d(0,${x}px,0)`),
-      }}
-    >
-      <animated.div style={{ height }}>{items[index]}</animated.div>
-    </animated.div>
-  ));
+  const reset = useCallback(() => {
+    ref.current.map(clearTimeout);
+    ref.current = [];
+    set([]);
+    ref.current.push(set(["Sebastian", "Gwozdz"]));
+    ref.current.push(
+      setTimeout(
+        () => set(["Sebastian", "Student", "Developer", "Gwozdz"]),
+        3000
+      )
+    );
+
+    ref.current.push(
+      setTimeout(() => set(["Sebastian", "Student", "Gwozdz"]), 5500)
+    );
+    ref.current.push(setTimeout(() => set(["Sebastian", "Gwozdz"]), 5500));
+  }, []);
+
+  return (
+    <div style={{ height: "40vh" }}>
+      {transitions.map(({ item, props: { innerHeight, ...rest }, key }) => (
+        <animated.div
+          className="transitions-item"
+          key={key}
+          style={rest}
+          onClick={reset}
+        >
+          <animated.div style={{ overflow: "hidden", height: innerHeight }}>
+            {item}
+          </animated.div>
+        </animated.div>
+      ))}
+    </div>
+  );
 }
